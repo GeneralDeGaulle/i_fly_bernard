@@ -11,9 +11,11 @@ Script principal qui, pour chaque avion dans "/input/avions.csv", utilise les au
 import pandas as pd
 import os
 
+import logging
+
 #pour le format de la date du titre de la carte
 import locale
-locale.setlocale(locale.LC_TIME,"")
+locale.setlocale(locale.LC_TIME,"");
 
 
 #%% import scripts
@@ -61,7 +63,7 @@ for aircraft_row in df_avion.itertuples():
     path_flight_data = os.path.join(path, "output", registration_ac)
     path_flight_data_csv = os.path.join(path_flight_data, f"{registration_ac}_flight_data_all.csv")
 
-    df_ac_data = pd.read_csv(path_flight_data_csv, delimiter = ",") #pour garder les N/A comme tel et simplifier la compairaison
+    df_ac_data = pd.read_csv(path_flight_data_csv, delimiter = ",")
     df_ac_data["departure_date_utc"] = pd.to_datetime(df_ac_data["departure_date_utc"], utc=True)
     df_ac_data["arrival_date_utc"] = pd.to_datetime(df_ac_data["arrival_date_utc"], utc=True)
     # df_ac_data = df_ac_data.astype({"co2_emission_kg":"float", "flight_duration_min":"float"})
@@ -152,7 +154,7 @@ for aircraft_row in df_avion.itertuples():
                 n = n + len(df_new_flights_only)
                 print()
                 print(f"--- {registration_ac} done ! ---")
-                print("---------------------"),print()
+                print("---------------------")
 
 
             else:
@@ -184,7 +186,7 @@ for aircraft_row in df_avion.itertuples():
 
 
 #%%
-print()
+print("---------------------------")
 print("--- all aircraft done ! ---")
 print(f"--- Il y a eu {str(n)} nouveau(x) vol(s) généré(s) ---")
 

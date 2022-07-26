@@ -12,7 +12,7 @@ import pandas as pd
 import os
 
 import locale
-locale.setlocale(locale.LC_TIME,"")
+locale.setlocale(locale.LC_TIME,"");
 
 
 #%%
@@ -22,15 +22,17 @@ from module import csv_to_map
 #%%
 
 # =============================================================================
- registration_ac = "F-HJJJ"
+registration_ac = "F-HJJJ"
 # =============================================================================
 
 
 #%% define path
 path = os.getcwd()
-path_avions = path + r"\input\avions.csv"
+path_avions = os.path.join(path, r"input\avions.csv")
 
-path_flight_data = path + "\output\\" + registration_ac + "\\" + registration_ac + "_flight_data_all.csv"
+path_flight_data = os.path.join(path, "output", registration_ac)
+path_flight_data_csv = os.path.join(path_flight_data, f"{registration_ac}_flight_data_all.csv")
+
 
 
 #%% load generic data
@@ -44,7 +46,7 @@ ac_proprio = df_avion.proprio.values[0]
 
 
 #%%
-df_ac_data = pd.read_csv(path_flight_data, delimiter = ",") #pour garder les N/A comme tel et simplifier la compairaison
+df_ac_data = pd.read_csv(path_flight_data_csv, delimiter = ",")
 df_ac_data["departure_date_utc"] = pd.to_datetime(df_ac_data["departure_date_utc"], utc=True)
 df_ac_data["arrival_date_utc"] = pd.to_datetime(df_ac_data["arrival_date_utc"], utc=True)
 
