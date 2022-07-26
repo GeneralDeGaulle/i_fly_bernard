@@ -22,9 +22,12 @@ from module import csv_to_map
 #%%
 
 # =============================================================================
+<<<<<<< Updated upstream
 registration_ac = "F-HJJJ"
+=======
+registration_ac = "F-HMBY"
+>>>>>>> Stashed changes
 # =============================================================================
-
 
 #%% define path
 path = os.getcwd()
@@ -52,7 +55,7 @@ df_ac_data["arrival_date_utc"] = pd.to_datetime(df_ac_data["arrival_date_utc"], 
 
 
 #%%
-df_new_flights_only = df_ac_data.iloc[[1]]
+df_new_flights_only = df_ac_data.iloc[[21]]
 
 
 #%%
@@ -68,7 +71,6 @@ for new_flight in df_new_flights_only.itertuples():
     date_map = new_flight.departure_date_only_utc_map.strftime("%#d %B %Y")
 
     csv_to_map.fct_csv_2_map(path_csv_flight, registration_ac, date_map, co2_new, tps_vol_new, ac_proprio)
-
 
 
 #%%
