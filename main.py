@@ -25,7 +25,7 @@ from module import kml_to_csv
 from module import get_new_df_data
 from module import csv_to_map
 
-# import map_to_twitter (pour twitter automatiquement, pas utilisé encore)
+# import map_to_twitter (pour twitter automatiquement, pas encore utilisé)
 
 
 #%% define path
