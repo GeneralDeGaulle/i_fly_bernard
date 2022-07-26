@@ -22,11 +22,7 @@ from module import csv_to_map
 #%%
 
 # =============================================================================
-<<<<<<< Updated upstream
-registration_ac = "F-HJJJ"
-=======
 registration_ac = "F-HMBY"
->>>>>>> Stashed changes
 # =============================================================================
 
 #%% define path
