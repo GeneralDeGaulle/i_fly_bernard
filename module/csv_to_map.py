@@ -2,7 +2,8 @@
 """
 Created on Mon Apr  4 20:40:44 2022
 
-Script #5 qui utilise la trajectoire csv et les infos de "d_get_new_df_data.py" pour générer la carte de la trajectoire et/ou le html. Si absence de données pendant plus de x minutes, calcule de la géodésique pour combler le trou.
+Script #5 qui utilise la trajectoire csv et les infos de "d_get_new_df_data.py" pour générer la carte de la trajectoire et/ou le html.
+Si absence de données pendant plus de x minutes, calcule de la géodésique pour combler le trou.
 
 @author: GeneralDeGaulle
 """

@@ -29,7 +29,7 @@ locale.setlocale(locale.LC_TIME,"")
 path = os.getcwd()
 
 path_avions = os.path.join(path, r"input\avions.csv")
-path_output_bilan = os.path.join(path, r"\output\Bilans"
+path_output_bilan = os.path.join(path, r"\output\Bilans")
 
 
 #%%
@@ -42,7 +42,7 @@ list_ac = df_avion["registration"].values
 df_all_flights = pd.DataFrame()
 
 for ac in list_ac:
-    path_ac = os.path.join(path, output, ac, ac +"_flight_data_all.csv")
+    path_ac = os.path.join(path, "output", ac, ac +"_flight_data_all.csv")
     df = pd.read_csv(path_ac, delimiter = ",")
     df_all_flights = pd.concat([df_all_flights, df])
 
@@ -64,7 +64,7 @@ for aircraft in list_ac:
 #pour mettre le propriétaire en premier
 df_all_flights = df_all_flights.loc[:,["propriétaire" ] + list_colonnes]
 
-path_all_ac = os.path.join(path, output, "all_flights_data.csv")
+path_all_ac = os.path.join(path, "output", "all_flights_data.csv")
 df_all_flights.to_csv(path_all_ac, index=False, encoding="utf-8-sig")
 
 

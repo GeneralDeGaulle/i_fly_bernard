@@ -2,7 +2,8 @@
 """
 Created on Thu Apr 14 21:43:19 2022
 
-Script principal qui, pour chaque avion dans "/input/avions.csv", utilise les autres scipts pour rechercher de nouveaux vols, générer les cartes et calculer le CO2 associé.
+Script principal qui, pour chaque avion dans "/input/avions.csv", utilise les autres scipts pour
+rechercher de nouveaux vols, générer les cartes et calculer le CO2 associé.
 
 @author: GeneralDeGaulle
 """
@@ -164,7 +165,7 @@ for aircraft_row in df_avion.itertuples():
                 print()
                 print(f"--- No new flights for A/C {registration_ac} ---")
                 print(f"--- {registration_ac} done ! ---")
-                print(),print()
+                print()
 
         else:
             # malgré tout, on met à jour la date de dernier check.
@@ -173,7 +174,7 @@ for aircraft_row in df_avion.itertuples():
             print()
             print(f"--- No new flights for A/C {registration_ac} ---")
             print(f"--- {registration_ac} done ! ---")
-            print(),print()
+            print()
 
     else:
         # malgré tout, on met à jour la date de dernier check.
@@ -182,7 +183,7 @@ for aircraft_row in df_avion.itertuples():
         print()
         print(f"--- No new flights for A/C {registration_ac} ---")
         print(f"--- {registration_ac} done ! ---")
-        print(),print()
+        print()
 
 
 #%%

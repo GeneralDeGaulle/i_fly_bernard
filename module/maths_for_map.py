@@ -2,6 +2,8 @@
 """
 Created on Mon Apr 18 18:52:22 2022
 
+Script #6 qui contient des fonctions mathématiques utilisées dans les autres scripts (surtout pour "csv_to_map.py").
+
 @author: GeneralDeGaulle
 """
 #%%
