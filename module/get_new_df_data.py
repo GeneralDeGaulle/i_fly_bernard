@@ -74,12 +74,12 @@ def fct_get_data_from_csv(csv, regis, icao, co2):
 
     # On lève une alerte si l'avion est trop haut au départ ou à l'arrivée, mais on continue. Par exemple, le vol est coupé par adsb-ex au moment du changement de jour UTC
     # altitude en mètre
-    if elev_ini >= 7000:
+    if elev_ini >= 3000:
         apt_dep = "A/C in cruise"
         apt_dep_icao = "A/C in cruise"
         print("départ A/C in cruise")
 
-    if elev_last >= 7000:
+    if elev_last >= 3000:
         apt_arr = "A/C in cruise"
         apt_arr_icao = "A/C in cruise"
         print("arrivée A/C in cruise")
@@ -121,4 +121,29 @@ def fct_get_airport_from_lat_lon(lat_x, lon_x, apt_name_x):
         return apt_x, apt_x_icao
 
 #%%
+def fct_get_all_data(df_new, list_csv, regis, icao, co2):
+    #pour chaque nouveau vol, et donc chaque csv unique, on se sert du csv pour générer
+    #toutes les infos (1ère et dernière positions, temps de vol, CO2 émis, etc)
+    for csv in list_csv:
+        item = fct_get_data_from_csv(csv, regis, icao, co2)
+        df_item = pd.DataFrame([item], columns = list(df_new.columns))
 
+        # on regroupe tous les nouveaux vols du même avions
+        df_new = pd.concat([df_new, df_item], ignore_index=True)
+
+    #definir types du nouveau df pour simplifier les futures tâches
+    df_new["departure_date_utc"] = pd.to_datetime(df_new["departure_date_utc"], utc=True)
+    df_new["arrival_date_utc"] = pd.to_datetime(df_new["arrival_date_utc"], utc=True)
+    df_new["departure_date_only_utc_map"] = pd.to_datetime(df_new["departure_date_only_utc"], utc=True)#pour map/strftime
+    df_new = df_new.astype({"co2_emission_tonnes":"float", "flight_duration_min":"float","latitude_dep":"float", "longitude_dep":"float","latitude_arr":"float", "longitude_arr":"float"})
+
+    #find airport and add info with lambda and apply (et grâce aux 1ère et dernière positions du csv que l'on a trouvé avec "fct_get_data_from_csv"
+    #fonction assez géniale en toute modestie
+    df_new[["airport_departure","airport_dep_icao"]] = df_new.apply(lambda x: fct_get_airport_from_lat_lon(x["latitude_dep"], x["longitude_dep"], x["airport_departure"]), axis=1, result_type ="expand")
+    df_new[["airport_arrival","airport_arr_icao"]] = df_new.apply(lambda x: fct_get_airport_from_lat_lon(x["latitude_arr"], x["longitude_arr"], x["airport_arrival"]), axis=1, result_type ="expand")
+
+
+    return df_new
+
+
+#%%
