@@ -1,7 +1,7 @@
 ﻿registration,icao24,proprio,date_acquisition,model,type,msn,co2_kg_per_hour,last_check
-F-HVBL,39d42b,avion #2 du groupe Bolloré,2013-06-14,Dassault Falcon-7X,Falcon-7X,188,3120,2022-07-26
-F-HFHP,3994ef,avion de François-Henri Pinault,2020-06-10,Bombardier Global 7500,BD-700-2A12,70022,4500,2022-07-26
-F-HMBY,39b038,avion du groupe Bouygues,2016-12-01,Bombardier Global 6000,BD-700-2A12,9748,4700,2022-07-26
-F-GVMA,395580,avion de Bernard Arnault,2020-09-14,Bombardier Global 7500,BD-700-2A12,70020,4500,2022-07-26
-F-GBOL,3905cb,avion #1 du groupe Bolloré,2013-06-17,Bombardier Global 6000,BD-700-1A10,9500,4700,2022-07-26
-F-HJJJ,39a529,avion du groupe JC-Decaux,2020-02-18,Falcon 900EX,Falcon 900EX,318,2600,2022-07-26
+F-HMBY,39b038,avion du groupe Bouygues,2016-12-01,Bombardier Global 6000,BD-700-2A12,9748,4700,2022-07-27
+F-GVMA,395580,avion de Bernard Arnault,2020-09-14,Bombardier Global 7500,BD-700-2A12,70020,4500,2022-07-27
+F-GBOL,3905cb,avion #1 du groupe Bolloré,2013-06-17,Bombardier Global 6000,BD-700-1A10,9500,4700,2022-07-27
+F-HJJJ,39a529,avion du groupe JC-Decaux,2020-02-18,Falcon 900EX,Falcon 900EX,318,2600,2022-07-27
+F-HVBL,39d42b,avion #2 du groupe Bolloré,2013-06-14,Dassault Falcon-7X,Falcon-7X,188,3120,2022-07-27
+F-HFHP,3994ef,avion de François-Henri Pinault,2020-06-10,Bombardier Global 7500,BD-700-2A12,70022,4500,2022-07-27
