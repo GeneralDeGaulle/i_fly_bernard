@@ -96,28 +96,13 @@ for aircraft_row in df_avion.itertuples():
             #idem, on ne continue que si on a des nouveaux vols (ici, des vols qui ont volé ;)
             if list_new_csv:
                 #initiatilisation du df
-                df_new_flights_only = pd.DataFrame(columns = df_ac_data.columns)
+                df_new_flights_empty = pd.DataFrame(columns = df_ac_data.columns)
 
-                #pour chaque nouveau vol, et donc chaque csv unique, on se sert du csv pour générer toutes les infos (1ère et dernière positions, temps de vol, CO2 émis, etc)
-                for csv_file in list_new_csv:
-                    item = get_new_df_data.fct_get_data_from_csv(csv_file, registration_ac, icao24_ac, co2_ac)
-                    df_item = pd.DataFrame([item], columns = list(df_ac_data.columns))
-
-                    # on regroupe tous les nouveaux vols du même avions
-                    df_new_flights_only = pd.concat([df_new_flights_only, df_item], ignore_index=True)
-
-
-                #definir types du nouveau df pour simplifier les futures tâches
-                df_new_flights_only["departure_date_utc"] = pd.to_datetime(df_new_flights_only["departure_date_utc"])
-                df_new_flights_only["arrival_date_utc"] = pd.to_datetime(df_new_flights_only["arrival_date_utc"])
-                df_new_flights_only["departure_date_only_utc_map"] = pd.to_datetime(df_new_flights_only["departure_date_only_utc"])#pour map/strftime
-                df_new_flights_only = df_new_flights_only.astype({"co2_emission_tonnes":"float", "flight_duration_min":"float","latitude_dep":"float", "longitude_dep":"float","latitude_arr":"float", "longitude_arr":"float"})
-
-                #find airport and add info with lambda and apply (et grâce aux 1ère et dernière positions du csv que l'on a trouvé avec "fct_get_data_from_csv"
-                #fonction assez géniale en toute modestie
-                df_new_flights_only[["airport_departure","airport_dep_icao"]] = df_new_flights_only.apply(lambda x: get_new_df_data.fct_get_airport_from_lat_lon(x["latitude_dep"], x["longitude_dep"], x["airport_departure"]), axis=1, result_type ="expand")
-                df_new_flights_only[["airport_arrival","airport_arr_icao"]] = df_new_flights_only.apply(lambda x: get_new_df_data.fct_get_airport_from_lat_lon(x["latitude_arr"], x["longitude_arr"], x["airport_arrival"]), axis=1, result_type ="expand")
-
+                #récupération des infos pour tous les nouveaux vols de cet avion
+                df_new_flights_only = get_new_df_data.fct_get_all_data(df_new_flights_empty,
+                                                                       list_new_csv,
+                                                                       registration_ac,
+                                                                       icao24_ac, co2_ac)
 
                 #plot map grâce à plotly avec les infos requises pour le titre de l'image
                 for new_flight in df_new_flights_only.itertuples():
@@ -129,7 +114,7 @@ for aircraft_row in df_avion.itertuples():
                     csv_to_map.fct_csv_2_map(path_csv_flight, registration_ac, date_map, co2_new, tps_vol_new, ac_proprio)
 
 
-                #clean and save data
+                # #clean and save data
                 #on nettoie new flight avant de le fusionner
                 df_new_flights_only = df_new_flights_only.drop(columns=["departure_date_only_utc_map"])
 

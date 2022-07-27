@@ -87,4 +87,5 @@ def fct_time_str(flt_duration_min):
 
     return flt_duration_str
 
+
 #%%
