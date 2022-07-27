@@ -56,17 +56,20 @@ df_vols_tbc.loc[:,"next_flight_departure_date"] = df_vols_tbc["departure_date_ut
 df_vols_tbc.loc[:,"diff_with_next"] = df_vols_tbc["next_flight_departure_date"] - df_vols_tbc["arrival_date_utc"]
 df_vols_tbc.loc[:,"next_flight_csv"] = df_vols_tbc["path_csv"].shift(1)
 
-df_vols_tbc = df_vols_tbc[(df_vols_tbc["airport_arrival"] == "A/C in cruise") &
-                         (df_vols_tbc["next_flight_departure"] == "A/C in cruise") &
-                         (df_vols_tbc["airport_departure"] != "A/C in cruise")]
+df_vols_tbc_1 = df_vols_tbc[(df_vols_tbc["airport_arrival"] == "A/C in cruise") &
+                          (df_vols_tbc["next_flight_departure"] == "A/C in cruise") &
+                          (df_vols_tbc["airport_departure"] != "A/C in cruise")]
+
+df_vols_tbc_2 = df_vols_tbc[(df_vols_tbc["arrival_date_utc"].dt.strftime("%Hh%M") == "23h59")]
 
 
-df_vols_to_be_merged = df_vols_tbc[(df_vols_tbc["arrival_date_utc"].dt.strftime("%H") >= "23") &
-                         (df_vols_tbc["diff_with_next"].dt.seconds/3600 <= 4)]
+df_vols_to_be_merged_1 = df_vols_tbc_1[(df_vols_tbc_1["arrival_date_utc"].dt.strftime("%H") >= "23") &
+                         (df_vols_tbc_1["diff_with_next"].dt.seconds/3600 <= 4)]
 
-#souvent des vols où on ne capte pas à l'arrivée et donc pas de second leg à fusionner
-df_vols_tbc_not = df_vols_tbc[(df_vols_tbc["arrival_date_utc"].dt.strftime("%H") < "23") |
-                              (df_vols_tbc["diff_with_next"].dt.seconds/3600 > 4)]
+df_vols_to_be_merged_2 = df_vols_tbc_2[(df_vols_tbc_2["diff_with_next"].dt.seconds/3600 <= 1)]
+
+
+df_vols_to_be_merged = pd.concat([df_vols_to_be_merged_1, df_vols_to_be_merged_2])
 
 
 #%% fusionner csv
