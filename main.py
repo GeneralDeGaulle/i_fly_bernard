@@ -22,6 +22,7 @@ from module import adsb_exchange
 from module import kml_to_csv
 from module import get_new_df_data
 from module import csv_to_map
+from module import post_flight_data_consolidation
 
 
 #%% define path
@@ -104,6 +105,15 @@ for aircraft_row in df_avion.itertuples():
                                                                        registration_ac,
                                                                        icao24_ac, co2_ac)
 
+
+                # check if flight has been split by adsb-ex at midnight UTC
+                df_new_flights_only = df_new_flights_only.sort_values(by=["departure_date_utc"], ascending = False)
+                df_new_flights_and_last = pd.concat([df_new_flights_only, df_ac_data.head(1)]) #df_ac_data.head(1) car si les deux volent sont trouvés lors de deux checks différents...
+                df_reconciliation = post_flight_data_consolidation.fct_check_reconciliation(df_new_flights_and_last)
+                if not df_reconciliation.empty:
+                    print("!!! flights reconciliation with to be done !!!")
+
+
                 #plot map grâce à plotly avec les infos requises pour le titre de l'image
                 for new_flight in df_new_flights_only.itertuples():
                     co2_new = new_flight.co2_emission_tonnes
@@ -171,34 +181,8 @@ print(f"--- Il y a eu {str(n)} nouveau(x) vol(s) généré(s) ---")
 
 
 #%% concat all aircraft df
-df_all_flights = pd.DataFrame()
-list_ac = df_avion["registration"].values
-
-for ac in list_ac:
-    path_ac = os.path.join(path, "output", ac, ac +"_flight_data_all.csv")
-    df = pd.read_csv(path_ac, delimiter = ",")
-    df_all_flights = pd.concat([df_all_flights, df])
-
-df_all_flights["departure_date_utc"] = pd.to_datetime(df_all_flights["departure_date_utc"], utc=True)
-df_all_flights["arrival_date_utc"] = pd.to_datetime(df_all_flights["arrival_date_utc"], utc=True)
-df_all_flights = df_all_flights.sort_values(by=["departure_date_utc"], ascending = False)
-df_all_flights = df_all_flights.reset_index(drop=True)
-
-df_all_flights["routes"] = df_all_flights["airport_departure"] + " - " + df_all_flights["airport_arrival"]
-df_all_flights["routes"] = df_all_flights["routes"].astype('category')
-
-list_colonnes = df_all_flights.columns.tolist()
-
-for aircraft in list_ac:
-    nom = df_avion[df_avion["registration"] == aircraft].proprio.values[0]
-    df_all_flights.loc[df_all_flights["registration"] == aircraft, "propriétaire"] = nom
-
-#pour mettre le propriétaire en premier
-df_all_flights = df_all_flights.loc[:,["propriétaire" ] + list_colonnes]
-
-path_all_ac = os.path.join(path, "output", "all_flights_data.csv")
-df_all_flights.to_csv(path_all_ac, index=False, encoding="utf-8-sig")
-
+post_flight_data_consolidation.fct_concat_all_flights(df_avion, path)
+print("---------------------------")
 print("--- all_flights_data.csv généré ---")
 
 

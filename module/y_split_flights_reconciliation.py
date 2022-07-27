@@ -2,6 +2,9 @@
 """
 Created on Tue Jul 26 17:24:50 2022
 
+Standalone script to find and correct flights which have been split by adsb-exchange.com
+at midnight UTC.
+
 @author: GeneralDeGaulle
 """
 
