@@ -12,8 +12,6 @@ rechercher de nouveaux vols, générer les cartes et calculer le CO2 associé.
 import pandas as pd
 import os
 
-import logging
-
 #pour le format de la date du titre de la carte
 import locale
 locale.setlocale(locale.LC_TIME,"");
@@ -24,8 +22,6 @@ from module import adsb_exchange
 from module import kml_to_csv
 from module import get_new_df_data
 from module import csv_to_map
-
-# import map_to_twitter (pour twitter automatiquement, pas encore utilisé)
 
 
 #%% define path
@@ -47,9 +43,6 @@ today_date = pd.to_datetime("now", utc=True)
 #%% start of loop
 n = 0
 
-# #provision pour twitter automatiquement après avoir généré les nouveaux vols.
-# df_all_new_flights_twitter = pd.DataFrame()
-
 #on attaque la boucle for pour passer les avions l'un après l'autre
 for aircraft_row in df_avion.itertuples():
     #define variables pour un avion
@@ -64,10 +57,15 @@ for aircraft_row in df_avion.itertuples():
     path_flight_data = os.path.join(path, "output", registration_ac)
     path_flight_data_csv = os.path.join(path_flight_data, f"{registration_ac}_flight_data_all.csv")
 
+    # pour créer le dossier si l'avion n'existe pas encore. pas le plus élégant mais efficace
+    if not os.path.exists(path_flight_data):
+        os.makedirs(path_flight_data, exist_ok=True)
+        df_template = pd.read_csv(os.path.join(path, r"input\template_flight_data_all.csv"))
+        df_template.to_csv(path_flight_data_csv, index=False, encoding="utf-8-sig")
+
     df_ac_data = pd.read_csv(path_flight_data_csv, delimiter = ",")
     df_ac_data["departure_date_utc"] = pd.to_datetime(df_ac_data["departure_date_utc"], utc=True)
     df_ac_data["arrival_date_utc"] = pd.to_datetime(df_ac_data["arrival_date_utc"], utc=True)
-    # df_ac_data = df_ac_data.astype({"co2_emission_kg":"float", "flight_duration_min":"float"})
 
 
     #go sur adsb-exchange pour trouver les nouveau vols par rapport à la date du dernier check jusqu'à aujourd'hui
@@ -131,11 +129,6 @@ for aircraft_row in df_avion.itertuples():
                     csv_to_map.fct_csv_2_map(path_csv_flight, registration_ac, date_map, co2_new, tps_vol_new, ac_proprio)
 
 
-                # #provision: on sauvegarde les nouveaux vols pour tweeter pour chaque avion pour twitter
-                # df_all_new_flights_twitter = pd.concat([df_all_new_flights_twitter, df_new_flights_only])
-                # df_all_new_flights_twitter = df_all_new_flights_twitter.reset_index(drop=True)
-
-
                 #clean and save data
                 #on nettoie new flight avant de le fusionner
                 df_new_flights_only = df_new_flights_only.drop(columns=["departure_date_only_utc_map"])
@@ -190,6 +183,37 @@ for aircraft_row in df_avion.itertuples():
 print("---------------------------")
 print("--- all aircraft done ! ---")
 print(f"--- Il y a eu {str(n)} nouveau(x) vol(s) généré(s) ---")
+
+
+#%% create full df
+df_all_flights = pd.DataFrame()
+
+for ac in list_ac:
+    path_ac = os.path.join(path, "output", ac, ac +"_flight_data_all.csv")
+    df = pd.read_csv(path_ac, delimiter = ",")
+    df_all_flights = pd.concat([df_all_flights, df])
+
+df_all_flights["departure_date_utc"] = pd.to_datetime(df_all_flights["departure_date_utc"], utc=True)
+df_all_flights["arrival_date_utc"] = pd.to_datetime(df_all_flights["arrival_date_utc"], utc=True)
+df_all_flights = df_all_flights.sort_values(by=["departure_date_utc"], ascending = False)
+df_all_flights = df_all_flights.reset_index(drop=True)
+
+df_all_flights["routes"] = df_all_flights["airport_departure"] + " - " + df_all_flights["airport_arrival"]
+df_all_flights["routes"] = df_all_flights["routes"].astype('category')
+
+list_colonnes = df_all_flights.columns.tolist()
+
+for aircraft in list_ac:
+    nom = df_avion[df_avion["registration"] == aircraft].proprio.values[0]
+    df_all_flights.loc[df_all_flights["registration"] == aircraft, "propriétaire"] = nom
+
+#pour mettre le propriétaire en premier
+df_all_flights = df_all_flights.loc[:,["propriétaire" ] + list_colonnes]
+
+path_all_ac = os.path.join(path, "output", "all_flights_data.csv")
+df_all_flights.to_csv(path_all_ac, index=False, encoding="utf-8-sig")
+
+print("--- all_flights_data.csv généré ---")
 
 
 #%%

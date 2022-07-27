@@ -130,7 +130,7 @@ def fct_csv_2_map(rel_path_flight_csv, regis, date_vol, co2, flight_temps, propr
             # plot(fig)
             # ici, on ne peut pas ajouter l'image de l'avion car on ne sait plus où est le centre de l'image. Donc il faut le rajouter à la main :(
             path_image = path_flight_csv + ".jpeg"
-            fig.write_image(path_image, engine="kaleido")
+            # fig.write_image(path_image, engine="kaleido")
             fig.write_html(path_image + ".html")
             #on enregistre le html dans ce cas pour pouvoir adapter la vue à la nouvelle trajectoire. Cela éviter de coder un truc complexe pour le zoom
 
