@@ -185,8 +185,9 @@ print("--- all aircraft done ! ---")
 print(f"--- Il y a eu {str(n)} nouveau(x) vol(s) généré(s) ---")
 
 
-#%% create full df
+#%% concat all aircraft df
 df_all_flights = pd.DataFrame()
+list_ac = df_avion["registration"].values
 
 for ac in list_ac:
     path_ac = os.path.join(path, "output", ac, ac +"_flight_data_all.csv")
