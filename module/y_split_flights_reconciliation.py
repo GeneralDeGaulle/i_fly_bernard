@@ -15,15 +15,13 @@ locale.setlocale(locale.LC_TIME,"");
 
 
 #%%
-from module import adsb_exchange
-from module import kml_to_csv
 from module import get_new_df_data
 from module import csv_to_map
 
 
 #%%
 # =============================================================================
-registration_ac = "F-HMBY"
+registration_ac = "F-HFHP"
 # =============================================================================
 
 #%% define path
