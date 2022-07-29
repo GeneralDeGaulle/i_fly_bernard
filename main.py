@@ -111,7 +111,7 @@ for aircraft_row in df_avion.itertuples():
                 df_new_flights_and_last = pd.concat([df_new_flights_only, df_ac_data.head(1)]) #df_ac_data.head(1) car si les deux volent sont trouvés lors de deux checks différents...
                 df_reconciliation = post_flight_data_consolidation.fct_check_reconciliation(df_new_flights_and_last)
                 if not df_reconciliation.empty:
-                    print("!!! flights reconciliation with to be done !!!")
+                    print("!!! flights reconciliation to be done !!!")
 
 
                 #plot map grâce à plotly avec les infos requises pour le titre de l'image
@@ -153,7 +153,6 @@ for aircraft_row in df_avion.itertuples():
                 print()
                 print(f"--- No new flights for A/C {registration_ac} ---")
                 print(f"--- {registration_ac} done ! ---")
-                print()
 
         else:
             # malgré tout, on met à jour la date de dernier check.
@@ -162,7 +161,6 @@ for aircraft_row in df_avion.itertuples():
             print()
             print(f"--- No new flights for A/C {registration_ac} ---")
             print(f"--- {registration_ac} done ! ---")
-            print()
 
     else:
         # malgré tout, on met à jour la date de dernier check.
@@ -171,7 +169,6 @@ for aircraft_row in df_avion.itertuples():
         print()
         print(f"--- No new flights for A/C {registration_ac} ---")
         print(f"--- {registration_ac} done ! ---")
-        print()
 
 
 #%%

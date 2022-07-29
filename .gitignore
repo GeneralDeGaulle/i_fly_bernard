@@ -19,6 +19,7 @@ output/**/*.jpeg
 *.psd
 *.kml
 *.log
+*.htm
 
 # specific files not used
 input/airplane_jet_original.png
