@@ -17,6 +17,7 @@ locale.setlocale(locale.LC_TIME,"");
 
 #%%
 from module import csv_to_map
+from module import get_new_df_data
 
 
 #%%
@@ -51,8 +52,20 @@ df_ac_data["arrival_date_utc"] = pd.to_datetime(df_ac_data["arrival_date_utc"], 
 
 
 #%%
-df_new_flights_only = df_ac_data.iloc[[21]]
+list_new_vols_index = [12]
+df_new_flights_only = df_ac_data.iloc[list_new_vols_index]
 
+
+#%% pour recalculer les données du vol à partir du csv
+df_new_flights_empty = pd.DataFrame(columns = df_ac_data.columns)
+
+list_new_csv = [df_new_flights_only.path_csv.values[0]]
+
+#récupération des infos pour tous les nouveaux vols de cet avion
+df_new_flights_only = get_new_df_data.fct_get_all_data(df_new_flights_empty,
+                                                       list_new_csv,
+                                                       registration_ac,
+                                                       icao24_ac, co2_ac)
 
 #%%
 #definir types
@@ -67,6 +80,25 @@ for new_flight in df_new_flights_only.itertuples():
     date_map = new_flight.departure_date_only_utc_map.strftime("%#d %B %Y")
 
     csv_to_map.fct_csv_2_map(path_csv_flight, registration_ac, date_map, co2_new, tps_vol_new, ac_proprio)
+
+
+#%%
+# #clean and save data
+
+# on supprime l'ancien vol avant d'ajouter le nouveau
+df_ac_data = df_ac_data.drop(list_new_vols_index)
+
+#on nettoie new flight avant de le fusionner
+df_new_flights_only = df_new_flights_only.drop(columns=["departure_date_only_utc_map"])
+
+#une fois fini on regroupe tous les vols.
+#Pas de check de duplicate car protection dans "fct_kml_2_folder" et dans la gestion de la date de dernier check dans df_avion. Peut être amélioré
+df_complete = pd.concat([df_ac_data, df_new_flights_only])
+df_complete = df_complete.sort_values(by=["departure_date_utc"], ascending = False)
+
+#puis on sauvegarde
+df_complete.to_csv(path_flight_data_csv, index=False, encoding="utf-8-sig")
+
 
 
 #%%
