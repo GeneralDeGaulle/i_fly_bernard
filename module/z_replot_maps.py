@@ -52,14 +52,16 @@ df_ac_data["arrival_date_utc"] = pd.to_datetime(df_ac_data["arrival_date_utc"], 
 
 
 #%%
-list_new_vols_index = [12]
+list_new_vols_index = [65, 102]
 df_new_flights_only = df_ac_data.iloc[list_new_vols_index]
+
+# df_new_flights_only.to_markdown(tablefmt="fancy_grid")
 
 
 #%% pour recalculer les données du vol à partir du csv
 df_new_flights_empty = pd.DataFrame(columns = df_ac_data.columns)
 
-list_new_csv = [df_new_flights_only.path_csv.values[0]]
+list_new_csv = list(df_new_flights_only.path_csv.values)
 
 #récupération des infos pour tous les nouveaux vols de cet avion
 df_new_flights_only = get_new_df_data.fct_get_all_data(df_new_flights_empty,
@@ -85,7 +87,7 @@ for new_flight in df_new_flights_only.itertuples():
 #%%
 # #clean and save data
 
-# on supprime l'ancien vol avant d'ajouter le nouveau
+# on supprime les anciens vols avant d'ajouter le nouveau
 df_ac_data = df_ac_data.drop(list_new_vols_index)
 
 #on nettoie new flight avant de le fusionner

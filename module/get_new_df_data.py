@@ -44,13 +44,13 @@ def fct_get_data_from_csv(csv, regis, icao, co2):
     lat_ini = df_csv["lat"].iloc[0]
     long_ini = df_csv["long"].iloc[0]
     time_ini = df_csv["time"].iloc[0]
-    elev_ini = df_csv["elevation"].iloc[0:5].mean()#pour eviter pics étranges au départ
+    elev_ini = df_csv["elevation"].iloc[0:3].mean()#pour eviter pics étranges au départ
 
     # on récupère la position finale de l'avion
     lat_last = df_csv["lat"].iloc[-1]
     long_last = df_csv["long"].iloc[-1]
     time_last = df_csv["time"].iloc[-1]
-    elev_last = df_csv["elevation"].iloc[-5:-1].mean()#pour eviter pics étranges à l'arrivée
+    elev_last = df_csv["elevation"].iloc[-3:-1].mean()#pour eviter pics étranges à l'arrivée
 
     # on créer une variable de date pour future utilisation dans "e_csv_to_map.py"
     dep_date_only_utc = str(time_ini.date())
@@ -74,12 +74,12 @@ def fct_get_data_from_csv(csv, regis, icao, co2):
 
     # On lève une alerte si l'avion est trop haut au départ ou à l'arrivée, mais on continue. Par exemple, le vol est coupé par adsb-ex au moment du changement de jour UTC
     # altitude en mètre
-    if elev_ini >= 3000:
+    if elev_ini >= 5000:
         apt_dep = "A/C in cruise"
         apt_dep_icao = "A/C in cruise"
         print("départ A/C in cruise")
 
-    if elev_last >= 3000:
+    if elev_last >= 5000:
         apt_arr = "A/C in cruise"
         apt_arr_icao = "A/C in cruise"
         print("arrivée A/C in cruise")

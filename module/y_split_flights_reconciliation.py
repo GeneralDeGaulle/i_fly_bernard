@@ -60,8 +60,7 @@ df_vols_tbc.loc[:,"diff_with_next"] = df_vols_tbc["next_flight_departure_date"] 
 df_vols_tbc.loc[:,"next_flight_csv"] = df_vols_tbc["path_csv"].shift(1)
 
 df_vols_tbc_1 = df_vols_tbc[(df_vols_tbc["airport_arrival"] == "A/C in cruise") &
-                          (df_vols_tbc["next_flight_departure"] == "A/C in cruise") &
-                          (df_vols_tbc["airport_departure"] != "A/C in cruise")]
+                          (df_vols_tbc["next_flight_departure"] == "A/C in cruise")]
 
 df_vols_tbc_2 = df_vols_tbc[(df_vols_tbc["arrival_date_utc"].dt.strftime("%Hh%M") == "23h59")]
 

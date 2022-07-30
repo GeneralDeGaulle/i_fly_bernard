@@ -289,7 +289,7 @@ ANS,SPHY,SPHY,Andahuaylas Airport,-13.706399917602539,-73.35040283203125,11300,S
 ANU,TAPA,TAPA,V.C. Bird International Airport,17.1367,-61.792702,62,NA,AG,AG-03,St. John's,medium_airport
 ANV,PANV,PANV,Anvik Airport,62.646702,-160.190994,291,NA,US,US-AK,Anvik,medium_airport
 ANW,KANW,KANW,Ainsworth Regional Airport,42.579201,-99.992995,2589,NA,US,US-NE,Ainsworth,small_airport
-ANX,ENAN,ENAN,AndÃ¸ya Airport,69.292503356934,16.144199371338,43,EU,NO,NO-18,Andenes,medium_airport
+ANX,ENAN,ENAN,Andøya Airport,69.292503356934,16.144199371338,43,EU,NO,NO-18,Andenes,medium_airport
 ANY,KANY,KANY,Anthony Municipal Airport,37.158501,-98.079597,1340,NA,US,US-KS,Anthony,small_airport
 ANZ,ANZ,,Angus Downs Airport,-25.0325,132.2748,1724,OC,AU,AU-NT,Angus Downs Station,small_airport
 AOB,AOB,,Annanberg Airport,-4.90416666667,144.635833333,130,OC,PG,PG-MPM,,small_airport
@@ -839,7 +839,7 @@ BNJ,EDKB,EDKB,Bonn-Hangelar Airport,50.7688903809,7.16333293915,197,EU,DE,DE-NW,
 BNK,YBNA,YBNA,Ballina Byron Gateway Airport,-28.8339004517,153.56199646,7,OC,AU,AU-NSW,Ballina,medium_airport
 BNL,KBNL,KBNL,Barnwell Regional Airport,33.25780106,-81.38829803,246,NA,US,US-SC,Barnwell,small_airport
 BNM,BNM,AYBD,Bodinumu Airport,-9.107777777779999,147.666722222,3700,OC,PG,PG-CPM,Bodinumu,small_airport
-BNN,ENBN,ENBN,BrÃ¸nnÃ¸ysund Airport,65.461097717285,12.217499732971,25,EU,NO,NO-18,BrÃ¸nnÃ¸y,medium_airport
+BNN,ENBN,ENBN,BrÃ¸nnøysund Airport,65.461097717285,12.217499732971,25,EU,NO,NO-18,BrÃ¸nnøy,medium_airport
 BNO,KBNO,KBNO,Burns Municipal Airport,43.5918998718,-118.955001831,4148,NA,US,US-OR,Burns,medium_airport
 BNP,OPBN,OPBN,Bannu Airport,32.9729,70.527901,1325,AS,PK,PK-NW,Bannu,small_airport
 BNR,DFOB,DFOB,Banfora Airport,10.682999610900879,-4.7170000076293945,984,AF,BF,BF-COM,Banfora,small_airport
@@ -1947,7 +1947,7 @@ EBM,DTTR,DTTR,El Borma Airport,31.704299926757812,9.254619598388672,827,AF,TN,TN
 EBN,MH-EBN,,Ebadon Airport,9.330559730529785,166.82000732421875,,OC,MH,MH-KWA,Ebadon Island,small_airport
 EBO,EBO,,Ebon Airport,4.5982,168.752,8,OC,MH,MH-EBO,Ebon Atoll,small_airport
 EBS,KEBS,KEBS,Webster City Municipal Airport,42.43659973,-93.86889648,1122,NA,US,US-IA,Webster City,small_airport
-EBU,LFMH,LFMH,Saint-Ã‰tienne-Boutheon Airport,45.54059982299805,4.296390056610107,1325,EU,FR,FR-ARA,Saint-Ã‰tienne/Boutheon,medium_airport
+EBU,LFMH,LFMH,Saint-Étienne-Boutheon Airport,45.54059982299805,4.296390056610107,1325,EU,FR,FR-ARA,Saint-Étienne/Boutheon,medium_airport
 EBW,FKKW,FKKW,Ebolowa Airport,2.875999927520752,11.1850004196167,1975,AF,CM,CM-SU,Ebolowa,small_airport
 ECA,K6D9,,Iosco County Airport,44.312801,-83.422302,606,NA,US,US-MI,East Tawas,small_airport
 ECG,KECG,KECG,Elizabeth City Regional Airport & Coast Guard Air Station,36.26060104,-76.17459869,12,NA,US,US-NC,Elizabeth City,medium_airport
@@ -2081,7 +2081,7 @@ EOZ,SVEZ,SVEZ,Elorza Airport,7.0833330154418945,-69.53333282470703,295,SA,VE,VE-
 EPA,SADP,SADP,El Palomar Airport,-34.6099,-58.6126,59,SA,AR,AR-B,El Palomar,medium_airport
 EPG,NE69,NE69,Browns Airport,40.8675003052,-96.1100006104,1183,NA,US,US-NE,Weeping Water,small_airport
 EPH,KEPH,KEPH,Ephrata Municipal Airport,47.30759811,-119.5159988,1276,NA,US,US-WA,Ephrata,small_airport
-EPL,LFSG,LFSG,Ã‰pinal-Mirecourt Airport,48.325001,6.06998,1084,EU,FR,FR-GES,Ã‰pinal/Mirecourt,medium_airport
+EPL,LFSG,LFSG,Épinal-Mirecourt Airport,48.325001,6.06998,1084,EU,FR,FR-GES,Épinal/Mirecourt,medium_airport
 EPR,YESP,YESP,Esperance Airport,-33.684399,121.822998,470,OC,AU,AU-WA,Esperance,medium_airport
 EPS,MDPO,MDPO,Samana El Portillo Airport,19.3214150435,-69.4959121943,30,NA,DO,DO-20,Samana,small_airport
 EPT,AYEL,AYEL,Eliptamin Airport,-5.0412,141.6779,4825,OC,PG,PG-SAN,Eliptamin,small_airport
@@ -2152,7 +2152,7 @@ EVM,KEVM,KEVM,Eveleth Virginia Municipal Airport,47.42509842,-92.49849701,1379,N
 EVN,UDYZ,UDYZ,Zvartnots International Airport,40.1473007202,44.3959007263,2838,AS,AM,AM-ER,Yerevan,large_airport
 EVV,KEVV,KEVV,Evansville Regional Airport,38.0369987488,-87.5324020386,418,NA,US,US-IN,Evansville,medium_airport
 EVW,KEVW,KEVW,Evanston-Uinta County Airport-Burns Field,41.27479935,-111.0350037,7143,NA,US,US-WY,Evanston,medium_airport
-EVX,LFOE,LFOE,Ã‰vreux-Fauville (BA 105) Air Base,49.02870178222656,1.2198599576950073,464,EU,FR,FR-NOR,Ã‰vreux/Fauville,medium_airport
+EVX,LFOE,LFOE,Évreux-Fauville (BA 105) Air Base,49.02870178222656,1.2198599576950073,464,EU,FR,FR-NOR,Évreux/Fauville,medium_airport
 EWB,KEWB,KEWB,New Bedford Regional Airport,41.67610168457031,-70.95690155029297,80,NA,US,US-MA,New Bedford,medium_airport
 EWE,ID-EWE,,Ewer Airport,-5.494,138.083,27,AS,ID,ID-PA,Asmat,small_airport
 EWI,WABT,WABT,Enarotali Airport,-3.9258999824523926,136.3769989013672,5807,AS,ID,ID-PA,Enarotali-Papua Island,small_airport
@@ -2570,7 +2570,7 @@ GMU,KGMU,KGMU,Greenville Downtown Airport,34.847900390599996,-82.34999847410002,
 GMV,UT25,UT25,Monument Valley Airport,37.016700744599994,-110.200996399,5192,NA,US,US-UT,Goulding's Lodge,small_airport
 GMZ,GCGM,GCGM,La Gomera Airport,28.029600143432617,-17.214599609375,716,EU,ES,ES-CN,Alajero La Gomera Island,small_airport
 GNA,UMMG,UMMG,Hrodna Airport,53.60200119018555,24.053800582885742,443,EU,BY,BY-HR,Hrodna,medium_airport
-GNB,LFLS,LFLS,Grenoble-Isère Airport,45.3629,5.32937,1302,EU,FR,FR-U-A,Saint-Ã‰tienne-de-Saint-Geoirs,medium_airport
+GNB,LFLS,LFLS,Grenoble-Isère Airport,45.3629,5.32937,1302,EU,FR,FR-U-A,Saint-Étienne-de-Saint-Geoirs,medium_airport
 GND,TGPY,TGPY,Point Salines International Airport,12.004199981689453,-61.78620147705078,41,NA,GD,GD-GE,Saint George's,medium_airport
 GNF,K2O1,,Gansner Field,39.943902,-120.945,3415,NA,US,US-CA,Quincy,small_airport
 GNG,KGNG,KGNG,Gooding Municipal Airport,42.91719818,-114.7649994,3732,NA,US,US-ID,Gooding,small_airport
@@ -2753,7 +2753,7 @@ HAQ,VRMH,VRMH,Hanimaadhoo Airport,6.744229793548584,73.17050170898438,4,AS,MV,MV
 HAR,KCXY,KCXY,Capital City Airport,40.2170982361,-76.85150146480001,347,NA,US,US-PA,Harrisburg,small_airport
 HAS,OEHL,OEHL,Ha'il Airport,27.437901,41.686298,3331,AS,SA,SA-06,Ha'il,medium_airport
 HAT,YHTL,YHTL,Heathlands Airport,-11.7369003296,142.57699585,,OC,AU,AU-QLD,,small_airport
-HAU,ENHD,ENHD,Haugesund Airport,59.34529876709,5.2083601951599,86,EU,NO,NO-11,KarmÃ¸y,medium_airport
+HAU,ENHD,ENHD,Haugesund Airport,59.34529876709,5.2083601951599,86,EU,NO,NO-11,Karmøy,medium_airport
 HAV,MUHA,MUHA,Jose Marti International Airport,22.989200592041016,-82.40910339355469,210,NA,CU,CU-03,Havana,large_airport
 HAW,EGFE,EGFE,Haverfordwest Airport,51.833099365234375,-4.9611101150512695,159,EU,GB,GB-WLS,Haverfordwest,medium_airport
 HAY,HAY,HAY,Haycock Airport,65.20099639889999,-161.156997681,175,NA,US,US-AK,Haycock,small_airport
@@ -3652,7 +3652,7 @@ KKI,Z13,Z13,Akiachak Airport,60.904800415039,-161.42199707031,23,NA,US,US-AK,Aki
 KKJ,RJFR,RJFR,Kitakyushu Airport,33.845901,131.035004,21,AS,JP,JP-40,Kitakyushu,medium_airport
 KKK,1KC,1KC,Kalakaket Creek AS Airport,64.4166256967,-156.820392609,1598,NA,US,US-AK,Kalakaket Creek,small_airport
 KKM,VTBH,VTBH,Sa Pran Nak Airport,14.9493999481,100.642997742,95,AS,TH,TH-16,,small_airport
-KKN,ENKR,ENKR,Kirkenes Airport (HÃ¸ybuktmoen),69.725799560547,29.891300201416,283,EU,NO,NO-20,Kirkenes,medium_airport
+KKN,ENKR,ENKR,Kirkenes Airport (Høybuktmoen),69.725799560547,29.891300201416,283,EU,NO,NO-20,Kirkenes,medium_airport
 KKO,NZKO,NZKO,Kaikohe Airport,-35.45109939575195,173.81700134277344,571,OC,NZ,NZ-NTL,,small_airport
 KKP,YKLB,YKLB,Koolburra Airport,-15.318900108337402,143.9550018310547,350,OC,AU,AU-QLD,Koolburra,small_airport
 KKQ,USDP,USDP,Krasnoselkup Airport,65.717,82.455,101,EU,RU,RU-YAN,Krasnoselkup,small_airport
@@ -8095,7 +8095,7 @@ XLU,DFCL,DFCL,Leo Airport,11.100000381469727,-2.0999999046325684,1181,AF,BF,BF-S
 XMA,XMA,,Maramag Airport,7.7538,125.0333,919,AS,PH,PH-BUK,Maramag,small_airport
 XMC,YMCO,YMCO,Mallacoota Airport,-37.59830093383789,149.72000122070312,31,OC,AU,AU-VIC,,small_airport
 XMD,KMDS,KMDS,Madison Municipal Airport,44.01599884,-97.08589935,1718,NA,US,US-SD,Madison,small_airport
-XME,LFQJ,LFQJ,Maubeuge-Ã‰lesmes Airport,50.31050109863281,4.033120155334473,452,EU,FR,FR-HDF,Maubeuge/Ã‰lesmes,medium_airport
+XME,LFQJ,LFQJ,Maubeuge-Élesmes Airport,50.31050109863281,4.033120155334473,452,EU,FR,FR-HDF,Maubeuge/Élesmes,medium_airport
 XMG,VNMN,VNMN,Mahendranagar Airport,28.963199615478516,80.14790344238281,650,AS,NP,NP-MA,Mahendranagar,small_airport
 XMH,NTGI,NTGI,Manihi Airport,-14.436800003051758,-146.07000732421875,14,OC,PF,PF-U-A,,medium_airport
 XMI,HTMI,HTMI,Masasi Airport,-10.732999801635742,38.766998291015625,1700,AF,TZ,TZ-17,Masasi,small_airport
@@ -8370,7 +8370,7 @@ YOD,CYOD,CYOD,CFB Cold Lake,54.404998779296875,-110.27899932861328,1775,NA,CA,CA
 YOE,CFM4,CFM4,Donnelly Airport,55.7094,-117.094002,1949,NA,CA,CA-AB,Donnelly,small_airport
 YOG,CNT3,CYKP,Ogoki Post Airport,51.6585998535,-85.9017028809,594,NA,CA,CA-ON,Ogoki Post,small_airport
 YOH,CYOH,CYOH,Oxford House Airport,54.93330001831055,-95.27890014648438,663,NA,CA,CA-MB,Oxford House,medium_airport
-YOI,YOI,,Opinaca Aerodrome,52.221944,-76.611944,692,NA,CA,CA-QC,Ã‰leonore Mine,small_airport
+YOI,YOI,,Opinaca Aerodrome,52.221944,-76.611944,692,NA,CA,CA-QC,Éleonore Mine,small_airport
 YOJ,CYOJ,CYOJ,High Level Airport,58.62139892578125,-117.16500091552734,1110,NA,CA,CA-AB,High Level,medium_airport
 YOL,DNYO,DNYO,Yola Airport,9.257550239562988,12.430399894714355,599,AF,NG,NG-AD,Yola,medium_airport
 YON,VQ10,VQTY,Yongphulla Airport,27.256399,91.514503,9000,AS,BT,BT-41,Tashigang,small_airport
