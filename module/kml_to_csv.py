@@ -30,8 +30,7 @@ def fct_kml_2_folder(flights_legs_list_new, path_f_data):
         file_name_only = os.path.splitext(kml_file_name)[0]
 
         #protection au cas où on a lancer le programme plusieurs fois par jour, on vériie que le kml n'existe pas déjà à l'endroit supposé
-        if not os.path.exists(new_path_kml):
-
+        if not os.listdir(path_flight_leg_folder):
             #crée toute l'arbo (flight_date+leg et si existe ne fait rien)
             os.makedirs(path_flight_leg_folder, exist_ok=True)
 
