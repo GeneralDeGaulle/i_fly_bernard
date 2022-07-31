@@ -35,8 +35,6 @@ def fct_kml_2_folder(flights_legs_list_new, path_f_data):
         # protection au cas où on a lancer le programme plusieurs fois par jour,
         # on vérifie que le dossier avec les fichiers n'existe pas déjà à l'endroit supposé
         if not os.listdir(path_flight_leg_folder):
-            print("not")
-            print(os.listdir(path_flight_leg_folder))
             #on coupe/colle le fichier à la bonne place
             os.replace(old_path_kml, new_path_kml)
 
@@ -45,8 +43,6 @@ def fct_kml_2_folder(flights_legs_list_new, path_f_data):
 
         # sinon, on supprime le kml et on ne traite pas ce vol
         else:
-            print("exist")
-            print(os.listdir(path_flight_leg_folder))
             os.remove(old_path_kml)
             print(f"--- {file_name_only} already exists ---")
 
