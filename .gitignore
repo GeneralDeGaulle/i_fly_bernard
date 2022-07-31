@@ -24,5 +24,6 @@ output/**/*.jpeg
 # specific files not used
 input/airplane_jet_original.png
 input/airplane_48.png
-z_map_to_twitter.py
+module/z_map_to_twitter.py
 tdl.txt
+module/recover_lost_flights.py
