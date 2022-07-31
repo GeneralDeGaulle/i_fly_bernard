@@ -33,11 +33,15 @@ def fct_adsbex_check_new_flights_and_kml(icao, regis, path_f_data, last_check_d)
 
     #ouvre firefox
     browser = webdriver.Firefox(firefox_profile=profile, executable_path=GeckoDriverManager().install())
-    print(),print()
+    print()
 
     #définir les dates de vérification (dernier check de l'avion (enregistré dans le fichier avions.csv) et aujourd'hui)
     today_date = pd.to_datetime("now", utc=True)
     diff_nb_jours = (today_date - last_check_d).days
+
+    # pour test
+    # last_check_d = pd.to_datetime("2021-10-20", utc=True)
+    # tested_date = str(pd.to_datetime("2021-10-20", utc=True).date())
 
     list_new_flights_legs = []
     #on commence de 0 pour le cas où on relance le programme plusieurs fois par jour
@@ -62,67 +66,34 @@ def fct_adsbex_check_new_flights_and_kml(icao, regis, path_f_data, last_check_d)
         if soup_item_to_check_flight == ("No Data available for\n" + tested_date):
             print("--- " + tested_date + ": no flight found for A/C " + regis + " ---")
 
-        #pour ne pas traiter les vols encore en cours. le choix 60s est arbitraire
-        elif abs(today_date.timestamp() - float(soup_item_to_check_flight_2)) < 60:
+        #pour ne pas traiter les vols encore en cours au moment du check. le choix 60s est arbitraire
+        elif abs(today_time_epoch - float(soup_item_to_check_flight_2)) < 60:
             print("--- " + tested_date + ": A/C "+ regis + " still in flight ---")
 
-        #protection against strange old flights
+        #cas particulier (bug du site ?) où il n'affiche pas les données alors qu'il y a un vol !
         elif soup_item_to_check_flight == "Legs: All" and soup_item_to_check_flight_2 == "NaN":
-            print("--- " + tested_date + ": no flight found for A/C " + regis + " ---")
+            # pour l'afficher, on fait prec/next day et normalement c'est bon
+            click_previous_day = browser.find_element(By.ID,"trace_back_1d")
+            click_previous_day.click()
+            time.sleep(0.5)
+            click_next_day = browser.find_element(By.ID,"trace_jump_1d")
+            click_next_day.click()
+            time.sleep(0.5)
+
+            #on réactulise soup après ces appuis bouton
+            content = browser.page_source
+            soup = BeautifulSoup(content, "html.parser")
+            soup_item_to_check_flight = soup.find("div",attrs={"class":"identSmall","id":"leg_sel"}).get_text()
+            soup_item_to_check_flight_2 = soup.find("span",attrs={"id":"selected_pos_epoch"}).get_text()
+
+            if soup_item_to_check_flight == "Legs: All" and soup_item_to_check_flight_2 != "NaN":
+                fct_get_kml_from_leg(path_f_data, regis, tested_date, list_new_flights_legs, browser)
+            else:
+                print("--- " + tested_date + ": no flight found for A/C " + regis + " with epoch=NaN ---")
 
         #enfin, c'est un nouveau vol que l'on peut traiter
         elif soup_item_to_check_flight == "Legs: All" and soup_item_to_check_flight_2 != "NaN":
-
-            #on définit le chemin du future fichier qui sera le meme pour tous les legs du jour
-            path_kml = os.path.join(path_f_data, regis + "-track-press_alt_uncorrected.kml")
-
-            #on clique sur le bouton "précédent leg" pour aller en arrière et avoir directement le dernier leg du jour.
-            click_previous_leg = browser.find_element(By.ID,"leg_prev")
-            click_previous_leg.click()
-            #on laisse un peu de temps juste au cas où
-            time.sleep(0.5)
-
-            #on réactulise soup après cet appui bouton
-            content = browser.page_source
-            soup = BeautifulSoup(content, "html.parser")
-            soup_last_leg_nb_str = soup.find("div",attrs={"class":"identSmall","id":"leg_sel"}).get_text()
-            nb_leg_int = int(soup_last_leg_nb_str.replace("Leg: ", ""))
-
-            #pour chaque leg, on va télécharger le kml et le nommer correctement
-            #façon facile de rembobiner le bon nombre de legs, meme quand leg = 1
-            for i in range(nb_leg_int,0,-1):
-                #on télécharge le fichier
-                download_kml = browser.find_element_by_xpath("//button[text()='uncorrected pressure alt.']")
-                download_kml.click()
-                time.sleep(0.5)
-
-
-                #protection pour que le fichier télécharge complètement avant de passer à la suite
-                n = 0
-                while not os.path.exists(path_kml) or os.path.getsize(path_kml) <= 3000:
-                    n = n+1
-                    time.sleep(1)
-                    print("!!! en attente du téléchargement fichier !!!!")
-                    #pour couvrir les petits vols tout en évitant les problèmes timing, on attend 5s avant de passer à la suite
-                    if n == 5 and os.path.exists(path_kml):
-                        print("--- petit vol ---")
-                        break
-
-                #on renomme pour le cas où plusieurs legs par jour (pour éviter d'écraser les précédents fichiers avec le même nom générique d'adsb-exchange)
-                path_kml_leg_i = os.path.join(path_f_data, f"{regis}_baro_{tested_date}_leg_{str(i)}.kml")
-                os.rename(path_kml, path_kml_leg_i)
-
-                #on sauve les path des fichiers kml et les infos pour faciliter la function suivante dans "c_kml_to_csv.py"
-                list_new_flights_legs.append([regis, tested_date, path_kml_leg_i, "leg_" + str(i), i])
-
-                #on clique sur le précédent pour préparer la prochaine boucle et passer au prochain leg
-                click_previous_leg = browser.find_element(By.ID,"leg_prev")
-                click_previous_leg.click()
-                time.sleep(0.5)
-
-
-            print(f"--- {tested_date}: {str(nb_leg_int)} new flight(s) found for A/C {regis} ---")
-
+            fct_get_kml_from_leg(path_f_data, regis, tested_date, list_new_flights_legs, browser)
 
         else:
             print()
@@ -137,7 +108,60 @@ def fct_adsbex_check_new_flights_and_kml(icao, regis, path_f_data, last_check_d)
     return list_new_flights_legs
 
 
+#%%
+def fct_get_kml_from_leg(path_flt_data, reg, date_tested, list_new_flt_legs, brwsr):
+    #on définit le chemin du future fichier qui sera le meme pour tous les legs du jour
+    path_kml = os.path.join(path_flt_data, reg + "-track-press_alt_uncorrected.kml")
 
+    #on clique sur le bouton "précédent leg" pour aller en arrière et avoir directement le dernier leg du jour.
+    click_previous_leg = brwsr.find_element(By.ID,"leg_prev")
+    click_previous_leg.click()
+    #on laisse un peu de temps juste au cas où
+    time.sleep(0.5)
+
+    #on réactulise soup après cet appui bouton
+    content = brwsr.page_source
+    soup = BeautifulSoup(content, "html.parser")
+    soup_last_leg_nb_str = soup.find("div",attrs={"class":"identSmall","id":"leg_sel"}).get_text()
+    nb_leg_int = int(soup_last_leg_nb_str.replace("Leg: ", ""))
+
+    #pour chaque leg, on va télécharger le kml et le nommer correctement
+    #façon facile de rembobiner le bon nombre de legs, meme quand leg = 1
+    for i in range(nb_leg_int,0,-1):
+        #on télécharge le fichier
+        download_kml = brwsr.find_element_by_xpath("//button[text()='uncorrected pressure alt.']")
+        download_kml.click()
+        time.sleep(0.5)
+
+        #protection pour que le fichier télécharge complètement avant de passer à la suite
+        n = 0
+        while not os.path.exists(path_kml) or os.path.getsize(path_kml) <= 3000:
+            n = n+1
+            time.sleep(1)
+            print("!!! en attente du téléchargement fichier !!!!")
+            #pour couvrir les petits vols tout en évitant les problèmes timing, on attend 5s avant de passer à la suite
+            if n == 5 and os.path.exists(path_kml):
+                print("--- petit vol ---")
+                break
+
+        #on renomme pour le cas où plusieurs legs par jour (pour éviter d'écraser les précédents fichiers avec le même nom générique d'adsb-exchange)
+        path_kml_leg_i = os.path.join(path_flt_data, f"{reg}_baro_{date_tested}_leg_{str(i)}.kml")
+        os.rename(path_kml, path_kml_leg_i)
+
+        #on sauve les path des fichiers kml et les infos pour faciliter la function suivante dans "c_kml_to_csv.py"
+        list_new_flt_legs.append([reg, date_tested, path_kml_leg_i, "leg_" + str(i), i])
+
+        #on clique sur le précédent pour préparer la prochaine boucle et passer au prochain leg
+        click_previous_leg = brwsr.find_element(By.ID,"leg_prev")
+        click_previous_leg.click()
+        time.sleep(0.5)
+
+    print(f"--- {date_tested}: {str(nb_leg_int)} new flight(s) found for A/C {reg} ---")
+
+    return None
+
+
+#%%
 
 
 
