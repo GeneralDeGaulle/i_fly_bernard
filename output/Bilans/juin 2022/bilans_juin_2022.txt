@@ -1,0 +1,50 @@
+fgvma (plus de vol apres le 15 juin)
+       flight_duration_min  co2_emission_tonnes
+count               4.0000                  4.0
+sum               197.2300                 14.8
+mean               49.3075                  3.7
+min                44.2700                  3.3
+max                55.6000                  4.2
+
+count                                                     4
+unique                                                    4
+top       Oxford (Kidlington) Airport - Paris-Le Bourget...
+freq                                                      1
+Name: routes, dtype: object
+
+
+fhfhp
+       flight_duration_min  co2_emission_tonnes
+count            12.000000            12.000000
+sum             981.670000            73.700000
+mean             81.805833             6.141667
+min              37.450000             2.800000
+max             133.730000            10.000000
+
+count                                                  12
+unique                                                 12
+top       London Luton Airport - Paris-Le Bourget Airport
+freq                                                    1
+Name: routes, dtype: object
+
+
+fgbol
+       flight_duration_min  co2_emission_tonnes
+count               8.0000               8.0000
+sum               907.6200              71.	1000
+mean              113.4525               8.8875
+min                51.3000               4.0000
+max               228.3300              17.9000
+
+count                                                     8
+unique                                                    8
+top       Humberto Delgado Airport (Lisbon Portela Airpo...
+freq                                                      1
+Name: routes, dtype: object
+
+
+Total nombre de vol = 24
+
+Total temps de vol = 35h
+
+Total CO2 émis = 160 tonnes
