@@ -59,11 +59,11 @@ def fct_csv_2_map(rel_path_flight_csv, regis, date_vol, co2, flight_temps, propr
 
         bearing = maths_for_map.fct_get_bearing(center_lat, center_long, center_lat_next, center_long_next)
 
-    # #pour éviter les pb si touts petits fichiers...c'est pas très joli et c'est arrivée qu'une fois.
-    # else:
-    #     center_lat = df["lat"].iloc[0]
-    #     center_long = df["long"].iloc[0]
-    #     bearing = 0
+    #pour éviter les pb si touts petits fichiers...c'est pas très joli et c'est arrivée qu'une fois.
+    else:
+        center_lat = df["lat"].iloc[0]
+        center_long = df["long"].iloc[0]
+        bearing = 0
 
 
     # =============================================================================
