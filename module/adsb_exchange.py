@@ -87,6 +87,7 @@ def fct_adsbex_check_new_flights_and_kml(icao, regis, path_f_data, last_check_d)
             soup_item_to_check_flight_2 = soup.find("span",attrs={"id":"selected_pos_epoch"}).get_text()
 
             if soup_item_to_check_flight == "Legs: All" and soup_item_to_check_flight_2 != "NaN":
+                print("--- new epoch=NaN check ---")
                 fct_get_kml_from_leg(path_f_data, regis, tested_date, list_new_flights_legs, browser)
             else:
                 print("--- " + tested_date + ": no flight found for A/C " + regis + " with epoch=NaN ---")
