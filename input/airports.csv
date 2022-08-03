@@ -2266,7 +2266,7 @@ FLM,SGFI,SGFI,Filadelfia Airport,-22.360477,-60.053604,423,SA,PY,PY-19,Filadelfi
 FLN,SBFL,SBFL,Hercilio Luz International Airport,-27.670278549194336,-48.5525016784668,16,SA,BR,BR-SC,FlorianÃ³polis,large_airport
 FLO,KFLO,KFLO,Florence Regional Airport,34.18539810180664,-79.7238998413086,146,NA,US,US-SC,Florence,medium_airport
 FLP,KFLP,KFLP,Marion County Regional Airport,36.29090118,-92.59030151,719,NA,US,US-AR,Flippin,small_airport
-FLR,LIRQ,LIRQ,Peretola Airport,43.810001,11.2051,142,EU,IT,IT-52,Firenze,medium_airport
+FLR,LIRQ,LIRQ,Firenze-Peretola Airport,43.810001,11.2051,142,EU,IT,IT-52,Firenze,medium_airport
 FLS,YFLI,YFLI,Flinders Island Airport,-40.0917015076,147.992996216,10,OC,AU,AU-TAS,Flinders Island,small_airport
 FLT,FLT,FLT,Flat Airport,62.452598571799996,-157.988998413,309,NA,US,US-AK,Flat,small_airport
 FLV,KFLV,KFLV,Sherman Army Air Field,39.3683013916,-94.9147033691,772,NA,US,US-KS,Fort Leavenworth,small_airport
