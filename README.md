@@ -69,4 +69,5 @@ root/
     └───all_flights_data.csv -> simple pd.concat de chaque fichier "xxx_flight_data_all.csv"
 ```
 
-
+## LICENSE
+License MIT. Voir [LICENSE.md](https://github.com/GeneralDeGaulle/i_fly_bernard/blob/master/LICENSE.md)
