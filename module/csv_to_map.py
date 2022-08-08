@@ -117,7 +117,7 @@ def fct_csv_2_map(rel_path_flight_csv, regis, date_vol, co2, flight_temps, propr
         center_lat = (df["lat"].iloc[-1] + df["lat"].iloc[0])/2
         center_long = (df["long"].iloc[-1] + df["long"].iloc[0])/2
 
-        fig.update_layout(width=1400, height=800, mapbox_zoom=3, mapbox_center=dict(lat=center_lat, lon=center_long))
+        fig.update_layout(width=1200, height=700, mapbox_zoom=3, mapbox_center=dict(lat=center_lat, lon=center_long))
 
         for y in range(len(df_gaps)):
             index_gap = df_gaps.index[y]
