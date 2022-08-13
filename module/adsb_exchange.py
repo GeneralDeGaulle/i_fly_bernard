@@ -98,7 +98,7 @@ def fct_adsbex_check_new_flights_and_kml(icao, regis, path_f_data, last_check_d)
 
         else:
             print()
-            print(f"!!!  EROOR for {tested_date} and {regis} !!!")
+            print(f"!!!  ERROR for {tested_date} and {regis} !!!")
             print()
 
     # on pourrait se poser la question de savoir s'il ne serait pas plus judicieux de fermer firefox une fois tous les avions faits
@@ -141,7 +141,7 @@ def fct_get_kml_from_leg(path_flt_data, reg, date_tested, list_new_flt_legs, brw
             time.sleep(1)
             print("!!! en attente du téléchargement fichier !!!!")
             #pour couvrir les petits vols tout en évitant les problèmes timing, on attend 5s avant de passer à la suite
-            if n == 5 and os.path.exists(path_kml):
+            if n == 2 and os.path.exists(path_kml):
                 print("--- petit vol ---")
                 break
 

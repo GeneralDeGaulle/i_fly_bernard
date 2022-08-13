@@ -14,6 +14,8 @@ script offline et séparé des autres, qui sert à générer des plots spécifiq
 
 #%%
 import pandas as pd
+import os
+import math
 
 import plotly.graph_objects as go
 import plotly.express as px
@@ -24,21 +26,22 @@ locale.setlocale(locale.LC_TIME,"")
 
 
 #%% script
-import module import maths_for_map
+from module import maths_for_map
 
 
 #%%
 
 # =============================================================================
- registration_ac = "F-HFHP"
+ registration_ac = "F-HVBL"
 # =============================================================================
 
 
 #%% define path
 path = os.getcwd()
-path_avions = path + r"\input\avions.csv"
+path_avions = os.path.join(path, r"input\avions.csv")
 
-path_ac = path + "\output\\" + registration_ac + "\\" + registration_ac + "_flight_data_all.csv"
+path_flight_data = os.path.join(path, "output", registration_ac)
+path_flight_data_csv = os.path.join(path_flight_data, f"{registration_ac}_flight_data_all.csv")
 
 
 #%% load generic data
@@ -55,12 +58,12 @@ ac_proprio = df_avion.proprio.values[0]
 
 
 #%%
-df_ac = pd.read_csv(path_ac, delimiter = ",")
+df_ac = pd.read_csv(path_flight_data_csv, delimiter = ",")
 df_ac["departure_date_utc"] = pd.to_datetime(df_ac["departure_date_utc"], utc=True)
 df_ac["arrival_date_utc"] = pd.to_datetime(df_ac["arrival_date_utc"], utc=True)
 df_ac["departure_date_only_utc_map"] = pd.to_datetime(df_ac["departure_date_only_utc"])
 
-df_ac = df_ac.head(3)
+df_ac = df_ac.head(5)
 
 
 #%%
@@ -77,8 +80,8 @@ co2_tot = df_ac["co2_emission_tonnes"].sum()
 df_ac = df_ac.sort_values(by=["departure_date_utc"], ascending = True)
 df_ac = df_ac.reset_index(drop=True)
 
-df_ac["airport_departure"] = ["Paris", "Rome","Saint-Malo"]
-df_ac["airport_arrival"] = ["Rome","Saint-Malo","Paris"]
+df_ac["airport_departure"] = ["Paris", "Palerme", "Nice", "Paris", "Toulon"]
+df_ac["airport_arrival"] = ["Palerme", "Nice", "Paris", "Toulon", "Paris"]
 
 
 #%% couleur contnue difficile car pas bcp de vol
@@ -134,20 +137,22 @@ for i, flight in df_ac.iterrows():
     df = pd.read_csv(flight.path_csv)
     geo_lat, geo_lon = maths_for_map.fct_geodesic_multiple_flights(df)
 
-    fig.add_trace(go.Scattermapbox(lon = geo_lon, lat = geo_lat, mode = "lines",
-                                        line_width = 6.5, line_color = px.colors.qualitative.Set2[i],
-                                        name = legend_i))
-
-    # fig.add_trace(go.Scattermapbox(lon = df.long, lat = df.lat, mode = "markers",
-    #                                     marker_size = 6, marker_color = px.colors.qualitative.Set2[i],
+    # trajectoire extrapolée
+    # fig.add_trace(go.Scattermapbox(lon = geo_lon, lat = geo_lat, mode = "lines",
+    #                                     line_width = 5, line_color = px.colors.qualitative.Pastel2[i],
     #                                     name = legend_i))
+
+    # trajectoire réelle
+    fig.add_trace(go.Scattermapbox(lon = df.long, lat = df.lat, mode = "markers",
+                                        marker_size = 5.5, marker_color = px.colors.qualitative.Pastel1[i],
+                                        name = legend_i))
 
 
 # fig.update_traces(marker={"size": 5.5})
 fig.update_coloraxes(showscale=False)
 fig.update_layout(margin = {"r":0,"t":0,"l":0,"b":0}, showlegend = True,
-                  width=1200, height=800, mapbox_zoom=3, mapbox_style="carto-positron",
-                  title_text = "<b>Triple vol en seul jour pour l'" + ac_proprio + "</b><br>" + date_map + " - " + registration_ac + " - " + flight_temps_str + " de vol - " + str(co2_tot) + "t de CO2 <b>",
+                  width=1000, height=750, mapbox_zoom=3, mapbox_style="carto-positron",
+                  title_text = "<b>Quintuple vol en seul jour pour l'" + ac_proprio + "</b><br>" + date_map + " - " + registration_ac + " - " + flight_temps_str + " de vol - " + str(co2_tot) + "t de CO2 <b>",
                   title_font_family="Arial", title_font_size=25, title_x=0.5, title_y=0.96) #, title_font_color = "darkblue
 
 fig.update_layout(legend_font_size=14, legend_borderwidth = 1, legend_bordercolor = "grey",

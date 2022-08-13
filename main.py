@@ -11,11 +11,14 @@ rechercher de nouveaux vols, générer les cartes et calculer le CO2 associé.
 #%% import library
 import pandas as pd
 import os
+import time
 
 #pour le format de la date du titre de la carte
 import locale
 locale.setlocale(locale.LC_TIME,"");
 
+#%%
+start_time = time.time()
 
 #%% import scripts
 from module import adsb_exchange
@@ -184,3 +187,4 @@ print("--- all_flights_data.csv généré ---")
 
 
 #%%
+print(f"--- temps d'execution {round((time.time() - start_time)/60.0,1)} minutes ---")
