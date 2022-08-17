@@ -274,7 +274,7 @@ ANC,PANC,PANC,Ted Stevens Anchorage International Airport,61.174400329589844,-14
 AND,KAND,KAND,Anderson Regional Airport,34.4945983887,-82.70939636230001,782,NA,US,US-SC,Anderson,medium_airport
 ANE,LFJR,LFJR,Angers-Loire Airport,47.560299,-0.312222,194,EU,FR,FR-PDL,Angers/Marce,medium_airport
 ANF,SCFA,SCFA,Andres Sabella Galvez International Airport,-23.444501,-70.445099,455,SA,CL,CL-AN,Antofagasta,medium_airport
-ANG,LFBU,LFBU,AngoulÃªme-Brie-Champniers Airport,45.72919845581055,0.22145600616931915,436,EU,FR,FR-NAQ,AngoulÃªme/Brie/Champniers,medium_airport
+ANG,LFBU,LFBU,Angoulême-Brie-Champniers Airport,45.72919845581055,0.22145600616931915,436,EU,FR,FR-NAQ,Angoulême/Brie/Champniers,medium_airport
 ANI,PANI,PANI,Aniak Airport,61.581600189208984,-159.54299926757812,88,NA,US,US-AK,Aniak,medium_airport
 ANJ,FCBZ,FCBZ,Zanaga Airport,-2.8499999046325684,13.817000389099121,1870,AF,CG,CG-2,Zanaga,small_airport
 ANK,LTAD,LTAD,Etimesgut Air Base,39.949798584,32.6885986328,2653,AS,TR,TR-06,Ankara,medium_airport
@@ -468,7 +468,7 @@ AXA,TQPF,TQPF,Clayton J Lloyd International Airport,18.2048,-63.055099,127,NA,AI
 AXB,89NY,89NY,Maxson Airfield,44.312002,-75.90034,340,NA,US,US-NY,Alexandria Bay,small_airport
 AXC,YAMC,YAMC,Aramac Airport,-22.966699600219727,145.24200439453125,232,OC,AU,AU-QLD,,small_airport
 AXD,LGAL,LGAL,Dimokritos Airport,40.855899810791016,25.956300735473633,24,EU,GR,GR-71,Alexandroupolis,medium_airport
-AXE,SSXX,SSXX,XanxerÃª Airport,-26.875556945800003,-52.373054504399995,2986,SA,BR,BR-SC,XanxerÃª,small_airport
+AXE,SSXX,SSXX,Xanxerê Airport,-26.875556945800003,-52.373054504399995,2986,SA,BR,BR-SC,Xanxerê,small_airport
 AXF,AXF,ZBAL,Alxa Left Banner Bayanhot Airport,38.74831,105.58858,4560,AS,CN,CN-15,Bayanhot,medium_airport
 AXG,KAXA,KAXA,Algona Municipal Airport,43.0778999329,-94.2720031738,1219,NA,US,US-IA,Algona,small_airport
 AXJ,RJDA,RJDA,Amakusa Airport,32.482498,130.158997,340,AS,JP,JP-43,,small_airport
@@ -1462,6 +1462,7 @@ CPX,TJCP,TJCP,Benjamin Rivera Noriega Airport,18.313289,-65.304324,49,NA,PR,PR-U
 CQA,SWEK,SWEK,Canarana Airport,-13.574443817138672,-52.27055740356445,1314,SA,BR,BR-MT,Canarana,small_airport
 CQD,OIFS,OIFS,Shahrekord Airport,32.2971992493,50.842201232899995,6723,AS,IR,IR-08,Shahrekord,medium_airport
 CQF,LFAC,LFAC,Calais-Dunkerque Airport,50.962100982666016,1.954759955406189,12,EU,FR,FR-HDF,Calais/Dunkerque,medium_airport
+CQM,LERL,LERL,Ciudad Real Airport,38.856389,-3.97,2120,EU,ES,ES-AN,Ciudad Real,private_airport
 CQP,YCFL,YCFL,Cape Flattery Airport,-14.970832,145.311667,3609,OC,AU,AU-QLD,,small_airport
 CQS,SWCQ,SWCQ,Costa Marques Airport,-12.421099662780762,-64.25160217285156,555,SA,BR,BR-RO,Costa Marques,small_airport
 CQT,SK-277,,Caquetania Airport,2.033333,-74.216667,900,SA,CO,CO-MET,Caquetania,small_airport
@@ -3206,7 +3207,7 @@ IRA,AGGK,AGGK,Ngorangora Airport,-10.449700355500001,161.897994995,54,OC,SB,SB-M
 IRB,K2F0,,Iraan Municipal Airport,30.9057006836,-101.891998291,2200,NA,US,US-TX,Iraan,small_airport
 IRC,PACR,PACR,Circle City /New/ Airport,65.830498,-144.076008,613,NA,US,US-AK,Circle,small_airport
 IRD,VGIS,VGIS,Ishurdi Airport,24.15250015258789,89.04940032958984,45,AS,BD,BD-5,Ishurdi,medium_airport
-IRE,SNIC,SNIC,IrecÃª Airport,-11.339900016784668,-41.84700012207031,2561,SA,BR,BR-BA,IrecÃª,small_airport
+IRE,SNIC,SNIC,Irecê Airport,-11.339900016784668,-41.84700012207031,2561,SA,BR,BR-BA,Irecê,small_airport
 IRG,YLHR,YLHR,Lockhart River Airport,-12.7869,143.304993,77,OC,AU,AU-QLD,Lockhart River,medium_airport
 IRI,HTIR,HTIR,Iringa Airport,-7.668630123138428,35.75210189819336,4678,AF,TZ,TZ-04,Nduli,medium_airport
 IRJ,SANL,SANL,Capitan V A Almonacid Airport,-29.3815994263,-66.7957992554,1437,SA,AR,AR-F,La Rioja,medium_airport
@@ -6029,7 +6030,7 @@ QHP,SBTA,SBTA,Base de AviaÃ§ão de Taubate Airport,-23.04010009765625,-45.5159
 QHR,HAHM,HAHM,Harar Meda Airport,8.7163,39.0059,6201,AF,ET,ET-OR,Debre Zeyit,medium_airport
 QHU,EDXJ,EDXJ,Husum-Schwesing Airport,54.5099983215,9.138333320620001,62,EU,DE,DE-SH,Husum,small_airport
 QHV,SSNH,SSNH,Novo Hamburgo Airport,-29.69610023498535,-51.08169937133789,66,SA,BR,BR-RS,Novo Hamburgo,small_airport
-QID,SNVI,SNVI,Melio Viana Airport,-21.790599822998047,-45.26919937133789,3232,SA,BR,BR-MG,TrÃªs CoraÃ§Ãµes,small_airport
+QID,SNVI,SNVI,Melio Viana Airport,-21.790599822998047,-45.26919937133789,3232,SA,BR,BR-MG,Três CoraÃ§Ãµes,small_airport
 QIG,SNIG,SNIG,Iguatu Airport,-6.346640110015869,-39.293800354003906,699,SA,BR,BR-CE,Iguatu,small_airport
 QIQ,SDRK,SDRK,Rio Claro Airport,-22.430104,-47.562113,1991,SA,BR,BR-SP,Rio Claro,small_airport
 QIT,SNIP,SNIP,Itapetinga Airport,-15.244500160217285,-40.277198791503906,915,SA,BR,BR-BA,Itapetinga,small_airport
@@ -6235,7 +6236,7 @@ RKU,RKU,AYRK,Kairuku Airport,-8.817000054,146.5243833,45,OC,PG,PG-CPM,Yule Islan
 RKV,BIRK,BIRK,Reykjavik Airport,64.1299972534,-21.9405994415,48,EU,IS,IS-1,Reykjavik,medium_airport
 RKW,KRKW,KRKW,Rockwood Municipal Airport,35.9222984314,-84.6896972656,1664,NA,US,US-TN,Rockwood,small_airport
 RKY,RKY,,Rokeby Airport,-13.6434,142.641,362,OC,AU,AU-QLD,Rokeby,small_airport
-RKZ,CN-0046,ZURK,Shigatse Air Base,29.3519,89.311401,3782,AS,CN,CN-54,XigazÃª,medium_airport
+RKZ,CN-0046,ZURK,Shigatse Air Base,29.3519,89.311401,3782,AS,CN,CN-54,Xigazê,medium_airport
 RLA,K07,K07,Rolla Downtown Airport,37.935699462890625,-91.8134994506836,987,NA,US,US-MO,Rolla,small_airport
 RLG,ETNL,ETNL,Rostock-Laage Airport,53.9182014465,12.278300285299999,138,EU,DE,DE-MV,Rostock,medium_airport
 RLK,ZBYZ,ZBYZ,Bayannur Tianjitai Airport,40.926,107.7428,3400,AS,CN,CN-15,Bavannur,medium_airport
@@ -7069,7 +7070,7 @@ TDX,VTBO,VTBO,Trat Airport,12.274600029,102.319000244,105,AS,TH,TH-23,,medium_ai
 TDZ,KTDZ,KTDZ,Toledo Executive Airport,41.56489944,-83.4822998,623,NA,US,US-OH,Toledo,small_airport
 TEA,MHTE,MHTE,Tela Airport,15.7759,-87.4758,7,NA,HN,HN-AT,Tela,medium_airport
 TEB,KTEB,KTEB,Teterboro Airport,40.85010147089999,-74.060798645,9,NA,US,US-NJ,Teterboro,medium_airport
-TEC,SBTL,SSVL,TelÃªmaco Borba Airport,-24.317801,-50.6516,2610,SA,BR,BR-PR,TelÃªmaco Borba,medium_airport
+TEC,SBTL,SSVL,Telêmaco Borba Airport,-24.317801,-50.6516,2610,SA,BR,BR-PR,Telêmaco Borba,medium_airport
 TED,EKTS,EKTS,Thisted Airport,57.06880187988281,8.705220222473145,23,EU,DK,DK-81,Thisted,medium_airport
 TEE,DABS,DABS,Cheikh Larbi Tebessi Airport,35.4315986633,8.12071990967,2661,AF,DZ,DZ-12,Tebessi,medium_airport
 TEF,YTEF,YTEF,Telfer Airport,-21.71500015258789,122.22899627685547,970,OC,AU,AU-WA,,medium_airport
@@ -7174,7 +7175,7 @@ TJG,WAON,WAON,Warukin Airport,-2.21655988693,115.435997009,197,AS,ID,ID-KS,Tanta
 TJH,RJBT,RJBT,Konotori Tajima Airport,35.512798,134.787003,584,AS,JP,JP-28,Toyooka,medium_airport
 TJI,MHTJ,MHTJ,Trujillo Airport,15.9268,-85.938202,3,NA,HN,HN-CL,Trujillo,medium_airport
 TJK,LTAW,LTAW,Tokat Airport,40.307430267333984,36.367408752441406,1831,AS,TR,TR-60,Tokat,medium_airport
-TJL,SSTL,SBTG,Plinio Alarcom Airport,-20.754199981689,-51.684200286865,1050,SA,BR,BR-MS,TrÃªs Lagoas,small_airport
+TJL,SSTL,SBTG,Plinio Alarcom Airport,-20.754199981689,-51.684200286865,1050,SA,BR,BR-MS,Três Lagoas,small_airport
 TJM,USTR,USTR,Roshchino International Airport,57.189601898199996,65.3243026733,378,AS,RU,RU-TYU,Tyumen,medium_airport
 TJN,NTKM,NTKM,Takume Airport,-15.854700088500001,-142.268005371,7,OC,PF,PF-U-A,Takume,small_airport
 TJQ,WIOD,WIKT,H.AS. Hanandjoeddin International Airport,-2.74572,107.754997,164,AS,ID,ID-BB,Tanjung Pandan-Belitung Island,small_airport
@@ -8643,7 +8644,7 @@ ZSP,CEW3,CEW3,St. Paul Airport,53.9933013916,-111.379997253,2147,NA,CA,CA-AB,St.
 ZSS,DISS,DISS,Sassandra Airport,4.928329944610596,-6.132780075073242,203,AF,CI,CI-09,Sassandra,small_airport
 ZST,CZST,CZST,Stewart Airport,55.935410448,-129.982434511,24,NA,CA,CA-BC,Stewart,medium_airport
 ZTA,NTGY,NTGY,Tureia Airport,-20.78969955444336,-138.57000732421875,12,OC,PF,PF-U-A,,small_airport
-ZTB,CTB6,CTB6,TÃªte-Ã -la-Baleine Airport,50.674400329589844,-59.38359832763672,107,NA,CA,CA-QC,TÃªte-Ã -la-Baleine,small_airport
+ZTB,CTB6,CTB6,Tête-Ã -la-Baleine Airport,50.674400329589844,-59.38359832763672,107,NA,CA,CA-QC,Tête-Ã -la-Baleine,small_airport
 ZTH,LGZA,LGZA,"Zakynthos International Airport ""Dionysios Solomos""",37.7509,20.8843,15,EU,GR,GR-21,Zakynthos Island,medium_airport
 ZTM,CZTM,CZTM,Shamattawa Airport,55.8656005859375,-92.0813980102539,289,NA,CA,CA-MB,Shamattawa,medium_airport
 ZTR,UKKV,UKKV,Zhytomyr Airport,50.270556,28.738611,,EU,UA,UA-18,,small_airport
