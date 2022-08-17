@@ -62,13 +62,15 @@ df_vols_tbc.loc[:,"next_flight_csv"] = df_vols_tbc["path_csv"].shift(1)
 df_vols_tbc_1 = df_vols_tbc[(df_vols_tbc["airport_arrival"] == "A/C in cruise") &
                           (df_vols_tbc["next_flight_departure"] == "A/C in cruise")]
 
-df_vols_tbc_2 = df_vols_tbc[(df_vols_tbc["arrival_date_utc"].dt.strftime("%Hh%M") == "23h59")]
+df_vols_tbc_2 = df_vols_tbc[(df_vols_tbc["arrival_date_utc"].dt.strftime("%Hh%M") >= "23h50")]
 
 
 df_vols_to_be_merged_1 = df_vols_tbc_1[(df_vols_tbc_1["arrival_date_utc"].dt.strftime("%H") >= "23") &
-                         (df_vols_tbc_1["diff_with_next"].dt.seconds/3600 <= 4)]
+                         (df_vols_tbc_1["diff_with_next"].dt.seconds/3600 <= 4) &
+                         (df_vols_tbc_1["diff_with_next"].dt.days == 0)]
 
-df_vols_to_be_merged_2 = df_vols_tbc_2[(df_vols_tbc_2["diff_with_next"].dt.seconds/3600 <= 1)]
+df_vols_to_be_merged_2 = df_vols_tbc_2[(df_vols_tbc_2["diff_with_next"].dt.seconds/3600 <= 1.5) &
+                                       (df_vols_tbc_2["diff_with_next"].dt.days == 0)]
 
 
 df_vols_to_be_merged = pd.concat([df_vols_to_be_merged_1, df_vols_to_be_merged_2])
