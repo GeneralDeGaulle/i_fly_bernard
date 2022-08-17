@@ -74,12 +74,12 @@ def fct_get_data_from_csv(csv, regis, icao, co2):
 
     # On lève une alerte si l'avion est trop haut au départ ou à l'arrivée, mais on continue. Par exemple, le vol est coupé par adsb-ex au moment du changement de jour UTC
     # altitude en mètre
-    if elev_ini >= 5000:
+    if elev_ini >= 4500:
         apt_dep = "A/C in cruise"
         apt_dep_icao = "A/C in cruise"
         print("départ A/C in cruise")
 
-    if elev_last >= 5000:
+    if elev_last >= 3500:
         apt_arr = "A/C in cruise"
         apt_arr_icao = "A/C in cruise"
         print("arrivée A/C in cruise")
