@@ -115,8 +115,9 @@ def fct_get_airport_from_lat_lon(lat_x, lon_x, apt_name_x):
         apt_x_icao = df_airports_filtered["airport_icao"].iloc[id_min]
 
         #juste au cas où, si aéroport un peu loin, on lève une alerte mais on continue
-        if df_airports_filtered["distance"].iloc[id_min] > 0.1:
-            print("!!! attention aéroport loin de l'avion !!!")
+        dist = df_airports_filtered["distance"].iloc[id_min]
+        if dist > 0.1:
+            print(f"!!! attention aéroport loin de l'avion: {dist} - {apt_x} !!!")
 
         return apt_x, apt_x_icao
 
