@@ -32,13 +32,13 @@ from module import maths_for_map
 #%%
 
 # =============================================================================
- registration_ac = "F-HVBL"
+ registration_ac = "F-GBOL"
 # =============================================================================
 
 
 #%% define path
 path = os.getcwd()
-path_avions = os.path.join(path, r"input\avions.csv")
+path_avions = os.path.join(path, "input","avions.csv")
 
 path_flight_data = os.path.join(path, "output", registration_ac)
 path_flight_data_csv = os.path.join(path_flight_data, f"{registration_ac}_flight_data_all.csv")
@@ -63,7 +63,7 @@ df_ac["departure_date_utc"] = pd.to_datetime(df_ac["departure_date_utc"], utc=Tr
 df_ac["arrival_date_utc"] = pd.to_datetime(df_ac["arrival_date_utc"], utc=True)
 df_ac["departure_date_only_utc_map"] = pd.to_datetime(df_ac["departure_date_only_utc"])
 
-df_ac = df_ac.head(5)
+df_ac = df_ac.head(3)
 
 
 #%%
@@ -71,7 +71,7 @@ flight_temps = df_ac["flight_duration_min"].sum()
 part_entiere = math.floor(flight_temps/60.0)
 part_decimal = int(round(flight_temps - part_entiere*60.0,0))
 
-flight_temps_str = str(math.floor(flight_temps/60.0)) + "h0" + str(part_decimal) +"min"
+flight_temps_str = str(math.floor(flight_temps/60.0)) + "h" + str(part_decimal) +"min"
 
 co2_tot = df_ac["co2_emission_tonnes"].sum()
 
@@ -80,8 +80,8 @@ co2_tot = df_ac["co2_emission_tonnes"].sum()
 df_ac = df_ac.sort_values(by=["departure_date_utc"], ascending = True)
 df_ac = df_ac.reset_index(drop=True)
 
-df_ac["airport_departure"] = ["Paris", "Palerme", "Nice", "Paris", "Toulon"]
-df_ac["airport_arrival"] = ["Palerme", "Nice", "Paris", "Toulon", "Paris"]
+df_ac["airport_departure"] = ["Paris", "Toulon", "Corfou"]
+df_ac["airport_arrival"] = ["Toulon", "Corfou", "Paris"]
 
 
 #%% couleur contnue difficile car pas bcp de vol
@@ -138,21 +138,21 @@ for i, flight in df_ac.iterrows():
     geo_lat, geo_lon = maths_for_map.fct_geodesic_multiple_flights(df)
 
     # trajectoire extrapolée
-    # fig.add_trace(go.Scattermapbox(lon = geo_lon, lat = geo_lat, mode = "lines",
-    #                                     line_width = 5, line_color = px.colors.qualitative.Pastel2[i],
-    #                                     name = legend_i))
+    fig.add_trace(go.Scattermapbox(lon = geo_lon, lat = geo_lat, mode = "lines",
+                                        line_width = 5, line_color = px.colors.qualitative.Pastel[i],
+                                        name = legend_i))
 
     # trajectoire réelle
-    fig.add_trace(go.Scattermapbox(lon = df.long, lat = df.lat, mode = "markers",
-                                        marker_size = 5.5, marker_color = px.colors.qualitative.Pastel1[i],
-                                        name = legend_i))
+    # fig.add_trace(go.Scattermapbox(lon = df.long, lat = df.lat, mode = "markers",
+    #                                     marker_size = 5.5, marker_color = px.colors.qualitative.Pastel1[i],
+    #                                     name = legend_i))
 
 
 # fig.update_traces(marker={"size": 5.5})
 fig.update_coloraxes(showscale=False)
 fig.update_layout(margin = {"r":0,"t":0,"l":0,"b":0}, showlegend = True,
-                  width=1000, height=750, mapbox_zoom=3, mapbox_style="carto-positron",
-                  title_text = "<b>Quintuple vol en seul jour pour l'" + ac_proprio + "</b><br>" + date_map + " - " + registration_ac + " - " + flight_temps_str + " de vol - " + str(co2_tot) + "t de CO2 <b>",
+                  width=800, height=800, mapbox_zoom=3, mapbox_style="carto-positron",
+                  title_text = "<b>Triple vol en seul jour pour l'" + ac_proprio + "</b><br>" + date_map + " - " + registration_ac + " - " + flight_temps_str + " de vol - " + str(co2_tot) + "t de CO2 <b>",
                   title_font_family="Arial", title_font_size=25, title_x=0.5, title_y=0.96) #, title_font_color = "darkblue
 
 fig.update_layout(legend_font_size=14, legend_borderwidth = 1, legend_bordercolor = "grey",

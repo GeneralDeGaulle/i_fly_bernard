@@ -62,7 +62,7 @@ def fct_kml_2_csv(flight_leg_kml):
     file_name = flight_leg_kml[2]
 
     #le csv sera au même endroit que le kml
-    path_csv = os.path.join(flight_leg_folder, file_name + ".csv")
+    path_csv = os.path.join(flight_leg_folder, f"{file_name}.csv")
 
     #on ouvre le kml et on va le parcourir avec soup
     f =  open(path_kml, 'r')

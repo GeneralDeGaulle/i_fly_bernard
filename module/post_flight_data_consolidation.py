@@ -50,7 +50,7 @@ def fct_concat_all_flights(df_avion, path):
     list_ac = df_avion["registration"].values
 
     for ac in list_ac:
-        path_ac = os.path.join(path, "output", ac, ac +"_flight_data_all.csv")
+        path_ac = os.path.join(path, "output", ac, f"{ac}_flight_data_all.csv")
         df = pd.read_csv(path_ac, delimiter = ",")
         df_all_flights = pd.concat([df_all_flights, df])
 

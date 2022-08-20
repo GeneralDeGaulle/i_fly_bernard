@@ -29,7 +29,7 @@ registration_ac = "F-HMBY"
 
 #%% define path
 path = os.getcwd()
-path_avions = os.path.join(path, r"input\avions.csv")
+path_avions = os.path.join(path, "input","avions.csv")
 
 path_flight_data = os.path.join(path, "output", registration_ac)
 path_flight_data_csv = os.path.join(path_flight_data, f"{registration_ac}_flight_data_all.csv")

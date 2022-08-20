@@ -20,7 +20,7 @@ from module import maths_for_map
 #%% load df_airport
 path = os.getcwd()
 
-path_airports = os.path.join(path, r"input\airports.csv")
+path_airports = os.path.join(path, "input", "airports.csv")
 
 #%% on charge le df_airport
 df_airports = pd.read_csv(path_airports, delimiter = ",", usecols=['ident', 'name', 'latitude_deg', "longitude_deg"])

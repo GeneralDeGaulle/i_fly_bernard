@@ -112,7 +112,7 @@ def fct_adsbex_check_new_flights_and_kml(icao, regis, path_f_data, last_check_d)
 #%%
 def fct_get_kml_from_leg(path_flt_data, reg, date_tested, list_new_flt_legs, brwsr):
     #on définit le chemin du future fichier qui sera le meme pour tous les legs du jour
-    path_kml = os.path.join(path_flt_data, reg + "-track-press_alt_uncorrected.kml")
+    path_kml = os.path.join(path_flt_data, f"{reg}-track-press_alt_uncorrected.kml")
 
     #on clique sur le bouton "précédent leg" pour aller en arrière et avoir directement le dernier leg du jour.
     click_previous_leg = brwsr.find_element(By.ID,"leg_prev")

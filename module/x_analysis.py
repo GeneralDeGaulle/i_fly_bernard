@@ -33,9 +33,9 @@ from module import maths_for_map
 #%% path
 path = os.getcwd()
 
-path_avions = os.path.join(path, r"input\avions.csv")
-path_all_flights = os.path.join(path, r"output\all_flights_data.csv")
-path_output_bilan = os.path.join(path, r"output\Bilans")
+path_avions = os.path.join(path, "input", "avions.csv")
+path_all_flights = os.path.join(path, "output", "all_flights_data.csv")
+path_output_bilan = os.path.join(path, "output", "Bilans")
 
 
 #%%
@@ -80,7 +80,7 @@ save_stat.append(df_all_flights_m_agg.to_markdown(tablefmt="fancy_grid") + "\n")
 save_stat.append(df_all_flights_m_rte)
 save_stat.append("------------------------------------------------\n\n")
 
-path_csv_all_flights_m_agg = os.path.join(path_output_bilan, "df_all_flights_m_agg" + ".csv")
+path_csv_all_flights_m_agg = os.path.join(path_output_bilan, "df_all_flights_m_agg.csv")
 df_all_flights_m_agg.to_csv(path_csv_all_flights_m_agg, encoding="utf-8-sig")
 
 
@@ -96,7 +96,7 @@ save_stat.append("--- Pour chaque avion ---")
 save_stat.append(df_all_flights_m_grouped.to_markdown(tablefmt="fancy_grid") + "\n")
 save_stat.append("------------------------------------------------\n\n")
 
-path_all_flights_m_grouped = os.path.join(path_output_bilan, "df_all_flights_m_grouped" + ".csv")
+path_all_flights_m_grouped = os.path.join(path_output_bilan, "df_all_flights_m_grouped.csv")
 df_all_flights_m_grouped.to_csv(path_all_flights_m_grouped, encoding="utf-8-sig")
 
 #%% Stats détaillées pour chaque avion
@@ -113,7 +113,7 @@ for ac in list_ac:
 
 
 #%% file save
-output_file_3 = open(os.path.join(path_output_bilan, r"bilans_" + date_1.strftime("%B_%Y") + ".txt"), 'w', encoding="utf-8-sig")
+output_file_3 = open(os.path.join(path_output_bilan, f"bilans_{date_1.strftime('%B_%Y')}.txt"), 'w', encoding="utf-8-sig")
 text_new_3 = "\n".join(save_stat)
 output_file_3.write(text_new_3)
 output_file_3.close()
@@ -188,7 +188,7 @@ plot(fig)
 
 
 #%%
-path_html = os.path.join(path_output_bilan, r"bilans_" + date_1.strftime("%B_%Y") + ".html")
+path_html = os.path.join(path_output_bilan, f"bilans_{date_1.strftime('%B_%Y')}.html")
 fig.write_html(path_html)
 
 
