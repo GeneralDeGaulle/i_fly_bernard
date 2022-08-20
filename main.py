@@ -144,16 +144,14 @@ for aircraft_row in df_avion.itertuples():
                 df_avion.to_csv(path_avions, index=False, encoding="utf-8-sig")
 
                 n = n + len(df_new_flights_only)
-                print()
                 print(f"--- {registration_ac} done ! ---")
-                print("---------------------")
+                print("---------------------------")
 
 
             else:
                 # malgré tout, on met à jour la date de dernier check.
                 df_avion.loc[df_avion["registration"] == registration_ac, "last_check"] = today_date.date()
                 df_avion.to_csv(path_avions, index=False, encoding="utf-8-sig")
-                print()
                 print(f"--- No new flights for A/C {registration_ac} ---")
                 print(f"--- {registration_ac} done ! ---")
 
@@ -161,7 +159,6 @@ for aircraft_row in df_avion.itertuples():
             # malgré tout, on met à jour la date de dernier check.
             df_avion.loc[df_avion["registration"] == registration_ac, "last_check"] = today_date.date()
             df_avion.to_csv(path_avions, index=False, encoding="utf-8-sig")
-            print()
             print(f"--- No new flights for A/C {registration_ac} ---")
             print(f"--- {registration_ac} done ! ---")
 
@@ -169,12 +166,12 @@ for aircraft_row in df_avion.itertuples():
         # malgré tout, on met à jour la date de dernier check.
         df_avion.loc[df_avion["registration"] == registration_ac, "last_check"] = today_date.date()
         df_avion.to_csv(path_avions, index=False, encoding="utf-8-sig")
-        print()
         print(f"--- No new flights for A/C {registration_ac} ---")
         print(f"--- {registration_ac} done ! ---")
 
 
 #%%
+print()
 print("---------------------------")
 print("--- all aircraft done ! ---")
 print(f"--- Il y a eu {str(n)} nouveau(x) vol(s) généré(s) ---")
@@ -188,3 +185,4 @@ print("--- all_flights_data.csv généré ---")
 
 #%%
 print(f"--- temps d'execution {round((time.time() - start_time)/60.0,1)} minutes ---")
+print("---")
