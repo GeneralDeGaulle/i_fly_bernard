@@ -18,6 +18,8 @@ import time
 from selenium import webdriver
 from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.common.by import By
+from selenium.webdriver.firefox.service import Service
+from selenium.webdriver.firefox.options import Options
 
 import os
 
@@ -25,14 +27,16 @@ import os
 #%%
 def fct_adsbex_check_new_flights_and_kml(icao, regis, path_f_data, last_check_d):
     #définir profile firefox, surtout pour configurer le lieu d'enregistrement du fichier et le non-clic pour démarrer le téléchargement
-    profile = webdriver.FirefoxProfile()
-    profile.set_preference("browser.download.folderList", 2)
-    profile.set_preference("browser.download.manager.showWhenStarting", False)
-    profile.set_preference("browser.download.dir", path_f_data)
-    profile.set_preference("browser.helperApps.neverAsk.saveToDisk", "text/csv")
+    options = Options()
+    options.set_preference("browser.download.folderList", 2)
+    options.set_preference("browser.download.manager.showWhenStarting", False)
+    options.set_preference("browser.download.dir", path_f_data)
+    options.set_preference("browser.helperApps.neverAsk.saveToDisk", "text/csv")
+
+    service = Service(GeckoDriverManager().install())
 
     #ouvre firefox
-    browser = webdriver.Firefox(firefox_profile=profile, executable_path=GeckoDriverManager().install())
+    browser = webdriver.Firefox(service=service, options=options)
     print()
 
     #définir les dates de vérification (dernier check de l'avion (enregistré dans le fichier avions.csv) et aujourd'hui)
@@ -130,7 +134,7 @@ def fct_get_kml_from_leg(path_flt_data, reg, date_tested, list_new_flt_legs, brw
     #façon facile de rembobiner le bon nombre de legs, meme quand leg = 1
     for i in range(nb_leg_int,0,-1):
         #on télécharge le fichier
-        download_kml = brwsr.find_element_by_xpath("//button[text()='uncorrected pressure alt.']")
+        download_kml = brwsr.find_element("xpath", "//button[text()='uncorrected pressure alt.']")
         download_kml.click()
         time.sleep(0.5)
 
