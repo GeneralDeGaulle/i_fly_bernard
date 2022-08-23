@@ -1,3 +1,4 @@
+#pipreqs --encoding=utf8 path_folder --force 
 beautifulsoup4==4.11.1
 geographiclib==2.0
 numpy==1.22.3
