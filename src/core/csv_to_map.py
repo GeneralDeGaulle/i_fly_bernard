@@ -24,7 +24,7 @@ import os
 
 
 #%%
-from module import maths_for_map
+from src.core import maths_for_map
 
 
 #%%

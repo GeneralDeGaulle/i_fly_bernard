@@ -26,7 +26,7 @@ locale.setlocale(locale.LC_TIME,"")
 
 
 #%% script
-from module import maths_for_map
+from src.core import maths_for_map
 
 
 #%%

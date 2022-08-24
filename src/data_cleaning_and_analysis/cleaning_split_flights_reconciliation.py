@@ -18,8 +18,8 @@ locale.setlocale(locale.LC_TIME,"");
 
 
 #%%
-from module import get_new_df_data
-from module import csv_to_map
+from src.core import get_new_df_data
+from src.core import csv_to_map
 
 
 #%%

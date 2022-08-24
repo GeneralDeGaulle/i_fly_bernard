@@ -14,7 +14,7 @@ import numpy as np
 import os
 
 #other script
-from module import maths_for_map
+from src.core import maths_for_map
 
 
 #%% load df_airport

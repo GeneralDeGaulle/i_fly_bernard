@@ -12,7 +12,7 @@ import numpy as np
 
 
 #%%
-from module import get_new_df_data
+from src.core import get_new_df_data
 
 
 #%% identifier s'il y a une doublette de vol à réconcilier

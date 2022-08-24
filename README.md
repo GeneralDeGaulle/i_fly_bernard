@@ -36,23 +36,25 @@ Les autres scripts sont des aides manuelles pour exploiter des vols spécifiques
 
 ```
 root/
-└─── main.py -> script principal qui, pour chaque avion dans "/input/avions.csv", utilise les autres scipts pour rechercher de nouveaux vols, générer les cartes et calculer le CO2 associé.
 └─── README.md -> ce que vous êtes entrain de lire :)
 └─── requirements.txt -> liste des dépendances (library + version)
+└─── LICENSE.md -> License MIT. Voir ci-dessous.
 
 
-└───root/module/
-    └─── adsb_exchange.py -> script #2 qui scrap le site "https://globe.adsbexchange.com/" à la recherche de nouveau(x) vol(s). Si nouveau vol détecté, téléchargement du kml.
-    └─── kml_to_csv.py -> script #3 qui déplace transforme le kml téléchargé à l'étape d'avant puis le transforme en csv
-    └─── get_new_df_data.py -> script #4 qui détermine toutes les infos du vol (aéroports départs et arrivés, temps de vol, CO2 émis, etc)
-    └─── csv_to_map.py -> script #5 qui utilise la trajectoire csv et les infos de "get_new_df_data.py" pour générer la carte de la trajectoire et/ou le html. Si absence de données pendant plus de x minutes, calcule de la géodésique pour combler le trou.
-    └─── maths_for_map.py -> script #6 qui contient des fonctions mathématiques utilisées dans les autres scripts (surtout pour "csv_to_map.py").
-    └─── post_flight_data_consolidation.py -> script #7 qui contient des fonctions de "post-traitement", principalement pour soulager le code principal
-
-    └─── x_analysis.py -> script offline et séparé des autres, qui sert à générer les bilans mensuels. Travail de génération manuel principalement
-    └─── y_multiple_flights_plot.py -> script offline et séparé des autres, qui sert à générer des plots spécifiques (par exemple pour twitter un cas où il y a eu 3 vols par jour ou un autre concernant un tour du monde)
-    └─── y_split_flights_reconciliation.py -> script offline pour identifier s'il y des vols à réconcilier (à cause d'adsb-ex qui coupe les vols à minuit UTC) et les "fusionnent"
-    └─── z_replot_maps.py -> script offline et séparé des autres, qui sert à regénérer facilement les plots d'un vol quand il y a eu un souci avec la version automatique
+└───root/src/
+    └─── main.py -> script principal qui, pour chaque avion dans "/input/avions.csv", utilise les autres scipts pour rechercher de nouveaux vols, générer les cartes et calculer le CO2 associé.
+    └───root/src/core/
+        └─── adsb_exchange.py -> script #2 qui scrap le site "https://globe.adsbexchange.com/" à la recherche de nouveau(x) vol(s). Si nouveau vol détecté, téléchargement du kml.
+        └─── kml_to_csv.py -> script #3 qui déplace transforme le kml téléchargé à l'étape d'avant puis le transforme en csv
+        └─── get_new_df_data.py -> script #4 qui détermine toutes les infos du vol (aéroports départs et arrivés, temps de vol, CO2 émis, etc)
+        └─── csv_to_map.py -> script #5 qui utilise la trajectoire csv et les infos de "get_new_df_data.py" pour générer la carte de la trajectoire et/ou le html. Si absence de données pendant plus de x minutes, calcule de la géodésique pour combler le trou.
+        └─── maths_for_map.py -> script #6 qui contient des fonctions mathématiques utilisées dans les autres scripts (surtout pour "csv_to_map.py").
+        └─── post_flight_data_consolidation.py -> script #7 qui contient des fonctions de "post-traitement", principalement pour soulager le code principal
+    └───data_cleaning_&_analysis
+        └─── analysis.py -> script offline et séparé des autres, qui sert à générer les bilans mensuels. Travail de génération manuel principalement
+        └─── plot_multiple_flights.py -> script offline et séparé des autres, qui sert à générer des plots spécifiques (par exemple pour twitter un cas où il y a eu 3 vols par jour ou un autre concernant un tour du monde)
+        └─── plot_replot_maps.py -> script offline et séparé des autres, qui sert à regénérer facilement les plots d'un vol quand il y a eu un souci avec la version automatique
+        └─── cleaning_split_flights_reconciliation.py -> script offline pour identifier s'il y des vols à réconcilier (à cause d'adsb-ex qui coupe les vols à minuit UTC) et les "fusionnent"
 
 
 └───root/input/

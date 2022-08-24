@@ -21,8 +21,8 @@ locale.setlocale(locale.LC_TIME,"")
 
 
 #%%
-from module import post_flight_data_consolidation
-from module import maths_for_map
+from src.core import post_flight_data_consolidation
+from src.core import maths_for_map
 
 
 #%%
@@ -190,48 +190,5 @@ plot(fig)
 #%%
 path_html = os.path.join(path_output_bilan, f"bilans_{date_1.strftime('%B_%Y')}.html")
 fig.write_html(path_html)
-
-
-#%% old with "not-OSM" map
-
-# df = df_all_flights_m
-# df_markers = df[(df["airport_departure"] != "A/C in cruise") & (df["airport_arrival"] != "A/C in cruise")]
-
-# fig = px.line_geo(df, lat = "latitude_dep", lon = "longitude_dep",
-#                   color = "propriétaire", color_discrete_sequence = px.colors.qualitative.Pastel, #Vivid
-#                   markers = False) #on met false pour que le marker aeroport n'apparqasse pas dans la legend
-
-# #pour compenser px...
-# fig.data[0].opacity = 0.65
-# for trace in fig.data:
-#     trace.line.width = 3
-
-
-# fig.update_geos(projection_type  = "natural earth", #scope= "europe",
-#                 showland = True, landcolor = "#f3f3f3",
-#                 showcountries = True, countrycolor = "rgb(204, 204, 204)", #rgb(243, 243, 243)
-#                 showlakes = False,
-#                 showocean = True, oceancolor = "#161a1d", #px.colors.qualitative.Pastel1[1],
-#                 fitbounds="locations")#B1E2FF
-
-
-# #et donc on trace a part les marker
-# # fig.add_trace(go.Scattergeo(
-# #         lon = df_markers["longitude_dep"], lat = df_markers["latitude_dep"],
-# #         mode = 'markers', marker_size = 6.5, marker_color = "silver", marker_line_color = "grey", marker_line_width = 0.5,
-# #         showlegend = False))
-
-
-# fig.update_layout(font_family="Segoe UI Semibold")
-# fig.update_layout(legend_title="<b> Propriétaire du jet privé", legend_font_size=15, legend_font_color ="#161a1d",
-#                   legend=dict(xanchor="left", x=0.12, yanchor="top", y=0.80))
-
-# fig.update_layout(title = "<b>Carte de tous les vols du mois de juillet 2022</b>", title_font_size=25,
-#                   title_font_color="#f3f3f3", title_x=0.05, title_y = 0.90)
-
-# fig.update_layout(margin={"t":0,"r":0, "l":0,"b":0})
-
-
-# plot(fig)
 
 
