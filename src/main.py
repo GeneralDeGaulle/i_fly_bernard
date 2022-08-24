@@ -25,7 +25,7 @@ from src.core import adsb_exchange
 from src.core import kml_to_csv
 from src.core import get_new_df_data
 from src.core import csv_to_map
-from src.core import post_flight_data_consolidation
+from src.core import post_flight_consolidation
 
 
 #%% define path
@@ -111,14 +111,6 @@ for aircraft_row in df_avion.itertuples():
                                                                        icao24_ac, co2_ac, ac_proprio)
 
 
-                # check if flight has been split by adsb-ex at midnight UTC
-                df_new_flights_only = df_new_flights_only.sort_values(by=["departure_date_utc"], ascending = False)
-                df_new_flights_and_last = pd.concat([df_new_flights_only, df_ac_data.head(1)]) #df_ac_data.head(1) car si les deux volent sont trouvés lors de deux checks différents...
-                df_reconciliation = post_flight_data_consolidation.fct_check_reconciliation(df_new_flights_and_last)
-                if not df_reconciliation.empty:
-                    print("!!! flights reconciliation to be done !!!")
-
-
                 #plot map grâce à plotly avec les infos requises pour le titre de l'image
                 for new_flight in df_new_flights_only.itertuples():
                     co2_new = new_flight.co2_emission_tonnes
@@ -180,7 +172,7 @@ print(f"--- Il y a eu {str(n)} nouveau(x) vol(s) généré(s) ---")
 
 
 #%% concat all aircraft df in one csv
-post_flight_data_consolidation.fct_concat_all_flights(df_avion, path)
+post_flight_consolidation.fct_concat_all_flights(df_avion, path)
 
 
 #%%

@@ -2,6 +2,8 @@
 """
 Created on Tue Jul 26 17:24:50 2022
 
+script contenant quelques fonctions utiles pour le post flight
+
 @author: GeneralDeGaulle
 """
 
@@ -12,7 +14,7 @@ import numpy as np
 
 
 #%%
-
+# from src.core import maths_for_bernard
 
 
 #%% concat all flights

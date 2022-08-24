@@ -2,8 +2,8 @@
 """
 Created on Wed Jul  6 22:13:30 2022
 
-script offline et séparé des autres, qui sert à regénérer toutes les données des fichiers
-"ac_flight_data_all.csv" à partir du path_csv contenu dans ce même fichier.
+script qui sert à regénérer toutes les données des fichiers "ac_flight_data_all.csv" à partir
+du path_csv contenu dans ce même fichier.
 
 @author: GeneralDeGaulle
 """

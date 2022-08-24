@@ -2,7 +2,8 @@
 """
 Created on Wed Jul  6 22:13:30 2022
 
-script offline et séparé des autres, qui sert à regénérer facilement les plots d'un vol quand il y a eu un souci avec la version automatique
+script offline et séparé des autres, qui sert à regénérer facilement les plots d'un vol quand
+il y a eu un souci avec la version automatique
 
 @author: GeneralDeGaulle
 """

@@ -2,7 +2,7 @@
 """
 Created on Mon Jun  6 13:05:02 2022
 
-Travail de génération manuel principalement
+script qui sert à générer les bilans mensuels.
 
 @author: GeneralDeGaulle
 """
@@ -21,7 +21,7 @@ locale.setlocale(locale.LC_TIME,"")
 
 
 #%%
-from src.core import post_flight_data_consolidation
+from src.core import post_flight_consolidation
 from src.core import maths_for_bernard
 
 
@@ -47,7 +47,7 @@ list_ac = df_avion["registration"].values
 
 
 #%% concat all flights data
-post_flight_data_consolidation.fct_concat_all_flights(df_avion, path)
+post_flight_consolidation.fct_concat_all_flights(df_avion, path)
 print("--- all_flights_data.csv généré ---")
 
 

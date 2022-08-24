@@ -2,7 +2,8 @@
 """
 Created on Wed Jul 13 20:26:30 2022
 
-script offline et séparé des autres, qui sert à générer des plots spécifiques (par exemple pour twitter un cas où il y a eu 3 vols par jour ou un autre concernant un tour du monde)
+script offline et séparé des autres, qui sert à générer des plots spécifiques (par exemple pour
+twitter un cas où il y a eu 3 vols par jour ou un autre concernant un tour du monde)
 
 @author: GeneralDeGaulle
 """
