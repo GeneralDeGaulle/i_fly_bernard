@@ -21,23 +21,24 @@ locale.setlocale(locale.LC_TIME,"");
 start_time = time.time()
 
 #%% import scripts
-from module import adsb_exchange
-from module import kml_to_csv
-from module import get_new_df_data
-from module import csv_to_map
-from module import post_flight_data_consolidation
+from src.core import adsb_exchange
+from src.core import kml_to_csv
+from src.core import get_new_df_data
+from src.core import csv_to_map
+from src.core import post_flight_data_consolidation
 
 
 #%% define path
-# path = os.getcwd()
-#pour être sûr que le path est le bon au cas où cwd() n'est pas correctement configuré.
-path = os.path.dirname(os.path.abspath(__file__))
-os.chdir(path)
+path_main = os.path.dirname(os.path.abspath(__file__))
+path = os.path.abspath(os.path.join(path_main, os.pardir))
 
-path_avions = os.path.join(path, "input","avions.csv")
+# pour être sûr que le path est le bon au cas où cwd() n'est pas correctement configuré.
+os.chdir(path)
 
 
 #%% load generic data
+path_avions = os.path.join(path, "input","avions.csv")
+
 df_avion = pd.read_csv(path_avions, delimiter = ",")
 df_avion["last_check"] = pd.to_datetime(df_avion["last_check"], utc=True)
 
