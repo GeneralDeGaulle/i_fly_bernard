@@ -177,10 +177,8 @@ print("--- all aircraft done ! ---")
 print(f"--- Il y a eu {str(n)} nouveau(x) vol(s) généré(s) ---")
 
 
-#%% concat all aircraft df
+#%% concat all aircraft df in one csv
 post_flight_data_consolidation.fct_concat_all_flights(df_avion, path)
-print("---------------------------")
-print("--- all_flights_data.csv généré ---")
 
 
 #%%
