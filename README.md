@@ -29,7 +29,7 @@ Principales libraries à installer (voir requirements.txt pour les versions):
 * geographiclib
 
 ## Struture et description du code
-<p align="justify">La structure est simple: un script principal (main.py) qui gère automatiquement la séquence de recherche des nouveaux vols et qui appelle dans l'ordre logique les autres (adsb_exchange.py, kml_to_csv.py, get_new_df_data.py, csv_to_map.py,  maths_for_map.py et post_flight_data_consolidation.py).
+<p align="justify">La structure est simple: un script principal (main.py) qui gère automatiquement la séquence de recherche des nouveaux vols et qui appelle dans l'ordre logique les autres (adsb_exchange.py, kml_to_csv.py, get_new_df_data.py, csv_to_map.py,  maths_for_bernard.py et post_flight_data_consolidation.py).
 Il utilise des données dans "/input/" et génère les résulats dans "/output/". Les 6 principaux scripts ont été commentés en français (et bientôt en anglais peut-être).</p>
 
 Les autres scripts sont des aides manuelles pour exploiter des vols spécifiques.
@@ -48,7 +48,7 @@ root/
         └─── kml_to_csv.py -> script #3 qui déplace transforme le kml téléchargé à l'étape d'avant puis le transforme en csv
         └─── get_new_df_data.py -> script #4 qui détermine toutes les infos du vol (aéroports départs et arrivés, temps de vol, CO2 émis, etc)
         └─── csv_to_map.py -> script #5 qui utilise la trajectoire csv et les infos de "get_new_df_data.py" pour générer la carte de la trajectoire et/ou le html. Si absence de données pendant plus de x minutes, calcule de la géodésique pour combler le trou.
-        └─── maths_for_map.py -> script #6 qui contient des fonctions mathématiques utilisées dans les autres scripts (surtout pour "csv_to_map.py").
+        └─── maths_for_bernard.py -> script #6 qui contient des fonctions mathématiques utilisées dans les autres scripts (surtout pour "csv_to_map.py").
         └─── post_flight_data_consolidation.py -> script #7 qui contient des fonctions de "post-traitement", principalement pour soulager le code principal
     └───data_cleaning_&_analysis
         └─── analysis.py -> script offline et séparé des autres, qui sert à générer les bilans mensuels. Travail de génération manuel principalement

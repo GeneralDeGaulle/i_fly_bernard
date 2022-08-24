@@ -22,7 +22,7 @@ locale.setlocale(locale.LC_TIME,"")
 
 #%%
 from src.core import post_flight_data_consolidation
-from src.core import maths_for_map
+from src.core import maths_for_bernard
 
 
 #%%
@@ -88,7 +88,7 @@ df_all_flights_m_agg.to_csv(path_csv_all_flights_m_agg, encoding="utf-8-sig")
 df_all_flights_m_grouped = df_all_flights_m.groupby("propriétaire").sum()
 df_all_flights_m_grouped = df_all_flights_m_grouped[["flight_duration_min", "co2_emission_tonnes"]].sort_values(by=["flight_duration_min"], ascending = False).reset_index()
 
-# df_all_flights_m_grouped["flight_duration_min"] = df_all_flights_m_grouped["flight_duration_min"].apply(lambda x: maths_for_map.fct_time_str(x))
+# df_all_flights_m_grouped["flight_duration_min"] = df_all_flights_m_grouped["flight_duration_min"].apply(lambda x: maths_for_bernard.fct_time_str(x))
 
 print(df_all_flights_m_grouped.to_markdown(tablefmt="fancy_grid"))
 
@@ -147,7 +147,7 @@ for n, ac in enumerate(list_ac):
         color_i = flight.color
 
         df = pd.read_csv(flight.path_csv)
-        geo_lat, geo_lon = maths_for_map.fct_geodesic_multiple_flights(df)
+        geo_lat, geo_lon = maths_for_bernard.fct_geodesic_multiple_flights(df)
 
         # pour gérer l'affichage d'un seul élément
         print(n, m)

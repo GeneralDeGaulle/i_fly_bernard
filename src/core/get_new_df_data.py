@@ -14,7 +14,7 @@ import numpy as np
 import os
 
 #other script
-from src.core import maths_for_map
+from src.core import maths_for_bernard
 
 
 #%% load df_airport
@@ -64,7 +64,7 @@ def fct_get_data_from_csv(csv, regis, icao, co2):
     flt_co2 = round(co2/1000.0 * flt_duration_min/60.0 ,1)
 
     #on transforme la durée de vol en format affichable
-    flt_duration_str = maths_for_map.fct_time_str(flt_duration_min)
+    flt_duration_str = maths_for_bernard.fct_time_str(flt_duration_min)
 
     # on prépare les futures colonnes du df
     apt_dep = ""

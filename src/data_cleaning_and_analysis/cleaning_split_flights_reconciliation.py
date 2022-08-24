@@ -23,6 +23,13 @@ from src.core import csv_to_map
 
 
 #%%
+
+
+# script à utiliser avec précaution et avec vérification manuelle que c'est bien un vol
+# coupé en 2 !
+
+
+#%%
 # =============================================================================
 registration_ac = "F-HMBY"
 # =============================================================================
@@ -131,8 +138,6 @@ df_ac_data = df_ac_data.drop(list_vol_next)
 #%%
 
 #une fois fini on regroupe tous les vols.
-#Pas de check de duplicate car protection dans "fct_kml_2_folder"
-# et dans la gestion de la date de dernier check dans df_avion. Peut être amélioré
 df_complete = pd.concat([df_ac_data, df_new_flights_only])
 df_complete = df_complete.sort_values(by=["departure_date_utc"], ascending = False)
 

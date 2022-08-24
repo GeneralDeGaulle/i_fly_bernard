@@ -15,35 +15,6 @@ import numpy as np
 from src.core import get_new_df_data
 
 
-#%% identifier s'il y a une doublette de vol à réconcilier
-# to find flights which have been split by adsb-exchange.com at midnight UTC.
-# then "y_split_flights_reconciliation.py" to be used
-def fct_check_reconciliation(df_new_flt_and_last):
-    df_vols_tbc = df_new_flt_and_last.copy()
-
-    df_vols_tbc.loc[:,"next_flight_departure"] = df_vols_tbc["airport_departure"].shift(1)
-    df_vols_tbc.loc[:,"next_flight_departure_date"] = df_vols_tbc["departure_date_utc"].shift(1)
-    df_vols_tbc.loc[:,"diff_with_next"] = df_vols_tbc["next_flight_departure_date"] - df_vols_tbc["arrival_date_utc"]
-    df_vols_tbc.loc[:,"next_flight_csv"] = df_vols_tbc["path_csv"].shift(1)
-
-    df_vols_tbc_1 = df_vols_tbc[(df_vols_tbc["airport_arrival"] == "A/C in cruise") &
-                              (df_vols_tbc["next_flight_departure"] == "A/C in cruise") &
-                              (df_vols_tbc["airport_departure"] != "A/C in cruise")]
-
-    df_vols_tbc_2 = df_vols_tbc[(df_vols_tbc["arrival_date_utc"].dt.strftime("%Hh%M") == "23h59")]
-
-
-    df_vols_to_be_merged_1 = df_vols_tbc_1[(df_vols_tbc_1["arrival_date_utc"].dt.strftime("%H") >= "23") &
-                             (df_vols_tbc_1["diff_with_next"].dt.seconds/3600 <= 4)]
-
-    df_vols_to_be_merged_2 = df_vols_tbc_2[(df_vols_tbc_2["diff_with_next"].dt.seconds/3600 <= 1)]
-
-
-    df_vols_to_be_merged = pd.concat([df_vols_to_be_merged_1, df_vols_to_be_merged_2])
-
-    return df_vols_to_be_merged
-
-
 #%% concat all flights
 def fct_concat_all_flights(df_avion, path):
     df_all_flights = pd.DataFrame()
