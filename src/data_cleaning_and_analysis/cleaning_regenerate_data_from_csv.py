@@ -14,8 +14,8 @@ import os
 
 
 #%%
-from module import csv_to_map
-from module import get_new_df_data
+from src.core import get_new_df_data
+
 
 
 #%% define path
@@ -26,6 +26,13 @@ path_avions = os.path.join(path, r"input\avions.csv")
 #%%
 df_avion = pd.read_csv(path_avions, delimiter = ",")
 
+
+#%%
+list_col = ["propriétaire", "registration", "icao24", "departure_date_only_utc", "departure_date_utc",
+            "arrival_date_utc", "flight_duration_str", "flight_duration_min", "co2_emission_tonnes",
+            "distance_km", "airport_departure", "airport_arrival", "routes", "pays_departure",
+            "pays_arrival", "airport_dep_icao", "airport_arr_icao", "latitude_dep", "longitude_dep",
+            "latitude_arr", "longitude_arr", "altitude_dep_m", "altitude_arr_m","path_csv"]
 
 #%% pour tous les avions
 for aircraft_row in df_avion.itertuples():
@@ -44,7 +51,7 @@ for aircraft_row in df_avion.itertuples():
     df_ac_data["arrival_date_utc"] = pd.to_datetime(df_ac_data["arrival_date_utc"], utc=True)
 
 
-    df_new_flights_empty = pd.DataFrame(columns = df_ac_data.columns)
+    df_new_flights_empty = pd.DataFrame(columns = list_col)
 
     # pour recalculer les données du vol à partir du csv
     list_new_csv = list(df_ac_data.path_csv.values)

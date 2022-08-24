@@ -101,13 +101,15 @@ for aircraft_row in df_avion.itertuples():
             #idem, on ne continue que si on a des nouveaux vols (ici, des vols qui ont volé ;)
             if list_new_csv:
                 #initiatilisation du df
+
                 df_new_flights_empty = pd.DataFrame(columns = df_ac_data.columns)
+                # df_new_flights_empty = pd.DataFrame(columns = df_ac_data.columns)
 
                 #récupération des infos pour tous les nouveaux vols de cet avion
                 df_new_flights_only = get_new_df_data.fct_get_all_data(df_new_flights_empty,
                                                                        list_new_csv,
                                                                        registration_ac,
-                                                                       icao24_ac, co2_ac)
+                                                                       icao24_ac, co2_ac, ac_proprio)
 
 
                 # check if flight has been split by adsb-ex at midnight UTC
