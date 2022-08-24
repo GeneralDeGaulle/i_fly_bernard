@@ -29,7 +29,7 @@ Principales libraries à installer (voir requirements.txt pour les versions):
 * geographiclib
 
 ## Struture et description du code
-<p align="justify">La structure est simple: un script principal (main.py) qui gère automatiquement la séquence de recherche des nouveaux vols et qui appelle dans l'ordre logique les autres (adsb_exchange.py, kml_to_csv.py, get_new_df_data.py, csv_to_map.py,  maths_for_map.py et post_flight_data_consolidation.py).
+<p align="justify">La structure est simple: un script principal (__main.py__) qui gère automatiquement la séquence de recherche des nouveaux vols et qui appelle dans l'ordre logique les autres (adsb_exchange.py, kml_to_csv.py, get_new_df_data.py, csv_to_map.py,  maths_for_map.py et post_flight_data_consolidation.py).
 Il utilise des données dans "/input/" et génère les résulats dans "/output/". Les 6 principaux scripts ont été commentés en français (et bientôt en anglais peut-être).</p>
 
 Les autres scripts sont des aides manuelles pour exploiter des vols spécifiques.
@@ -42,7 +42,7 @@ root/
 
 
 └───root/src/
-    └─── main.py -> script principal qui, pour chaque avion dans "/input/avions.csv", utilise les autres scipts pour rechercher de nouveaux vols, générer les cartes et calculer le CO2 associé.
+    └─── __main.py__ -> script principal qui, pour chaque avion dans "/input/avions.csv", utilise les autres scipts pour rechercher de nouveaux vols, générer les cartes et calculer le CO2 associé.
     └───root/src/core/
         └─── adsb_exchange.py -> script #2 qui scrap le site "https://globe.adsbexchange.com/" à la recherche de nouveau(x) vol(s). Si nouveau vol détecté, téléchargement du kml.
         └─── kml_to_csv.py -> script #3 qui déplace transforme le kml téléchargé à l'étape d'avant puis le transforme en csv
@@ -66,9 +66,23 @@ root/
 
 └───root/output/
     └───aircraft_xxx_folder/
-         └───xxx_flight_data_all.csv -> contient tous les vols de "aircraft". Ce fichier est complété par "a_main.py" si nouveau vol trouvé
+         └───xxx_flight_data_all.csv -> contient tous les vols de "aircraft". Ce fichier est complété par "__main.py__" si nouveau vol trouvé
          └───root/output//date/ -> dossier contenant le kml, csv, jpg, html des vols de ce jour, par leg. Un exemple est donné pour F-GBOL et un pour F-HVBL.
     └───all_flights_data.csv -> simple pd.concat de chaque fichier "xxx_flight_data_all.csv"
+```
+
+## Utilisation
+
+<p align="justify">Il va s'agir ici d'installer en premier lieu les dépendances. Dans un second temps, il faudra lancer le module Python `src`.</p>
+
+```shell
+# Se placer à la racine
+
+# Installer les dépendances
+pip install -r requirements.txt
+
+# Lancer le script
+python -m src
 ```
 
 ## LICENSE
