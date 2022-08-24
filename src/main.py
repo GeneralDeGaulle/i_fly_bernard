@@ -103,7 +103,6 @@ for aircraft_row in df_avion.itertuples():
                 #initiatilisation du df
 
                 df_new_flights_empty = pd.DataFrame(columns = df_ac_data.columns)
-                # df_new_flights_empty = pd.DataFrame(columns = df_ac_data.columns)
 
                 #récupération des infos pour tous les nouveaux vols de cet avion
                 df_new_flights_only = get_new_df_data.fct_get_all_data(df_new_flights_empty,

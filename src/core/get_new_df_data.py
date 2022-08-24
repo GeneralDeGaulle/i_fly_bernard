@@ -24,7 +24,7 @@ path_avions = os.path.join(path, "input","avions.csv")
 path_airports = os.path.join(path, "input", "airports.csv")
 
 #%% on charge le df_airport
-df_airports = pd.read_csv(path_airports, delimiter = ",", usecols=["ident", "name", "latitude_deg", "longitude_deg"])
+df_airports = pd.read_csv(path_airports, delimiter = ",", usecols=["ident", "name", "latitude_deg", "longitude_deg", "iso_country"])
 df_airports = df_airports.rename(columns={"ident" : "airport_icao"})
 
 df_avion = pd.read_csv(path_avions, delimiter = ",")
@@ -93,13 +93,15 @@ def fct_get_data_from_csv(csv, regis, icao, co2):
         print("arrivée A/C in cruise")
 
 
-    return [proprio, regis, icao, dep_date_only_utc, dep_date_utc, arr_date_utc, flt_duration_str,
-            flt_duration_min, flt_co2, distance_dep_arr_km, apt_dep, apt_arr, routes, pays_departure,
+    return [proprio, regis, icao, dep_date_only_utc, dep_date_utc, arr_date_utc, apt_dep, apt_arr,
+            flt_duration_str, flt_duration_min, flt_co2, distance_dep_arr_km, routes, pays_departure,
             pays_arrival, apt_dep_icao, apt_arr_icao, lat_ini, long_ini, lat_last, long_last, elev_ini, elev_last, csv_relatif]
 
 
 #%% meilleure fonction du projet, pour une latitude et une longitude donnée, on donne l'aéroport le plus proche.
 def fct_get_airport_from_lat_lon(lat_x, lon_x, apt_name_x):
+    # pas obligé je pense de faire copy, puisqu'on est dans une fonction
+    df_airports_filtered = df_airports.copy()
 
     #on traite le cas des vols en cruise à part car sinon, si l'A/C en cruise à 30000ft au dessus d'un aéroport, le code dessous va considérer que c'est l'aéroport utilisé.
     if apt_name_x == "A/C in cruise":
@@ -166,11 +168,11 @@ def fct_get_all_data(df_new, list_csv, regis, icao, co2, propri):
     list_apt_unique = list(pd.concat([df_new["airport_dep_icao"], df_new["airport_arr_icao"]]).unique())
     df_airports_f = df_airports[df_airports["airport_icao"].isin(list_apt_unique)]
     #on pré-filtre df_airports pour améliorer la perfo
-    df_new["country_departure"] = df_new.apply(lambda x: fct_airport_to_country(x["airport_dep_icao"], df_airports_f), axis = 1)
-    df_new["country_arrival"] = df_new.apply(lambda x: fct_airport_to_country(x["airport_arr_icao"], df_airports_f), axis = 1)
+    df_new["iso_country_dep"] = df_new.apply(lambda x: fct_airport_to_country(x["airport_dep_icao"], df_airports_f), axis = 1)
+    df_new["iso_country_arr"] = df_new.apply(lambda x: fct_airport_to_country(x["airport_arr_icao"], df_airports_f), axis = 1)
 
     # on ajoute le propriétaire en nom intelligible
-    df_new.loc[df_all_flights["registration"] == aircraft, "propriétaire"] = propri
+    df_new.loc[df_new["registration"] == regis, "propriétaire"] = propri
 
     # on ajoute la route
     df_new["routes"] = df_new["airport_departure"] + " - " + df_new["airport_arrival"]

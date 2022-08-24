@@ -17,7 +17,6 @@ import os
 from src.core import get_new_df_data
 
 
-
 #%% define path
 path = os.getcwd()
 path_avions = os.path.join(path, r"input\avions.csv")
@@ -27,12 +26,12 @@ path_avions = os.path.join(path, r"input\avions.csv")
 df_avion = pd.read_csv(path_avions, delimiter = ",")
 
 
-#%%
-list_col = ["propriétaire", "registration", "icao24", "departure_date_only_utc", "departure_date_utc",
-            "arrival_date_utc", "flight_duration_str", "flight_duration_min", "co2_emission_tonnes",
-            "distance_km", "airport_departure", "airport_arrival", "routes", "pays_departure",
-            "pays_arrival", "airport_dep_icao", "airport_arr_icao", "latitude_dep", "longitude_dep",
-            "latitude_arr", "longitude_arr", "altitude_dep_m", "altitude_arr_m","path_csv"]
+#%% pour repositionner les colonnes si besoin
+# list_col = ["propriétaire", "registration", "icao24", "departure_date_only_utc", "departure_date_utc",
+#             "arrival_date_utc", "airport_departure", "airport_arrival", "flight_duration_str",
+#             "flight_duration_min", "co2_emission_tonnes", "distance_km", "iso_country_dep", "iso_country_arr", "routes",
+#             "airport_dep_icao", "airport_arr_icao", "latitude_dep", "longitude_dep",
+#             "latitude_arr", "longitude_arr", "altitude_dep_m", "altitude_arr_m","path_csv"]
 
 #%% pour tous les avions
 for aircraft_row in df_avion.itertuples():
@@ -40,6 +39,7 @@ for aircraft_row in df_avion.itertuples():
     registration_ac = aircraft_row.registration
     icao24_ac = str(aircraft_row.icao24)
     co2_ac = aircraft_row.co2_kg_per_hour
+    ac_proprio = aircraft_row.proprio
     print(registration_ac)
     # break
 
@@ -50,8 +50,10 @@ for aircraft_row in df_avion.itertuples():
     df_ac_data["departure_date_utc"] = pd.to_datetime(df_ac_data["departure_date_utc"], utc=True)
     df_ac_data["arrival_date_utc"] = pd.to_datetime(df_ac_data["arrival_date_utc"], utc=True)
 
-
-    df_new_flights_empty = pd.DataFrame(columns = list_col)
+    # df vide
+    # pour repositionner les colonnes si besoin
+    # df_new_flights_empty = pd.DataFrame(columns = list_col)
+    df_new_flights_empty = pd.DataFrame(columns = df_ac_data.columns)
 
     # pour recalculer les données du vol à partir du csv
     list_new_csv = list(df_ac_data.path_csv.values)
@@ -60,7 +62,7 @@ for aircraft_row in df_avion.itertuples():
     df_ac_data_new = get_new_df_data.fct_get_all_data(df_new_flights_empty,
                                                            list_new_csv,
                                                            registration_ac,
-                                                           icao24_ac, co2_ac)
+                                                           icao24_ac, co2_ac, ac_proprio)
 
     # #clean and save data
     #on nettoie new flight avant de le fusionner
@@ -85,12 +87,14 @@ ac_proprio = df_avion.proprio.values[0]
 
 path_flight_data = os.path.join(path, "output", registration_ac)
 path_flight_data_csv = os.path.join(path_flight_data, f"{registration_ac}_flight_data_all.csv")
-
 df_ac_data = pd.read_csv(path_flight_data_csv, delimiter = ",")
-df_ac_data["departure_date_utc"] = pd.to_datetime(df_ac_data["departure_date_utc"], utc=True)
-df_ac_data["arrival_date_utc"] = pd.to_datetime(df_ac_data["arrival_date_utc"], utc=True)
 
+
+# df vide
+# pour repositionner les colonnes si besoin
+# df_new_flights_empty = pd.DataFrame(columns = list_col)
 df_new_flights_empty = pd.DataFrame(columns = df_ac_data.columns)
+
 
 # pour recalculer les données du vol à partir du csv
 list_new_csv = list(df_ac_data.path_csv.values)
@@ -99,7 +103,7 @@ list_new_csv = list(df_ac_data.path_csv.values)
 df_ac_data_new = get_new_df_data.fct_get_all_data(df_new_flights_empty,
                                                        list_new_csv,
                                                        registration_ac,
-                                                       icao24_ac, co2_ac)
+                                                       icao24_ac, co2_ac, ac_proprio)
 
 # #clean and save data
 #on nettoie new flight avant de le fusionner
