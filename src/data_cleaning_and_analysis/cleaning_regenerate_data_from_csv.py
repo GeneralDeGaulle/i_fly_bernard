@@ -22,8 +22,6 @@ from src.core import post_flight_consolidation
 path = os.getcwd()
 path_avions = os.path.join(path, r"input\avions.csv")
 
-
-#%%
 df_avion = pd.read_csv(path_avions, delimiter = ",")
 
 
@@ -122,3 +120,5 @@ df_complete.to_csv(path_flight_data_csv, index=False, encoding="utf-8-sig")
 
 
 
+#%% concat all aircraft df in one csv
+post_flight_consolidation.fct_concat_all_flights(df_avion, path)
