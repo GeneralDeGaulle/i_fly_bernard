@@ -45,12 +45,6 @@ df_avion = df_avion.sort_values(by=["proprio"])
 list_ac = df_avion["registration"].values
 
 
-
-#%% concat all flights data
-post_flight_consolidation.fct_concat_all_flights(df_avion, path)
-print("--- all_flights_data.csv généré ---")
-
-
 #%% load df
 df_all_flights = pd.read_csv(path_all_flights, delimiter = ",")
 
@@ -68,14 +62,14 @@ df_all_flights_m = df_all_flights.loc[(df_all_flights["departure_date_utc"] >= d
 #%% stats mensuel tout
 save_stat = []
 
-df_all_flights_m_agg = df_all_flights_m[["flight_duration_min","co2_emission_tonnes"]].agg(["count", "sum", "mean", "min", "max"]).round(1)
+df_all_flights_m_agg = df_all_flights_m[["flight_duration_min","co2_emission_tonnes"]].agg(["count", "sum", "mean", ",median", "min", "max"]).round(1)
 df_all_flights_m_rte =str( df_all_flights_m["routes"].describe())
 
 print(df_all_flights_m_agg.to_markdown(tablefmt="fancy_grid"))
 print(df_all_flights_m_rte)
 
 
-save_stat.append("--- All flights ---")
+save_stat.append("--- All flights ---\n")
 save_stat.append(df_all_flights_m_agg.to_markdown(tablefmt="fancy_grid") + "\n")
 save_stat.append(df_all_flights_m_rte)
 save_stat.append("------------------------------------------------\n\n")
@@ -96,8 +90,6 @@ save_stat.append("--- Pour chaque avion ---")
 save_stat.append(df_all_flights_m_grouped.to_markdown(tablefmt="fancy_grid") + "\n")
 save_stat.append("------------------------------------------------\n\n")
 
-path_all_flights_m_grouped = os.path.join(path_output_bilan, "df_all_flights_m_grouped.csv")
-df_all_flights_m_grouped.to_csv(path_all_flights_m_grouped, encoding="utf-8-sig")
 
 #%% Stats détaillées pour chaque avion
 for ac in list_ac:

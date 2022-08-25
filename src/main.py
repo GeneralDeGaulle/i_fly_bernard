@@ -112,6 +112,7 @@ for aircraft_row in df_avion.itertuples():
 
                 # on teste le nouveau df avec les fonctions de consolidations.
                 df_new_flights_only = post_flight_consolidation.fct_short_flight(df_new_flights_only)
+                post_flight_consolidation.fct_check_2flights_in1(df_new_flights_only)
 
                 #plot map grâce à plotly avec les infos requises pour le titre de l'image
                 for new_flight in df_new_flights_only.itertuples():
