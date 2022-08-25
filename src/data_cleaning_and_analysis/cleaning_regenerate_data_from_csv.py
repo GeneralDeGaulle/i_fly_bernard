@@ -15,6 +15,7 @@ import os
 
 #%%
 from src.core import get_new_df_data
+from src.core import post_flight_consolidation
 
 
 #%% define path
@@ -71,6 +72,9 @@ for aircraft_row in df_avion.itertuples():
     #une fois fini on regroupe tous les vols.
     df_complete = df_ac_data_new
     df_complete = df_complete.sort_values(by=["departure_date_utc"], ascending = False)
+
+    #on teste le nouveau df avec les fonctions de consolidations
+    df_complete = post_flight_consolidation.fct_airport_vs_cruise(df_complete)
 
     #puis on sauvegarde
     df_complete.to_csv(path_flight_data_csv, index=False, encoding="utf-8-sig")

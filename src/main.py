@@ -130,6 +130,9 @@ for aircraft_row in df_avion.itertuples():
                 df_complete = pd.concat([df_ac_data, df_new_flights_only])
                 df_complete = df_complete.sort_values(by=["departure_date_utc"], ascending = False)
 
+                #on teste le nouveau df avec les fonctions de consolidations
+                df_complete = post_flight_consolidation.fct_airport_vs_cruise(df_complete)
+
                 # on met à jour la date de dernier check.
                 df_avion.loc[df_avion["registration"] == registration_ac, "last_check"] = today_date.date()
 
@@ -138,6 +141,7 @@ for aircraft_row in df_avion.itertuples():
                 df_avion.to_csv(path_avions, index=False, encoding="utf-8-sig")
 
                 n = n + len(df_new_flights_only)
+                print()
                 print(f"--- {registration_ac} done ! ---")
                 print("---------------------------")
 
