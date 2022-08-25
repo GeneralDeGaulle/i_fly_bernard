@@ -73,6 +73,7 @@ for aircraft_row in df_avion.itertuples():
 
     #on teste le nouveau df avec les fonctions de consolidations
     df_complete = post_flight_consolidation.fct_airport_vs_cruise(df_complete)
+    df_complete = post_flight_consolidation.fct_short_flight(df_complete)
 
     #puis on sauvegarde
     df_complete.to_csv(path_flight_data_csv, index=False, encoding="utf-8-sig")
@@ -115,9 +116,13 @@ df_ac_data_new = df_ac_data_new.drop(columns=["departure_date_only_utc_map"])
 df_complete = df_ac_data_new
 df_complete = df_complete.sort_values(by=["departure_date_utc"], ascending = False)
 
+#on teste le nouveau df avec les fonctions de consolidations
+df_complete = post_flight_consolidation.fct_airport_vs_cruise(df_complete)
+df_complete = post_flight_consolidation.fct_short_flight(df_complete)
+
+
 #puis on sauvegarde
 df_complete.to_csv(path_flight_data_csv, index=False, encoding="utf-8-sig")
-
 
 
 #%% concat all aircraft df in one csv

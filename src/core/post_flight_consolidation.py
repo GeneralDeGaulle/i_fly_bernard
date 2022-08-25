@@ -93,7 +93,21 @@ def fct_airport_vs_cruise(df_data):
         return df_data
 
     else:
-        print(f"{registration_ac} - {m} vols dont l'aéroport a été modifiés")
+        print(f"--- {registration_ac} - {m} vols dont l'aéroport a été modifiés ---")
+
+
+#%% vol de - de 5min (bug adsb ?)
+def fct_short_flight(df_data):
+    avant = len(df_data)
+    df_data = df_data[df_data["flight_duration_min"] >= 5]
+    apres = len(df_data)
+
+    m = avant - apres
+
+    if m != 0:
+        print(f"!!! {registration_ac} - {m} vols dont l'aéroport a été modifiés !!!")
+
+    return df_data
 
 
 #%%

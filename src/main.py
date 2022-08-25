@@ -110,6 +110,8 @@ for aircraft_row in df_avion.itertuples():
                                                                        registration_ac,
                                                                        icao24_ac, co2_ac, ac_proprio)
 
+                # on teste le nouveau df avec les fonctions de consolidations.
+                df_new_flights_only = post_flight_consolidation.fct_short_flight(df_new_flights_only)
 
                 #plot map grâce à plotly avec les infos requises pour le titre de l'image
                 for new_flight in df_new_flights_only.itertuples():
@@ -130,7 +132,8 @@ for aircraft_row in df_avion.itertuples():
                 df_complete = pd.concat([df_ac_data, df_new_flights_only])
                 df_complete = df_complete.sort_values(by=["departure_date_utc"], ascending = False)
 
-                #on teste le nouveau df avec les fonctions de consolidations
+                # on teste le nouveau df complet avec les fonctions de consolidations.
+                #☺ df complet car il faut le vol n-1 pour compléter.
                 df_complete = post_flight_consolidation.fct_airport_vs_cruise(df_complete)
 
                 # on met à jour la date de dernier check.
