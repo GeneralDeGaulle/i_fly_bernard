@@ -111,7 +111,8 @@ for aircraft_row in df_avion.itertuples():
                                                                        registration_ac,
                                                                        icao24_ac, co2_ac, ac_proprio)
 
-                # on teste le nouveau df avec les fonctions de consolidations.
+                # on teste le nouveau df avec les fonctions de consolidations. En fonction de la vérification,
+                # soit on applique les modifs, soit une alerte.
                 df_new_flights_only = post_flight_consolidation.fct_short_flight(df_new_flights_only)
                 post_flight_consolidation.fct_check_2flights_in1(df_new_flights_only)
 
@@ -135,8 +136,10 @@ for aircraft_row in df_avion.itertuples():
                 df_complete = df_complete.sort_values(by=["departure_date_utc"], ascending = False)
 
                 # on teste le nouveau df complet avec les fonctions de consolidations.
-                #☺ df complet car il faut le vol n-1 pour compléter.
+                # df complet car il faut le vol n-1 pour compléter. En fonction de la vérification,
+                # soit on applique les modifs, soit une alerte.
                 df_complete = post_flight_consolidation.fct_airport_vs_cruise(df_complete)
+                post_flight_consolidation.fct_check_reconciliation(df_complete)
 
                 # on met à jour la date de dernier check.
                 df_avion.loc[df_avion["registration"] == registration_ac, "last_check"] = today_date.date()

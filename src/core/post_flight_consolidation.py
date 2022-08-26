@@ -84,13 +84,14 @@ def fct_airport_vs_cruise(df_data):
         df_data.loc[condition_cruise_arr, "airport_arrival"] = df_data.loc[condition_cruise_arr,"next_flight_departure"]
         df_data.loc[condition_cruise_dep, "airport_departure"] = df_data.loc[condition_cruise_dep, "previous_flight_arrival"]
         #specific message
-        print(f"--- {registration_ac} - {m} vols dont l'aéroport a été modifiés ---")
+        print(f"--- {registration_ac} - {m} vols dont l'aéroport a été modifié ---")
 
     #cleaning
     df_data = df_data.drop(columns=["next_flight_departure","previous_flight_arrival"])
 
     # si m = 0, on renvoit le df_data d'origine. Si non, on renvoie celui modifié
     return df_data
+
 
 #%% vol de - de 5min ou -10min avec meme airport dep = arr
 def fct_short_flight(df_data):
@@ -104,11 +105,11 @@ def fct_short_flight(df_data):
                       (df_data["flight_duration_min"] >= 10)]
 
     taille_apres = len(df_data)
-
     m = taille_avant - taille_apres
 
     if m != 0:
-        print(f"!!! {registration_ac} - {m} vols dont l'aéroport a été modifiés !!!")
+        print(f"!!! {registration_ac} - {m} petits vols ont été supprimés  !!!")
+
 
     return df_data
 
@@ -119,15 +120,15 @@ def fct_check_2flights_in1(df_data, output = 0):
 
     # on enlève les vols de moins de 2h car ils sont nécessairement plus lent (moins de phase
     # de croisiere à haute vitesse et moins intéressant relativement aux données de vols perdues
-    df_data = df_data[df_data["flight_duration_min"] >= 120]
+    df_data = df_data[df_data["flight_duration_min"] >= 120].copy()
 
     # calcul de la durée théorique du vol en utilisant une vitesse moyenne pour ce genre de jets.
     # on a calculé sur les 2ans de data 606 km/h pour les milliardaires ; 559 pour valljet.
     # On prends 500 pour avoir une marge
-    df_data["flight_duration_theorique_h"] = df_data["distance_km"] / 500.0
+    df_data.loc[:,"flight_duration_theorique_h"] = df_data["distance_km"] / 500.0
 
     # on estime que le vol a été étrangement long s'il a pris une heure en plus que la moyenne
-    df_data["flight_took_too_long"] = (df_data["flight_duration_min"] / 60.0
+    df_data.loc[:,"flight_took_too_long"] = (df_data["flight_duration_min"] / 60.0
                                        - df_data["flight_duration_theorique_h"]) > 0.5
 
     # on ne garde que les vols "problématiques"
@@ -170,6 +171,32 @@ def fct_check_gap_in_flight(df_data):
             df_data = df_data.drop([i])
 
     return df_data
+
+
+#%% identifier s'il y a une doublette de vol à réconcilier
+# to find flights which have been split by adsb-exchange.com at midnight UTC.
+# then "y_split_flights_reconciliation.py" to be used
+def fct_check_reconciliation(df_ac_data):
+    df_vols_tbc = df_ac_data.copy()
+
+    df_vols_tbc.loc[:,"next_flight_departure"] = df_vols_tbc["airport_departure"].shift(1)
+    df_vols_tbc.loc[:,"next_flight_departure_date"] = df_vols_tbc["departure_date_utc"].shift(1)
+    df_vols_tbc.loc[:,"diff_with_next"] = df_vols_tbc["next_flight_departure_date"] - df_vols_tbc["arrival_date_utc"]
+    df_vols_tbc.loc[:,"next_flight_csv"] = df_vols_tbc["path_csv"].shift(1)
+
+    df_vols_tbc_1 = df_vols_tbc[(df_vols_tbc["airport_arrival"] == "A/C in cruise") &
+                              (df_vols_tbc["next_flight_departure"] == "A/C in cruise")]
+
+    df_vols_to_be_merged_1 = df_vols_tbc_1[(df_vols_tbc_1["arrival_date_utc"].dt.strftime("%H") >= "23") &
+                             (df_vols_tbc_1["diff_with_next"].dt.seconds/3600 <= 4) &
+                             (df_vols_tbc_1["diff_with_next"].dt.days == 0)]
+
+    df_vols_to_be_merged = pd.concat([df_vols_to_be_merged_1])
+
+    nb_of_issues = len(df_vols_to_be_merged)
+
+    if nb_of_issues > 0:
+        print(f"!!! {nb_of_issues} vols potentiellement coupé en deux à minuit UTC !!!")
 
 
 #%%

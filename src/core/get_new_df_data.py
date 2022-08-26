@@ -85,12 +85,10 @@ def fct_get_data_from_csv(csv, regis, icao, co2):
     if elev_ini >= 4500:
         apt_dep = "A/C in cruise"
         apt_dep_icao = "A/C in cruise"
-        print("départ A/C in cruise")
 
     if elev_last >= 3500:
         apt_arr = "A/C in cruise"
         apt_arr_icao = "A/C in cruise"
-        print("arrivée A/C in cruise")
 
 
     return [proprio, regis, icao, dep_date_only_utc, dep_date_utc, arr_date_utc, apt_dep, apt_arr,
@@ -99,7 +97,7 @@ def fct_get_data_from_csv(csv, regis, icao, co2):
 
 
 #%% meilleure fonction du projet, pour une latitude et une longitude donnée, on donne l'aéroport le plus proche.
-def fct_get_airport_from_lat_lon(lat_x, lon_x, apt_name_x):
+def fct_get_airport_from_lat_lon(lat_x, lon_x, apt_name_x, quiet = 0):
     # pas obligé je pense de faire copy, puisqu'on est dans une fonction
     df_airports_filtered = df_airports.copy()
 
@@ -125,7 +123,7 @@ def fct_get_airport_from_lat_lon(lat_x, lon_x, apt_name_x):
 
         #juste au cas où, si aéroport un peu loin, on lève une alerte mais on continue
         dist = df_airports_filtered["distance"].iloc[id_min]
-        if dist > 0.1:
+        if dist > 0.1 and quiet == 0:
             print(f"!!! attention aéroport loin de l'avion: {dist} - {apt_x} !!!")
 
         return apt_x, apt_x_icao
@@ -143,7 +141,7 @@ def fct_airport_to_country(apt_icao, df_apt):
 
 
 #%%
-def fct_get_all_data(df_new, list_csv, regis, icao, co2, propri):
+def fct_get_all_data(df_new, list_csv, regis, icao, co2, propri, quiet = 0):
     #pour chaque nouveau vol, et donc chaque csv unique, on se sert du csv pour générer
     #toutes les infos (1ère et dernière positions, temps de vol, CO2 émis, etc)
     for csv in list_csv:
@@ -161,8 +159,8 @@ def fct_get_all_data(df_new, list_csv, regis, icao, co2, propri):
 
     #find airport and add info with lambda and apply (et grâce aux 1ère et dernière positions du csv que
     #l'on a trouvé avec "fct_get_data_from_csv". fonction assez géniale en toute modestie
-    df_new[["airport_departure","airport_dep_icao"]] = df_new.apply(lambda x: fct_get_airport_from_lat_lon(x["latitude_dep"], x["longitude_dep"], x["airport_departure"]), axis=1, result_type ="expand")
-    df_new[["airport_arrival","airport_arr_icao"]] = df_new.apply(lambda x: fct_get_airport_from_lat_lon(x["latitude_arr"], x["longitude_arr"], x["airport_arrival"]), axis=1, result_type ="expand")
+    df_new[["airport_departure","airport_dep_icao"]] = df_new.apply(lambda x: fct_get_airport_from_lat_lon(x["latitude_dep"], x["longitude_dep"], x["airport_departure"], quiet), axis=1, result_type ="expand")
+    df_new[["airport_arrival","airport_arr_icao"]] = df_new.apply(lambda x: fct_get_airport_from_lat_lon(x["latitude_arr"], x["longitude_arr"], x["airport_arrival"], quiet), axis=1, result_type ="expand")
 
     #on ajoute le pays par rapport au point de départ/arrivé
     list_apt_unique = list(pd.concat([df_new["airport_dep_icao"], df_new["airport_arr_icao"]]).unique())
