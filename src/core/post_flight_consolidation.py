@@ -26,7 +26,7 @@ df_avion = pd.read_csv(path_avions, delimiter = ",")
 
 
 #%% concat all flights
-def fct_concat_all_flights(df_avion, path):
+def fct_concat_all_flights(df_avion, path, quiet = 1):
     df_all_flights = pd.DataFrame()
     list_ac = df_avion["registration"].values
 
@@ -42,13 +42,12 @@ def fct_concat_all_flights(df_avion, path):
     df_all_flights = df_all_flights.sort_values(by=["departure_date_utc"], ascending = False)
     df_all_flights = df_all_flights.reset_index(drop=True)
 
-
     #pour sauvegarder
     path_all_ac = os.path.join(path, "output", "all_flights_data.csv")
     df_all_flights.to_csv(path_all_ac, index=False, encoding="utf-8-sig")
 
-    print("---------------------------")
-    print("--- all_flights_data.csv généré ---")
+    if quiet == 0:
+        print("--- all_flights_data.csv généré ---")
 
 
 #%% ouvre adsb-ex sur les vols à problèmes
@@ -84,19 +83,18 @@ def fct_airport_vs_cruise(df_data):
     if m > 0:
         df_data.loc[condition_cruise_arr, "airport_arrival"] = df_data.loc[condition_cruise_arr,"next_flight_departure"]
         df_data.loc[condition_cruise_dep, "airport_departure"] = df_data.loc[condition_cruise_dep, "previous_flight_arrival"]
-
-        #cleaning
-        df_data = df_data.drop(columns=["next_flight_departure","previous_flight_arrival"])
+        #specific message
         print(f"--- {registration_ac} - {m} vols dont l'aéroport a été modifiés ---")
 
-        return df_data
+    #cleaning
+    df_data = df_data.drop(columns=["next_flight_departure","previous_flight_arrival"])
 
-    else:
-        print(f"--- {registration_ac} - {m} vols dont l'aéroport a été modifiés ---")
-
+    # si m = 0, on renvoit le df_data d'origine. Si non, on renvoie celui modifié
+    return df_data
 
 #%% vol de - de 5min ou -10min avec meme airport dep = arr
 def fct_short_flight(df_data):
+    # objectif_fct: on enlève les vols courts de df_data
     registration_ac = df_data.registration.iloc[0]
 
     taille_avant = len(df_data)
@@ -117,7 +115,7 @@ def fct_short_flight(df_data):
 
 #%% verification si deux vols ont été fusionnés par erreur par adsb
 def fct_check_2flights_in1(df_data, output = 0):
-    taille_avant = len(df_data)
+    # objectif_fct: on garde dans df_data que les vols potentiellement problématiques
 
     # on enlève les vols de moins de 2h car ils sont nécessairement plus lent (moins de phase
     # de croisiere à haute vitesse et moins intéressant relativement aux données de vols perdues
@@ -141,14 +139,13 @@ def fct_check_2flights_in1(df_data, output = 0):
     # on vérifie s'il y a bien un gap dans le csv (et si ce n'est pas un vol lent, ou tour de piste ou autre)
     df_data = fct_check_gap_in_flight(df_data)
 
-    taille_apres = len(df_data)
-    m = taille_avant - taille_apres
+    nb_of_issues = len(df_data)
 
-    if m != 0:
+    if nb_of_issues > 0:
         if output == 0:
-            print(f"!!! {m} vols avec un temps de vol trop long et un gap de position !!!")
+            print(f"!!! {nb_of_issues} vols avec un temps de vol trop long et un gap de position !!!")
         else:
-            print(f"!!! {m} vols avec un temps de vol trop long et un gap de position !!!")
+            print(f"!!! {nb_of_issues} vols avec un temps de vol trop long et un gap de position !!!")
             return df_data
 
 

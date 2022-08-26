@@ -47,6 +47,7 @@ today_date = pd.to_datetime("now", utc=True)
 
 #%% start of loop
 n = 0
+list_print_new_flights = []
 
 #on attaque la boucle for pour passer les avions l'un après l'autre
 for aircraft_row in df_avion.itertuples():
@@ -144,7 +145,9 @@ for aircraft_row in df_avion.itertuples():
                 df_complete.to_csv(path_flight_data_csv, index=False, encoding="utf-8-sig")
                 df_avion.to_csv(path_avions, index=False, encoding="utf-8-sig")
 
+                # puis on génère des logs
                 n = n + len(df_new_flights_only)
+                list_print_new_flights.append(f"--- {registration_ac} - {len(df_new_flights_only)} vols générés ---")
                 print()
                 print(f"--- {registration_ac} done ! ---")
                 print("---------------------------")
@@ -154,6 +157,7 @@ for aircraft_row in df_avion.itertuples():
                 # malgré tout, on met à jour la date de dernier check.
                 df_avion.loc[df_avion["registration"] == registration_ac, "last_check"] = today_date.date()
                 df_avion.to_csv(path_avions, index=False, encoding="utf-8-sig")
+                list_print_new_flights.append(f"--- {registration_ac} - 0 vols générés ---")
                 print(f"--- No new flights for A/C {registration_ac} ---")
                 print(f"--- {registration_ac} done ! ---")
 
@@ -161,6 +165,7 @@ for aircraft_row in df_avion.itertuples():
             # malgré tout, on met à jour la date de dernier check.
             df_avion.loc[df_avion["registration"] == registration_ac, "last_check"] = today_date.date()
             df_avion.to_csv(path_avions, index=False, encoding="utf-8-sig")
+            list_print_new_flights.append(f"--- {registration_ac} - 0 vols générés ---")
             print(f"--- No new flights for A/C {registration_ac} ---")
             print(f"--- {registration_ac} done ! ---")
 
@@ -168,6 +173,7 @@ for aircraft_row in df_avion.itertuples():
         # malgré tout, on met à jour la date de dernier check.
         df_avion.loc[df_avion["registration"] == registration_ac, "last_check"] = today_date.date()
         df_avion.to_csv(path_avions, index=False, encoding="utf-8-sig")
+        list_print_new_flights.append(f"--- {registration_ac} - 0 vols générés ---")
         print(f"--- No new flights for A/C {registration_ac} ---")
         print(f"--- {registration_ac} done ! ---")
 
@@ -176,7 +182,12 @@ for aircraft_row in df_avion.itertuples():
 print()
 print("---------------------------")
 print("--- all aircraft done ! ---")
-print(f"--- Il y a eu {str(n)} nouveau(x) vol(s) généré(s) ---")
+print("---------------------------")
+print(f"--- temps d'execution {round((time.time() - start_time)/60.0,1)} minutes ---")
+print(f"--- Total - {str(n)} vols générés ---")
+print("---------------------------")
+print("\n".join(list_print_new_flights))
+print("---------------------------")
 
 
 #%% concat all aircraft df in one csv
@@ -184,5 +195,3 @@ post_flight_consolidation.fct_concat_all_flights(df_avion, path)
 
 
 #%%
-print(f"--- temps d'execution {round((time.time() - start_time)/60.0,1)} minutes ---")
-print("---")
