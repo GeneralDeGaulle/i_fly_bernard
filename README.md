@@ -29,7 +29,7 @@ Principales libraries à installer (voir requirements.txt pour les versions):
 * geographiclib
 
 ## Struture et description du code
-<p align="justify">La structure est simple: un script principal (main.py) qui gère automatiquement la séquence de recherche des nouveaux vols et qui appelle dans l'ordre logique les autres (adsb_exchange.py, kml_to_csv.py, get_new_df_data.py, csv_to_map.py,  maths_for_map.py et post_flight_data_consolidation.py).
+<p align="justify">La structure est simple: un script principal (main.py) qui gère automatiquement la séquence de recherche des nouveaux vols et qui appelle dans l'ordre logique les autres (adsb_exchange.py, kml_to_csv.py, get_new_df_data.py, csv_to_map.py,  maths_for_bernard.py et post_flight_consolidation.py).
 Il utilise des données dans "/input/" et génère les résulats dans "/output/". Les 6 principaux scripts ont été commentés en français (et bientôt en anglais peut-être).</p>
 
 Les autres scripts sont des aides manuelles pour exploiter des vols spécifiques.
@@ -48,13 +48,14 @@ root/
         └─── kml_to_csv.py -> script #3 qui déplace transforme le kml téléchargé à l'étape d'avant puis le transforme en csv
         └─── get_new_df_data.py -> script #4 qui détermine toutes les infos du vol (aéroports départs et arrivés, temps de vol, CO2 émis, etc)
         └─── csv_to_map.py -> script #5 qui utilise la trajectoire csv et les infos de "get_new_df_data.py" pour générer la carte de la trajectoire et/ou le html. Si absence de données pendant plus de x minutes, calcule de la géodésique pour combler le trou.
-        └─── maths_for_map.py -> script #6 qui contient des fonctions mathématiques utilisées dans les autres scripts (surtout pour "csv_to_map.py").
-        └─── post_flight_data_consolidation.py -> script #7 qui contient des fonctions de "post-traitement", principalement pour soulager le code principal
-    └───data_cleaning_&_analysis
-        └─── analysis.py -> script offline et séparé des autres, qui sert à générer les bilans mensuels. Travail de génération manuel principalement
-        └─── plot_multiple_flights.py -> script offline et séparé des autres, qui sert à générer des plots spécifiques (par exemple pour twitter un cas où il y a eu 3 vols par jour ou un autre concernant un tour du monde)
-        └─── plot_replot_maps.py -> script offline et séparé des autres, qui sert à regénérer facilement les plots d'un vol quand il y a eu un souci avec la version automatique
+        └─── maths_for_bernard.py -> script #6 qui contient des fonctions mathématiques utilisées dans les autres scripts (surtout pour "csv_to_map.py").
+        └─── post_flight_consolidation.py -> script #7 qui contient des fonctions de "post-traitement", principalement pour soulager le code principal
+    └───data_cleaning_and_analysis
+        └─── analysis_bilan_mensuel.py -> script qui sert à générer les bilans mensuels.
+        └─── cleaning_regenerate_data_from_csv.py -> script qui sert à regénérer toutes les données des fichiers "ac_flight_data_all.csv" à partir du path_csv contenu dans ce même fichier.
         └─── cleaning_split_flights_reconciliation.py -> script offline pour identifier s'il y des vols à réconcilier (à cause d'adsb-ex qui coupe les vols à minuit UTC) et les "fusionnent"
+        └─── plot_multiple_flights.py -> script qui sert à générer des plots spécifiques (par exemple pour twitter un cas où il y a eu 3 vols par jour ou un autre concernant un tour du monde)
+        └─── plot_replot_maps.py -> script qui sert à regénérer facilement les plots d'un vol quand il y a eu un souci avec la version automatique
 
 
 └───root/input/

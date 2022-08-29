@@ -28,6 +28,17 @@ def fct_get_bearing(lat1, long1, lat2, long2):
     return bearing_deg
 
 
+#%% fonction pour calculer la distance géodésique entre 2 aéroports
+def fct_get_distance(lat1, long1, lat2, long2):
+    geod = Geodesic.WGS84
+
+    g = geod.Inverse(lat1, long1, lat2, long2)
+
+    dist_km = round(g['s12']/1000.0,0)
+
+    return dist_km
+
+
 #%% fonction pour combler les trous de trajectoire entre deux points
 def fct_geodesic(df, y, index_gap):
     lat_ini = df["lat"].iloc[index_gap]

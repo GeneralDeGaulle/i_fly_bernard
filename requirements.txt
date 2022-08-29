@@ -1,4 +1,4 @@
-#pipreqs --encoding=utf8 path_folder --force 
+#pipreqs --encoding=utf8 /path_folder/ --force
 beautifulsoup4==4.11.1
 geographiclib==2.0
 numpy==1.22.3
@@ -7,3 +7,5 @@ Pillow==9.2.0
 plotly==5.9.0
 selenium==4.4.3
 webdriver_manager==3.8.2
+matplotlib==3.5.1
+seaborn==0.11.2

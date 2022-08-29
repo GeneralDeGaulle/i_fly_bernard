@@ -23,6 +23,13 @@ from src.core import csv_to_map
 
 
 #%%
+
+
+# script à utiliser avec précaution et avec vérification manuelle que c'est bien un vol
+# coupé en 2 !
+
+
+#%%
 # =============================================================================
 registration_ac = "F-HMBY"
 # =============================================================================
@@ -43,6 +50,7 @@ df_avion = df_avion[df_avion["registration"] == registration_ac]
 icao24_ac = df_avion.icao24.values[0]
 co2_ac = df_avion.co2_kg_per_hour.values[0]
 ac_proprio = df_avion.proprio.values[0]
+gallons_ac = df_avion.us_gallons_per_hour.values[0]
 
 
 #%%
@@ -101,7 +109,8 @@ df_new_flights_empty = pd.DataFrame(columns = df_ac_data.columns)
 df_new_flights_only = get_new_df_data.fct_get_all_data(df_new_flights_empty,
                                                        list_new_csv,
                                                        registration_ac,
-                                                       icao24_ac, co2_ac)
+                                                       icao24_ac, co2_ac, ac_proprio, gallons_ac,
+                                                       quiet = 0)
 
 
 #plot map grâce à plotly avec les infos requises pour le titre de l'image
@@ -131,8 +140,6 @@ df_ac_data = df_ac_data.drop(list_vol_next)
 #%%
 
 #une fois fini on regroupe tous les vols.
-#Pas de check de duplicate car protection dans "fct_kml_2_folder"
-# et dans la gestion de la date de dernier check dans df_avion. Peut être amélioré
 df_complete = pd.concat([df_ac_data, df_new_flights_only])
 df_complete = df_complete.sort_values(by=["departure_date_utc"], ascending = False)
 

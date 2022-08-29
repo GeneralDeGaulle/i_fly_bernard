@@ -4,7 +4,6 @@ __pycache__/
 input/pictures_twitter/
 input/raw_data/
 output/save/
-src/not_used/
 
 # ignore all files with specific extensions
 *.psd

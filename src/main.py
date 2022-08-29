@@ -25,7 +25,7 @@ from src.core import adsb_exchange
 from src.core import kml_to_csv
 from src.core import get_new_df_data
 from src.core import csv_to_map
-from src.core import post_flight_data_consolidation
+from src.core import post_flight_consolidation
 
 
 #%% define path
@@ -47,6 +47,7 @@ today_date = pd.to_datetime("now", utc=True)
 
 #%% start of loop
 n = 0
+list_print_new_flights = []
 
 #on attaque la boucle for pour passer les avions l'un après l'autre
 for aircraft_row in df_avion.itertuples():
@@ -56,6 +57,7 @@ for aircraft_row in df_avion.itertuples():
     co2_ac = aircraft_row.co2_kg_per_hour
     last_check_date = aircraft_row.last_check
     ac_proprio = aircraft_row.proprio
+    gallons_ac = aircraft_row.us_gallons_per_hour
 
 
     #load previous data
@@ -75,7 +77,10 @@ for aircraft_row in df_avion.itertuples():
 
     #go sur adsb-exchange pour trouver les nouveau vols par rapport à la date du dernier check jusqu'à aujourd'hui
     list_new_flights_ac = []
-    list_new_flights_ac = adsb_exchange.fct_adsbex_check_new_flights_and_kml(icao24_ac, registration_ac, path_flight_data, last_check_date)
+    list_new_flights_ac = adsb_exchange.fct_adsbex_check_new_flights_and_kml(icao24_ac,
+                                                                             registration_ac,
+                                                                             path_flight_data,
+                                                                             last_check_date)
 
 
     #si nouveau(x) vol(s), on continue, sinon stop et on passe à l'avion suivant.
@@ -101,22 +106,19 @@ for aircraft_row in df_avion.itertuples():
             #idem, on ne continue que si on a des nouveaux vols (ici, des vols qui ont volé ;)
             if list_new_csv:
                 #initiatilisation du df
+
                 df_new_flights_empty = pd.DataFrame(columns = df_ac_data.columns)
 
                 #récupération des infos pour tous les nouveaux vols de cet avion
                 df_new_flights_only = get_new_df_data.fct_get_all_data(df_new_flights_empty,
                                                                        list_new_csv,
                                                                        registration_ac,
-                                                                       icao24_ac, co2_ac)
+                                                                       icao24_ac, co2_ac, ac_proprio, gallons_ac)
 
-
-                # check if flight has been split by adsb-ex at midnight UTC
-                df_new_flights_only = df_new_flights_only.sort_values(by=["departure_date_utc"], ascending = False)
-                df_new_flights_and_last = pd.concat([df_new_flights_only, df_ac_data.head(1)]) #df_ac_data.head(1) car si les deux volent sont trouvés lors de deux checks différents...
-                df_reconciliation = post_flight_data_consolidation.fct_check_reconciliation(df_new_flights_and_last)
-                if not df_reconciliation.empty:
-                    print("!!! flights reconciliation to be done !!!")
-
+                # on teste le nouveau df avec les fonctions de consolidations. En fonction de la vérification,
+                # soit on applique les modifs, soit une alerte.
+                df_new_flights_only = post_flight_consolidation.fct_short_flight(df_new_flights_only)
+                post_flight_consolidation.fct_check_2flights_in1(df_new_flights_only)
 
                 #plot map grâce à plotly avec les infos requises pour le titre de l'image
                 for new_flight in df_new_flights_only.itertuples():
@@ -137,6 +139,12 @@ for aircraft_row in df_avion.itertuples():
                 df_complete = pd.concat([df_ac_data, df_new_flights_only])
                 df_complete = df_complete.sort_values(by=["departure_date_utc"], ascending = False)
 
+                # on teste le nouveau df complet avec les fonctions de consolidations.
+                # df complet car il faut le vol n-1 pour compléter. En fonction de la vérification,
+                # soit on applique les modifs, soit une alerte.
+                df_complete = post_flight_consolidation.fct_airport_vs_cruise(df_complete)
+                post_flight_consolidation.fct_check_reconciliation(df_complete)
+
                 # on met à jour la date de dernier check.
                 df_avion.loc[df_avion["registration"] == registration_ac, "last_check"] = today_date.date()
 
@@ -144,7 +152,10 @@ for aircraft_row in df_avion.itertuples():
                 df_complete.to_csv(path_flight_data_csv, index=False, encoding="utf-8-sig")
                 df_avion.to_csv(path_avions, index=False, encoding="utf-8-sig")
 
+                # puis on génère des logs
                 n = n + len(df_new_flights_only)
+                list_print_new_flights.append(f"--- {registration_ac} - {len(df_new_flights_only)} vols générés ---")
+                print()
                 print(f"--- {registration_ac} done ! ---")
                 print("---------------------------")
 
@@ -153,6 +164,7 @@ for aircraft_row in df_avion.itertuples():
                 # malgré tout, on met à jour la date de dernier check.
                 df_avion.loc[df_avion["registration"] == registration_ac, "last_check"] = today_date.date()
                 df_avion.to_csv(path_avions, index=False, encoding="utf-8-sig")
+                list_print_new_flights.append(f"--- {registration_ac} - 0 vols générés ---")
                 print(f"--- No new flights for A/C {registration_ac} ---")
                 print(f"--- {registration_ac} done ! ---")
 
@@ -160,6 +172,7 @@ for aircraft_row in df_avion.itertuples():
             # malgré tout, on met à jour la date de dernier check.
             df_avion.loc[df_avion["registration"] == registration_ac, "last_check"] = today_date.date()
             df_avion.to_csv(path_avions, index=False, encoding="utf-8-sig")
+            list_print_new_flights.append(f"--- {registration_ac} - 0 vols générés ---")
             print(f"--- No new flights for A/C {registration_ac} ---")
             print(f"--- {registration_ac} done ! ---")
 
@@ -167,6 +180,7 @@ for aircraft_row in df_avion.itertuples():
         # malgré tout, on met à jour la date de dernier check.
         df_avion.loc[df_avion["registration"] == registration_ac, "last_check"] = today_date.date()
         df_avion.to_csv(path_avions, index=False, encoding="utf-8-sig")
+        list_print_new_flights.append(f"--- {registration_ac} - 0 vols générés ---")
         print(f"--- No new flights for A/C {registration_ac} ---")
         print(f"--- {registration_ac} done ! ---")
 
@@ -175,13 +189,16 @@ for aircraft_row in df_avion.itertuples():
 print()
 print("---------------------------")
 print("--- all aircraft done ! ---")
-print(f"--- Il y a eu {str(n)} nouveau(x) vol(s) généré(s) ---")
+print("---------------------------")
+print(f"--- temps d'execution {round((time.time() - start_time)/60.0,1)} minutes ---")
+print(f"--- Total - {str(n)} vols générés ---")
+print("---------------------------")
+print("\n".join(list_print_new_flights))
+print("---------------------------")
 
 
 #%% concat all aircraft df in one csv
-post_flight_data_consolidation.fct_concat_all_flights(df_avion, path)
+post_flight_consolidation.fct_concat_all_flights(df_avion, path)
 
 
 #%%
-print(f"--- temps d'execution {round((time.time() - start_time)/60.0,1)} minutes ---")
-print("---")

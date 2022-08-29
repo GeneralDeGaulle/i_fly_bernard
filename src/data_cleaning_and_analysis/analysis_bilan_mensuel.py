@@ -2,7 +2,7 @@
 """
 Created on Mon Jun  6 13:05:02 2022
 
-Travail de génération manuel principalement
+script qui sert à générer les bilans mensuels.
 
 @author: GeneralDeGaulle
 """
@@ -21,8 +21,8 @@ locale.setlocale(locale.LC_TIME,"")
 
 
 #%%
-from src.core import post_flight_data_consolidation
-from src.core import maths_for_map
+from src.core import post_flight_consolidation
+from src.core import maths_for_bernard
 
 
 #%%
@@ -45,12 +45,6 @@ df_avion = df_avion.sort_values(by=["proprio"])
 list_ac = df_avion["registration"].values
 
 
-
-#%% concat all flights data
-post_flight_data_consolidation.fct_concat_all_flights(df_avion, path)
-print("--- all_flights_data.csv généré ---")
-
-
 #%% load df
 df_all_flights = pd.read_csv(path_all_flights, delimiter = ",")
 
@@ -68,14 +62,14 @@ df_all_flights_m = df_all_flights.loc[(df_all_flights["departure_date_utc"] >= d
 #%% stats mensuel tout
 save_stat = []
 
-df_all_flights_m_agg = df_all_flights_m[["flight_duration_min","co2_emission_tonnes"]].agg(["count", "sum", "mean", "min", "max"]).round(1)
+df_all_flights_m_agg = df_all_flights_m[["flight_duration_min","co2_emission_tonnes"]].agg(["count", "sum", "mean", ",median", "min", "max"]).round(1)
 df_all_flights_m_rte =str( df_all_flights_m["routes"].describe())
 
 print(df_all_flights_m_agg.to_markdown(tablefmt="fancy_grid"))
 print(df_all_flights_m_rte)
 
 
-save_stat.append("--- All flights ---")
+save_stat.append("--- All flights ---\n")
 save_stat.append(df_all_flights_m_agg.to_markdown(tablefmt="fancy_grid") + "\n")
 save_stat.append(df_all_flights_m_rte)
 save_stat.append("------------------------------------------------\n\n")
@@ -88,7 +82,7 @@ df_all_flights_m_agg.to_csv(path_csv_all_flights_m_agg, encoding="utf-8-sig")
 df_all_flights_m_grouped = df_all_flights_m.groupby("propriétaire").sum()
 df_all_flights_m_grouped = df_all_flights_m_grouped[["flight_duration_min", "co2_emission_tonnes"]].sort_values(by=["flight_duration_min"], ascending = False).reset_index()
 
-# df_all_flights_m_grouped["flight_duration_min"] = df_all_flights_m_grouped["flight_duration_min"].apply(lambda x: maths_for_map.fct_time_str(x))
+# df_all_flights_m_grouped["flight_duration_min"] = df_all_flights_m_grouped["flight_duration_min"].apply(lambda x: maths_for_bernard.fct_time_str(x))
 
 print(df_all_flights_m_grouped.to_markdown(tablefmt="fancy_grid"))
 
@@ -96,8 +90,6 @@ save_stat.append("--- Pour chaque avion ---")
 save_stat.append(df_all_flights_m_grouped.to_markdown(tablefmt="fancy_grid") + "\n")
 save_stat.append("------------------------------------------------\n\n")
 
-path_all_flights_m_grouped = os.path.join(path_output_bilan, "df_all_flights_m_grouped.csv")
-df_all_flights_m_grouped.to_csv(path_all_flights_m_grouped, encoding="utf-8-sig")
 
 #%% Stats détaillées pour chaque avion
 for ac in list_ac:
@@ -147,7 +139,7 @@ for n, ac in enumerate(list_ac):
         color_i = flight.color
 
         df = pd.read_csv(flight.path_csv)
-        geo_lat, geo_lon = maths_for_map.fct_geodesic_multiple_flights(df)
+        geo_lat, geo_lon = maths_for_bernard.fct_geodesic_multiple_flights(df)
 
         # pour gérer l'affichage d'un seul élément
         print(n, m)

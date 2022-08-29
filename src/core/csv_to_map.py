@@ -24,7 +24,7 @@ import os
 
 
 #%%
-from src.core import maths_for_map
+from src.core import maths_for_bernard
 
 
 #%%
@@ -57,7 +57,7 @@ def fct_csv_2_map(rel_path_flight_csv, regis, date_vol, co2, flight_temps, propr
         center_lat_next = df["lat"].iloc[center_index+1]
         center_long_next = df["long"].iloc[center_index+1]
 
-        bearing = maths_for_map.fct_get_bearing(center_lat, center_long, center_lat_next, center_long_next)
+        bearing = maths_for_bernard.fct_get_bearing(center_lat, center_long, center_lat_next, center_long_next)
 
     #pour éviter les pb si touts petits fichiers...c'est pas très joli et c'est arrivée qu'une fois.
     else:
@@ -121,7 +121,7 @@ def fct_csv_2_map(rel_path_flight_csv, regis, date_vol, co2, flight_temps, propr
 
         for y in range(len(df_gaps)):
             index_gap = df_gaps.index[y]
-            geo_lat, geo_lon = maths_for_map.fct_geodesic(df, y, index_gap)
+            geo_lat, geo_lon = maths_for_bernard.fct_geodesic(df, y, index_gap)
 
             fig.add_trace(go.Scattermapbox(lon = geo_lon, lat = geo_lat, mode = "lines",
                                            line_width = 1, line_color = "dimgrey"))

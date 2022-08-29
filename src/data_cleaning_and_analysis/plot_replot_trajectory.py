@@ -2,7 +2,8 @@
 """
 Created on Wed Jul  6 22:13:30 2022
 
-script offline et séparé des autres, qui sert à regénérer facilement les plots d'un vol quand il y a eu un souci avec la version automatique
+script offline et séparé des autres, qui sert à regénérer facilement les plots d'un vol quand
+il y a eu un souci avec la version automatique
 
 @author: GeneralDeGaulle
 """
@@ -67,7 +68,8 @@ list_new_csv = list(df_new_flights_only.path_csv.values)
 df_new_flights_only = get_new_df_data.fct_get_all_data(df_new_flights_empty,
                                                        list_new_csv,
                                                        registration_ac,
-                                                       icao24_ac, co2_ac)
+                                                       icao24_ac, co2_ac, ac_proprio, gallons_ac,
+                                                       quiet = 0)
 
 #%%
 #definir types
@@ -94,7 +96,6 @@ df_ac_data = df_ac_data.drop(list_new_vols_index)
 df_new_flights_only = df_new_flights_only.drop(columns=["departure_date_only_utc_map"])
 
 #une fois fini on regroupe tous les vols.
-#Pas de check de duplicate car protection dans "fct_kml_2_folder" et dans la gestion de la date de dernier check dans df_avion. Peut être amélioré
 df_complete = pd.concat([df_ac_data, df_new_flights_only])
 df_complete = df_complete.sort_values(by=["departure_date_utc"], ascending = False)
 
@@ -102,14 +103,5 @@ df_complete = df_complete.sort_values(by=["departure_date_utc"], ascending = Fal
 df_complete.to_csv(path_flight_data_csv, index=False, encoding="utf-8-sig")
 
 
-
 #%%
-# path_flight_csv = r"C:\Users\Michel\Desktop\Michel\Sciences\1-Ateliers\Atelier_sw\python\python_i_fly_bernard_2\output\F-HMBY\2022-07-17\leg_1\F-HMBY_baro_2022-07-17_leg_1.csv"
-
-# registration_ac = "F-HMBY"
-# icao24_ac = "39b038"
-# co2_ac = 4700
-# ac_proprio = "avion du groupe Bouygues"
-
-
 

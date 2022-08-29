@@ -2,7 +2,8 @@
 """
 Created on Wed Jul 13 20:26:30 2022
 
-script offline et séparé des autres, qui sert à générer des plots spécifiques (par exemple pour twitter un cas où il y a eu 3 vols par jour ou un autre concernant un tour du monde)
+script offline et séparé des autres, qui sert à générer des plots spécifiques (par exemple pour
+twitter un cas où il y a eu 3 vols par jour ou un autre concernant un tour du monde)
 
 @author: GeneralDeGaulle
 """
@@ -26,7 +27,7 @@ locale.setlocale(locale.LC_TIME,"")
 
 
 #%% script
-from src.core import maths_for_map
+from src.core import maths_for_bernard
 
 
 #%%
@@ -100,7 +101,7 @@ for i, flight in df_ac.iterrows():
 
 
     df = pd.read_csv(flight.path_csv)
-    geo_lat, geo_lon = maths_for_map.fct_geodesic_multiple_flights(df)
+    geo_lat, geo_lon = maths_for_bernard.fct_geodesic_multiple_flights(df)
 
     fig.add_trace(go.Scattermapbox(lon = geo_lon, lat = geo_lat, mode = "lines",
                                        line_width = 6.5, line_color = px.colors.qualitative.Set2[i],
@@ -135,7 +136,7 @@ for i, flight in df_ac.iterrows():
 
 
     df = pd.read_csv(flight.path_csv)
-    geo_lat, geo_lon = maths_for_map.fct_geodesic_multiple_flights(df)
+    geo_lat, geo_lon = maths_for_bernard.fct_geodesic_multiple_flights(df)
 
     # trajectoire extrapolée
     fig.add_trace(go.Scattermapbox(lon = geo_lon, lat = geo_lat, mode = "lines",
@@ -179,7 +180,7 @@ fig.write_html(df_ac.path_csv.iloc[-1] + "_all_flights.html")
 
 #     if not flight.departure_date_only_utc == "2022-07-12":
 #         df = pd.read_csv(flight.path_csv)
-#         geo_lat, geo_lon = maths_for_map.fct_geodesic_multiple_flights(df)
+#         geo_lat, geo_lon = maths_for_bernard.fct_geodesic_multiple_flights(df)
 
 #         fig.add_trace(go.Scattermapbox(lon = geo_lon, lat = geo_lat, mode = "lines",
 #                                            line_width = 4, line_color = px.colors.qualitative.Plotly[i],
@@ -190,11 +191,11 @@ fig.write_html(df_ac.path_csv.iloc[-1] + "_all_flights.html")
 #         df1 = df.iloc[:800]
 #         df2 = df.iloc[800:]
 
-#         # geo_lat, geo_lon = maths_for_map.fct_geodesic_multiple_flights(df1)
+#         # geo_lat, geo_lon = maths_for_bernard.fct_geodesic_multiple_flights(df1)
 #         # fig.add_trace(go.Scattermapbox(lon = geo_lon, lat = geo_lat, mode = "lines", showlegend = False,
 #         #                                    line_width = 4, line_color = px.colors.qualitative.Plotly[i]))#colors_turbo[i]
 
-#         # geo_lat, geo_lon = maths_for_map.fct_geodesic_multiple_flights(df2)
+#         # geo_lat, geo_lon = maths_for_bernard.fct_geodesic_multiple_flights(df2)
 #         # fig.add_trace(go.Scattermapbox(lon = geo_lon, lat = geo_lat, mode = "lines",
 #         #                                    line_width = 4, line_color = px.colors.qualitative.Plotly[i],
 #         #                                    name = legend_i))#colors_turbo[i]
