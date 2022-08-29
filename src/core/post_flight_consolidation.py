@@ -17,6 +17,10 @@ from selenium import webdriver
 from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.firefox.service import Service
 
+import plotly.graph_objects as go
+import plotly.express as px
+from plotly.offline import plot #for displaying picture in spyder/browser
+
 
 #%%
 path = os.getcwd()
@@ -212,6 +216,20 @@ def fct_check_reconciliation(df_ac_data):
 
     if nb_of_issues > 0:
         print(f"!!! {nb_of_issues} vols potentiellement coupé en deux à minuit UTC !!!")
+
+
+#%% plot df_csv
+def plot_df_csv(df_csv, save_file_path):
+    fig = px.scatter_mapbox(df_csv, lat="lat", lon="long", color="elevation", color_continuous_scale="Temps",# Temps sunset sunsetdark,Plasma_r
+                            mapbox_style="carto-positron", #"open-street-map" "stamen-toner"
+                            width=800, height=800,
+                            zoom=4)
+
+    fig.update_coloraxes(showscale=False)
+
+    fig.write_image(f"{save_file_path}.jpeg", engine="kaleido")
+
+    plot(fig)
 
 
 #%%
