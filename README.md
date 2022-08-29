@@ -27,9 +27,11 @@ Principales libraries à installer (voir requirements.txt pour les versions):
 * selenium
 * webdriver_manager
 * geographiclib
+* seaborn
+* matplotlib
 
 ## Struture et description du code
-<p align="justify">La structure est simple: un script principal (main.py) qui gère automatiquement la séquence de recherche des nouveaux vols et qui appelle dans l'ordre logique les autres (adsb_exchange.py, kml_to_csv.py, get_new_df_data.py, csv_to_map.py,  maths_for_bernard.py et post_flight_consolidation.py).
+<p align="justify">La structure est simple: un script principal (main.py) qui gère automatiquement la séquence de recherche des nouveaux vols et qui appelle dans l'ordre logique les autres (adsb_exchange.py, kml_to_csv.py, get_new_df_data.py, csv_to_map.py, maths_for_bernard.py et post_flight_consolidation.py).
 Il utilise des données dans "/input/" et génère les résulats dans "/output/". Les 6 principaux scripts ont été commentés en français (et bientôt en anglais peut-être).</p>
 
 Les autres scripts sont des aides manuelles pour exploiter des vols spécifiques.
