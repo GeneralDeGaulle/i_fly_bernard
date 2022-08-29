@@ -148,7 +148,7 @@ def fct_get_all_data(df_new, list_csv, regis, icao, co2, propri, gallons, quiet 
     #pour chaque nouveau vol, et donc chaque csv unique, on se sert du csv pour générer
     #toutes les infos (1ère et dernière positions, temps de vol, CO2 émis, etc)
     for csv in list_csv:
-        item = fct_get_data_from_csv(csv, regis, icao, co2)
+        item = fct_get_data_from_csv(csv, regis, icao, co2, gallons)
         df_item = pd.DataFrame([item], columns = list(df_new.columns))
 
         # on regroupe tous les nouveaux vols du même avions

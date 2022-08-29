@@ -26,11 +26,11 @@ df_avion = pd.read_csv(path_avions, delimiter = ",")
 
 
 #%% pour repositionner les colonnes si besoin
-list_col = ["propriétaire", "registration", "icao24", "departure_date_only_utc", "departure_date_utc",
-            "arrival_date_utc", "airport_departure", "airport_arrival", "flight_duration_str",
-            "flight_duration_min", "kerosene_litres", "co2_emission_tonnes", "distance_km", "iso_country_dep", "iso_country_arr", "routes",
-            "airport_dep_icao", "airport_arr_icao", "latitude_dep", "longitude_dep",
-            "latitude_arr", "longitude_arr", "altitude_dep_m", "altitude_arr_m","path_csv"]
+# list_col = ["propriétaire", "registration", "icao24", "departure_date_only_utc", "departure_date_utc",
+#             "arrival_date_utc", "airport_departure", "airport_arrival", "flight_duration_str",
+#             "flight_duration_min", "kerosene_litres", "co2_emission_tonnes", "distance_km", "iso_country_dep", "iso_country_arr", "routes",
+#             "airport_dep_icao", "airport_arr_icao", "latitude_dep", "longitude_dep",
+#             "latitude_arr", "longitude_arr", "altitude_dep_m", "altitude_arr_m","path_csv"]
 
 #%% pour tous les avions
 for aircraft_row in df_avion.itertuples():
