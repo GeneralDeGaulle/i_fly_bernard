@@ -70,7 +70,12 @@ def fct_airport_vs_cruise(df_data):
     registration_ac = df_data.registration.iloc[0]
 
     df_data.loc[:,"next_flight_departure"] = df_data["airport_departure"].shift(1)
+    df_data.loc[:,"next_flight_departure_icao"] = df_data["airport_dep_icao"].shift(1)
+    df_data.loc[:,"next_flight_dep_iso_country"] = df_data["iso_country_dep"].shift(1)
+
     df_data.loc[:,"previous_flight_arrival"] = df_data["airport_arrival"].shift(-1)
+    df_data.loc[:,"previous_flight_arrival_icao"] = df_data["airport_arr_icao"].shift(-1)
+    df_data.loc[:,"previous_flight_arr_iso_country"] = df_data["iso_country_arr"].shift(-1)
 
     condition_cruise_arr = ((df_data["airport_arrival"] == "A/C in cruise") &
                  (df_data["next_flight_departure"] != "A/C in cruise"))
@@ -82,12 +87,20 @@ def fct_airport_vs_cruise(df_data):
 
     if m > 0:
         df_data.loc[condition_cruise_arr, "airport_arrival"] = df_data.loc[condition_cruise_arr,"next_flight_departure"]
+        df_data.loc[condition_cruise_arr, "airport_arr_icao"] = df_data.loc[condition_cruise_arr,"next_flight_departure_icao"]
+        df_data.loc[condition_cruise_arr, "iso_country_arr"] = df_data.loc[condition_cruise_arr,"next_flight_dep_iso_country"]
         df_data.loc[condition_cruise_dep, "airport_departure"] = df_data.loc[condition_cruise_dep, "previous_flight_arrival"]
+        df_data.loc[condition_cruise_dep, "airport_dep_icao"] = df_data.loc[condition_cruise_dep, "previous_flight_arrival_icao"]
+        df_data.loc[condition_cruise_dep, "iso_country_dep"] = df_data.loc[condition_cruise_dep, "previous_flight_arr_iso_country"]
+        # on complete les autres infos
+
+        df_data["routes"] = df_data["airport_departure"] + " - " + df_data["airport_arrival"]
         #specific message
         print(f"--- {registration_ac} - {m} vols dont l'aéroport a été modifié ---")
 
     #cleaning
-    df_data = df_data.drop(columns=["next_flight_departure","previous_flight_arrival"])
+    df_data = df_data.drop(columns=["next_flight_departure","previous_flight_arrival", "next_flight_departure_icao",
+                                    "next_flight_dep_iso_country", "previous_flight_arrival_icao", "previous_flight_arr_iso_country"])
 
     # si m = 0, on renvoit le df_data d'origine. Si non, on renvoie celui modifié
     return df_data
@@ -118,43 +131,45 @@ def fct_short_flight(df_data):
 def fct_check_2flights_in1(df_data, output = 0):
     # objectif_fct: on garde dans df_data que les vols potentiellement problématiques
 
+    registration_ac = df_data.registration.iloc[0]
+
     # on enlève les vols de moins de 2h car ils sont nécessairement plus lent (moins de phase
     # de croisiere à haute vitesse et moins intéressant relativement aux données de vols perdues
-    df_data = df_data[df_data["flight_duration_min"] >= 120].copy()
+    df_data_prep = df_data[df_data["flight_duration_min"] >= 120].copy()
 
     # calcul de la durée théorique du vol en utilisant une vitesse moyenne pour ce genre de jets.
     # on a calculé sur les 2ans de data 606 km/h pour les milliardaires ; 559 pour valljet.
     # On prends 500 pour avoir une marge
-    df_data.loc[:,"flight_duration_theorique_h"] = df_data["distance_km"] / 500.0
+    df_data_prep.loc[:,"flight_duration_theorique_h"] = df_data_prep["distance_km"] / 500.0
 
     # on estime que le vol a été étrangement long s'il a pris une heure en plus que la moyenne
-    df_data.loc[:,"flight_took_too_long"] = (df_data["flight_duration_min"] / 60.0
-                                       - df_data["flight_duration_theorique_h"]) > 0.5
+    df_data_prep.loc[:,"flight_took_too_long"] = (df_data_prep["flight_duration_min"] / 60.0
+                                       - df_data_prep["flight_duration_theorique_h"]) > 0.5
 
     # on ne garde que les vols "problématiques"
-    df_data = df_data[(df_data["flight_took_too_long"] == True)]
+    df_data_tbc = df_data_prep[(df_data_prep["flight_took_too_long"] == True)]
 
     # on clean les colonnes
-    df_data = df_data.drop(columns=["flight_duration_theorique_h", "flight_took_too_long"])
+    df_data_tbc = df_data_tbc.drop(columns=["flight_duration_theorique_h", "flight_took_too_long"])
 
     # on vérifie s'il y a bien un gap dans le csv (et si ce n'est pas un vol lent, ou tour de piste ou autre)
-    df_data = fct_check_gap_in_flight(df_data)
+    df_data_issue = fct_check_gap_in_flight(df_data_tbc)
 
-    nb_of_issues = len(df_data)
+    nb_of_issues = len(df_data_issue)
 
     if nb_of_issues > 0:
         if output == 0:
-            print(f"!!! {nb_of_issues} vols avec un temps de vol trop long et un gap de position !!!")
+            print(f"!!! {registration_ac} - {nb_of_issues} vols trop long avec un gap de position !!!")
         else:
-            print(f"!!! {nb_of_issues} vols avec un temps de vol trop long et un gap de position !!!")
-            return df_data
+            print(f"!!! {registration_ac} - {nb_of_issues} vols trop long avec un gap de position !!!")
+            return df_data_issue
 
 
 #%% verification un vol étrangement long à un gap
-def fct_check_gap_in_flight(df_data):
+def fct_check_gap_in_flight(df_data_to_be_confirmed):
     # on regarde vol par vol si le csv n'a pas un trou
-    for i in df_data.index:
-        path_csv = df_data.loc[i].path_csv
+    for i in df_data_to_be_confirmed.index:
+        path_csv = df_data_to_be_confirmed.loc[i].path_csv
 
         # on charge le csv du vol concerné
         df = pd.read_csv(path_csv)
@@ -168,9 +183,9 @@ def fct_check_gap_in_flight(df_data):
         df_gaps = df[df["diff_time"] >= 1]
 
         if df_gaps.empty:
-            df_data = df_data.drop([i])
+            df_data_to_be_confirmed = df_data_to_be_confirmed.drop([i])
 
-    return df_data
+    return df_data_to_be_confirmed
 
 
 #%% identifier s'il y a une doublette de vol à réconcilier
