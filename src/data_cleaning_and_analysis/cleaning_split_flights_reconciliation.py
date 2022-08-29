@@ -108,7 +108,7 @@ df_new_flights_empty = pd.DataFrame(columns = df_ac_data.columns)
 df_new_flights_only = get_new_df_data.fct_get_all_data(df_new_flights_empty,
                                                        list_new_csv,
                                                        registration_ac,
-                                                       icao24_ac, co2_ac)
+                                                       icao24_ac, co2_ac, ac_proprio, quiet = 0)
 
 
 #plot map grâce à plotly avec les infos requises pour le titre de l'image
