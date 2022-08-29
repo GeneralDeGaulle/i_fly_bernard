@@ -52,10 +52,12 @@ root/
         └─── post_flight_consolidation.py -> script #7 qui contient des fonctions de "post-traitement", principalement pour soulager le code principal
     └───data_cleaning_and_analysis
         └─── analysis_bilan_mensuel.py -> script qui sert à générer les bilans mensuels.
-        └─── cleaning_regenerate_data_from_csv.py -> script qui sert à regénérer toutes les données des fichiers "ac_flight_data_all.csv" à partir du path_csv contenu dans ce même fichier.
+        └─── analysis_plot_bilan.py -> script qui sert à générer des plots seaborn pour divers bilans
+        └─── cleaning_break_merged_flights.py -> script qui sert à couper en deux des vols qui ont été mergés par erreur par adsb-ex.
+        └─── cleaning_regenerate_data_from_csv.py -> script qui sert à regénérer toutes les données des fichiers "XXX_flight_data_all.csv" à partir des path_csv contenu dans ce même fichier.
         └─── cleaning_split_flights_reconciliation.py -> script offline pour identifier s'il y des vols à réconcilier (à cause d'adsb-ex qui coupe les vols à minuit UTC) et les "fusionnent"
-        └─── plot_multiple_flights.py -> script qui sert à générer des plots spécifiques (par exemple pour twitter un cas où il y a eu 3 vols par jour ou un autre concernant un tour du monde)
-        └─── plot_replot_maps.py -> script qui sert à regénérer facilement les plots d'un vol quand il y a eu un souci avec la version automatique
+        └─── plot_multiple_trajectories.py -> script qui sert à générer des plots spécifiques (par exemple pour twitter un cas où il y a eu 3 vols par jour ou un autre concernant un tour du monde)
+        └─── plot_replot_trajectory.py -> script qui sert à regénérer facilement les plots d'un vol quand il y a eu un souci avec la version automatique
 
 
 └───root/input/
