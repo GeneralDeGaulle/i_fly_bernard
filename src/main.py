@@ -57,6 +57,7 @@ for aircraft_row in df_avion.itertuples():
     co2_ac = aircraft_row.co2_kg_per_hour
     last_check_date = aircraft_row.last_check
     ac_proprio = aircraft_row.proprio
+    gallons_ac = aircraft_row.us_gallons_per_hour
 
 
     #load previous data
@@ -76,7 +77,10 @@ for aircraft_row in df_avion.itertuples():
 
     #go sur adsb-exchange pour trouver les nouveau vols par rapport à la date du dernier check jusqu'à aujourd'hui
     list_new_flights_ac = []
-    list_new_flights_ac = adsb_exchange.fct_adsbex_check_new_flights_and_kml(icao24_ac, registration_ac, path_flight_data, last_check_date)
+    list_new_flights_ac = adsb_exchange.fct_adsbex_check_new_flights_and_kml(icao24_ac,
+                                                                             registration_ac,
+                                                                             path_flight_data,
+                                                                             last_check_date)
 
 
     #si nouveau(x) vol(s), on continue, sinon stop et on passe à l'avion suivant.
@@ -109,7 +113,7 @@ for aircraft_row in df_avion.itertuples():
                 df_new_flights_only = get_new_df_data.fct_get_all_data(df_new_flights_empty,
                                                                        list_new_csv,
                                                                        registration_ac,
-                                                                       icao24_ac, co2_ac, ac_proprio)
+                                                                       icao24_ac, co2_ac, ac_proprio, gallons_ac)
 
                 # on teste le nouveau df avec les fonctions de consolidations. En fonction de la vérification,
                 # soit on applique les modifs, soit une alerte.

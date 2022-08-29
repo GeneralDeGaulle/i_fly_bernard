@@ -30,7 +30,7 @@ df_airports = df_airports.rename(columns={"ident" : "airport_icao"})
 df_avion = pd.read_csv(path_avions, delimiter = ",")
 
 #%%
-def fct_get_data_from_csv(csv, regis, icao, co2):
+def fct_get_data_from_csv(csv, regis, icao, co2, gallons_per_h):
 
     df_csv = pd.read_csv(csv)
 
@@ -65,6 +65,9 @@ def fct_get_data_from_csv(csv, regis, icao, co2):
     # on calcule la variable importante du co2
     flt_co2 = round(co2/1000.0 * flt_duration_min/60.0 ,1)
 
+    # on calcule la variable importante du co2
+    flt_litres = round(3.8 * gallons_per_h * flt_duration_min/60.0, 1)
+
     #on transforme la durée de vol en format affichable
     flt_duration_str = maths_for_bernard.fct_time_str(flt_duration_min)
 
@@ -92,7 +95,7 @@ def fct_get_data_from_csv(csv, regis, icao, co2):
 
 
     return [proprio, regis, icao, dep_date_only_utc, dep_date_utc, arr_date_utc, apt_dep, apt_arr,
-            flt_duration_str, flt_duration_min, flt_co2, distance_dep_arr_km, routes, pays_departure,
+            flt_duration_str, flt_duration_min, flt_litres, flt_co2, distance_dep_arr_km, routes, pays_departure,
             pays_arrival, apt_dep_icao, apt_arr_icao, lat_ini, long_ini, lat_last, long_last, elev_ini, elev_last, csv_relatif]
 
 
@@ -141,7 +144,7 @@ def fct_airport_to_country(apt_icao, df_apt):
 
 
 #%%
-def fct_get_all_data(df_new, list_csv, regis, icao, co2, propri, quiet = 0):
+def fct_get_all_data(df_new, list_csv, regis, icao, co2, propri, gallons, quiet = 0):
     #pour chaque nouveau vol, et donc chaque csv unique, on se sert du csv pour générer
     #toutes les infos (1ère et dernière positions, temps de vol, CO2 émis, etc)
     for csv in list_csv:

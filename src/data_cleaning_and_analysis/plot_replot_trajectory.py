@@ -68,7 +68,8 @@ list_new_csv = list(df_new_flights_only.path_csv.values)
 df_new_flights_only = get_new_df_data.fct_get_all_data(df_new_flights_empty,
                                                        list_new_csv,
                                                        registration_ac,
-                                                       icao24_ac, co2_ac)
+                                                       icao24_ac, co2_ac, ac_proprio, gallons_ac,
+                                                       quiet = 0)
 
 #%%
 #definir types

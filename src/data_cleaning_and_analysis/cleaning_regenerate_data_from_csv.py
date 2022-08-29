@@ -26,11 +26,11 @@ df_avion = pd.read_csv(path_avions, delimiter = ",")
 
 
 #%% pour repositionner les colonnes si besoin
-# list_col = ["propriétaire", "registration", "icao24", "departure_date_only_utc", "departure_date_utc",
-#             "arrival_date_utc", "airport_departure", "airport_arrival", "flight_duration_str",
-#             "flight_duration_min", "co2_emission_tonnes", "distance_km", "iso_country_dep", "iso_country_arr", "routes",
-#             "airport_dep_icao", "airport_arr_icao", "latitude_dep", "longitude_dep",
-#             "latitude_arr", "longitude_arr", "altitude_dep_m", "altitude_arr_m","path_csv"]
+list_col = ["propriétaire", "registration", "icao24", "departure_date_only_utc", "departure_date_utc",
+            "arrival_date_utc", "airport_departure", "airport_arrival", "flight_duration_str",
+            "flight_duration_min", "kerosene_litres", "co2_emission_tonnes", "distance_km", "iso_country_dep", "iso_country_arr", "routes",
+            "airport_dep_icao", "airport_arr_icao", "latitude_dep", "longitude_dep",
+            "latitude_arr", "longitude_arr", "altitude_dep_m", "altitude_arr_m","path_csv"]
 
 #%% pour tous les avions
 for aircraft_row in df_avion.itertuples():
@@ -39,6 +39,7 @@ for aircraft_row in df_avion.itertuples():
     icao24_ac = str(aircraft_row.icao24)
     co2_ac = aircraft_row.co2_kg_per_hour
     ac_proprio = aircraft_row.proprio
+    gallons_ac = aircraft_row.us_gallons_per_hour
     print(registration_ac)
     # break
 
@@ -60,7 +61,8 @@ for aircraft_row in df_avion.itertuples():
     df_ac_data_new = get_new_df_data.fct_get_all_data(df_new_flights_empty,
                                                            list_new_csv,
                                                            registration_ac,
-                                                           icao24_ac, co2_ac, ac_proprio, quiet = 1)
+                                                           icao24_ac, co2_ac, ac_proprio, gallons_ac,
+                                                           quiet = 1)
 
     # #clean and save data
     #on nettoie new flight avant de le fusionner
@@ -88,6 +90,7 @@ df_avion = df_avion[df_avion["registration"] == registration_ac]
 icao24_ac = df_avion.icao24.values[0]
 co2_ac = df_avion.co2_kg_per_hour.values[0]
 ac_proprio = df_avion.proprio.values[0]
+gallons_ac = df_avion.us_gallons_per_hour.values[0]
 
 path_flight_data = os.path.join(path, "output", registration_ac)
 path_flight_data_csv = os.path.join(path_flight_data, f"{registration_ac}_flight_data_all.csv")
@@ -105,8 +108,8 @@ df_new_flights_empty = pd.DataFrame(columns = df_ac_data.columns)
 df_ac_data_new = get_new_df_data.fct_get_all_data(df_new_flights_empty,
                                                        list_new_csv,
                                                        registration_ac,
-                                                       icao24_ac, co2_ac, ac_proprio, quiet = 1)
-
+                                                       icao24_ac, co2_ac, ac_proprio, gallons_ac,
+                                                       quiet = 1)
 # #clean and save data
 #on nettoie new flight avant de le fusionner
 df_ac_data_new = df_ac_data_new.drop(columns=["departure_date_only_utc_map"])

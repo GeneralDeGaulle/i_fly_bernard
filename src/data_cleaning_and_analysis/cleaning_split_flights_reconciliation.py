@@ -50,6 +50,7 @@ df_avion = df_avion[df_avion["registration"] == registration_ac]
 icao24_ac = df_avion.icao24.values[0]
 co2_ac = df_avion.co2_kg_per_hour.values[0]
 ac_proprio = df_avion.proprio.values[0]
+gallons_ac = df_avion.us_gallons_per_hour.values[0]
 
 
 #%%
@@ -108,7 +109,8 @@ df_new_flights_empty = pd.DataFrame(columns = df_ac_data.columns)
 df_new_flights_only = get_new_df_data.fct_get_all_data(df_new_flights_empty,
                                                        list_new_csv,
                                                        registration_ac,
-                                                       icao24_ac, co2_ac, ac_proprio, quiet = 0)
+                                                       icao24_ac, co2_ac, ac_proprio, gallons_ac,
+                                                       quiet = 0)
 
 
 #plot map grâce à plotly avec les infos requises pour le titre de l'image
