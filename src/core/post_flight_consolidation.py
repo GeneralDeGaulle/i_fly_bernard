@@ -184,7 +184,7 @@ def fct_check_gap_in_flight(df_data_to_be_confirmed):
         df["diff_time"] = df["time"].shift(-1) - df["time"]
         df["diff_time"] = df["diff_time"].apply(lambda x: x.seconds/3600.0)
 
-        df_gaps = df[df["diff_time"] >= 1]
+        df_gaps = df[df["diff_time"] >= 1.5]
 
         if df_gaps.empty:
             df_data_to_be_confirmed = df_data_to_be_confirmed.drop([i])
