@@ -144,4 +144,4 @@ df_complete = df_complete.sort_values(by=["departure_date_utc"], ascending = Fal
 df_complete.to_csv(path_flight_data_csv, index=False, encoding="utf-8-sig")
 
 
-
+#%%
