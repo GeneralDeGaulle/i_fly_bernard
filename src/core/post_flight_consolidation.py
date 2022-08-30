@@ -63,7 +63,7 @@ def fct_open_flights(df_issue):
         date = flights.departure_date_only_utc
         icao = flights.icao24
 
-        url = "https://globe.adsbexchange.com/?icao=" + icao + "&showTrace=" + date
+        url = "https://globe.adsbexchange.com/?icao=" + str(icao) + "&showTrace=" + date
 
         browser.switch_to.new_window("tab")
         browser.get(url)

@@ -26,7 +26,7 @@ from src.core import get_new_df_data
 
 #%%
 # =============================================================================
-registration_ac = "F-HMBY"
+registration_ac = "F-HEME"
 # =============================================================================
 
 #%% define path
@@ -42,10 +42,10 @@ df_avion = pd.read_csv(path_avions, delimiter = ",")
 
 df_avion = df_avion[df_avion["registration"] == registration_ac]
 
-icao24_ac = df_avion.icao24.values[0]
+icao24_ac = str(df_avion.icao24.values[0])
 co2_ac = df_avion.co2_kg_per_hour.values[0]
 ac_proprio = df_avion.proprio.values[0]
-gallons_ac = aircraft_row.us_gallons_per_hour
+gallons_ac = df_avion.us_gallons_per_hour.values[0]
 
 
 #%%
@@ -63,47 +63,56 @@ post_flight_consolidation.fct_open_flights(df_tbc)
 
 
 #%% sélectionner les vols à traiter
-list_vols_index = [0]
-df_to_break = df_tbc.iloc[list_vols_index]
+# list_vol_index = [0,1]
+# df_to_break = df_tbc.iloc[list_vol_index]
+df_to_break = df_tbc
 
 
-#%% analyser les vols à breaker
-path_csv_ini = os.path.join(path, df_to_break.path_csv.iloc[0])
-path_folder_ini = os.path.dirname(path_csv_ini)
-file_name_ini = os.path.splitext(os.path.basename(df_to_break.path_csv.iloc[0]))[0]
+list_new_csv = []
 
-df_csv_ini = pd.read_csv(path_csv_ini)
-df_csv_ini["time"] = pd.to_datetime(df_csv_ini["time"], utc=True)
+#%%
+for i in range(len(df_to_break)):
+# analyser les vols à breaker
+    path_csv_ini = os.path.join(path, df_to_break.path_csv.iloc[i])
+    path_folder_ini = os.path.dirname(path_csv_ini)
+    file_name_ini = os.path.splitext(os.path.basename(df_to_break.path_csv.iloc[i]))[0]
 
-# on regarde si dans le csv, deux points consécutifs on un écart de plus d'1h afin de
-# rechercher les trous de trajectoires. Inférieur à 1h n'est pas intéressant en termes de pertes de données
-df_csv_ini["diff_time_h"] = df_csv_ini["time"].shift(-1) - df_csv_ini["time"]
-df_csv_ini["diff_time_h"] = df_csv_ini["diff_time_h"].apply(lambda x: x.seconds/3600.0)
-df_gaps = df_csv_ini[df_csv_ini["diff_time_h"] >= 1]
+    df_csv_ini = pd.read_csv(path_csv_ini)
+    df_csv_ini["time"] = pd.to_datetime(df_csv_ini["time"], utc=True)
 
-df_gaps = df_gaps.sort_values(by="diff_time_h", ascending = False)
+    # on regarde si dans le csv, deux points consécutifs on un écart de plus d'1h afin de
+    # rechercher les trous de trajectoires. Inférieur à 1h n'est pas intéressant en termes de pertes de données
+    df_csv_ini["diff_time_h"] = df_csv_ini["time"].shift(-1) - df_csv_ini["time"]
+    df_csv_ini["diff_time_h"] = df_csv_ini["diff_time_h"].apply(lambda x: x.seconds/3600.0)
+    df_gaps = df_csv_ini[df_csv_ini["diff_time_h"] >= 1]
 
-
-#%% on construit les nouveaux csv et on les plots pour vérifier
-df_break_point = df_gaps.iloc[0]
-
-path_csv_flight_1 = os.path.join(path_folder_ini, f"{file_name_ini}_break_1.csv")
-path_csv_flight_2 = os.path.join(path_folder_ini, f"{file_name_ini}_break_2.csv")
-
-df_csv_flight_1 = df_csv_ini.iloc[0:df_break_point.name]
-df_csv_flight_2 = df_csv_ini.iloc[df_break_point.name + 1:]
-
-post_flight_consolidation.plot_df_csv(df_csv_flight_1, path_csv_flight_1)
-post_flight_consolidation.plot_df_csv(df_csv_flight_2, path_csv_flight_2)
-
-df_csv_flight_1.to_csv(path_csv_flight_1, index=False, encoding="utf-8-sig")
-df_csv_flight_2.to_csv(path_csv_flight_2, index=False, encoding="utf-8-sig")
+    df_gaps = df_gaps.sort_values(by="diff_time_h", ascending = False)
 
 
-#%% on regénère les données pour les nouveaux vols
-list_new_csv = [path_csv_flight_1, path_csv_flight_2]
+# on construit les nouveaux csv et on les plots pour vérifier
+    df_break_point = df_gaps.iloc[0]
 
-#récupération des infos pour tous les nouveaux vols de cet avion
+    path_csv_flight_1 = os.path.join(path_folder_ini, f"{file_name_ini}_break_1.csv")
+    path_csv_flight_2 = os.path.join(path_folder_ini, f"{file_name_ini}_break_2.csv")
+
+    df_csv_flight_1 = df_csv_ini.iloc[0:df_break_point.name]
+    df_csv_flight_2 = df_csv_ini.iloc[df_break_point.name + 1:]
+
+    post_flight_consolidation.plot_df_csv(df_csv_flight_1, path_csv_flight_1)
+    post_flight_consolidation.plot_df_csv(df_csv_flight_2, path_csv_flight_2)
+
+    df_csv_flight_1 = df_csv_flight_1.drop(columns=["diff_time_h"])
+    df_csv_flight_2 = df_csv_flight_2.drop(columns=["diff_time_h"])
+
+    df_csv_flight_1.to_csv(path_csv_flight_1, index=False, encoding="utf-8-sig")
+    df_csv_flight_2.to_csv(path_csv_flight_2, index=False, encoding="utf-8-sig")
+
+
+    # on prépare la liste de tous les vols à regénérer
+    list_new_csv.append(path_csv_flight_1)
+    list_new_csv.append(path_csv_flight_2)
+
+#%%récupération des infos pour tous les nouveaux vols de cet avion
 df_new_flights_empty = pd.DataFrame(columns = df_ac_data.columns)
 df_new_flights_only = get_new_df_data.fct_get_all_data(df_new_flights_empty, list_new_csv,
                                                        registration_ac, icao24_ac, co2_ac,
@@ -124,4 +133,3 @@ df_complete.to_csv(path_flight_data_csv, index=False, encoding="utf-8-sig")
 
 
 #%%
-

@@ -53,7 +53,7 @@ df_avion["last_check"] = pd.to_datetime(df_avion["last_check"], utc=True)
 #%% constant definition et df
 df_avion = df_avion[df_avion["registration"] == registration_ac]
 
-icao24_ac = df_avion.icao24.values[0]
+icao24_ac = str(df_avion.icao24.values[0])
 co2_ac = df_avion.co2_kg_per_hour.values[0]
 ac_proprio = df_avion.proprio.values[0]
 

@@ -20,6 +20,7 @@ locale.setlocale(locale.LC_TIME,"");
 #%%
 from src.core import get_new_df_data
 from src.core import csv_to_map
+from src.core import post_flight_consolidation
 
 
 #%%
@@ -47,7 +48,7 @@ df_avion = pd.read_csv(path_avions, delimiter = ",")
 
 df_avion = df_avion[df_avion["registration"] == registration_ac]
 
-icao24_ac = df_avion.icao24.values[0]
+icao24_ac = str(df_avion.icao24.values[0])
 co2_ac = df_avion.co2_kg_per_hour.values[0]
 ac_proprio = df_avion.proprio.values[0]
 gallons_ac = df_avion.us_gallons_per_hour.values[0]
@@ -75,6 +76,10 @@ df_vols_to_be_merged_1 = df_vols_tbc_1[(df_vols_tbc_1["arrival_date_utc"].dt.str
                          (df_vols_tbc_1["diff_with_next"].dt.days == 0)]
 
 df_vols_to_be_merged = pd.concat([df_vols_to_be_merged_1])
+
+
+#%% visualiser les vols
+post_flight_consolidation.fct_open_flights(df_vols_to_be_merged)
 
 
 #%% fusionner csv
@@ -112,24 +117,15 @@ df_new_flights_only = get_new_df_data.fct_get_all_data(df_new_flights_empty,
                                                        icao24_ac, co2_ac, ac_proprio, gallons_ac,
                                                        quiet = 0)
 
-
-#plot map grâce à plotly avec les infos requises pour le titre de l'image
-for new_flight in df_new_flights_only.itertuples():
-    co2_new = new_flight.co2_emission_tonnes
-    tps_vol_new = new_flight.flight_duration_str
-    path_csv_flight = new_flight.path_csv
-    date_map = new_flight.departure_date_only_utc_map.strftime("%#d %B %Y")
-
-    csv_to_map.fct_csv_2_map(path_csv_flight, registration_ac, date_map, co2_new, tps_vol_new, ac_proprio)
+#plot map grâce à plotly
+for flight in df_new_flights_only.itertuples():
+    path_csv_flt = os.path.join(path, flight.path_csv)
+    post_flight_consolidation.plot_df_csv(pd.read_csv(path_csv_flt), path_csv_flt)
 
 
-#clean and save data
-#on nettoie new flight avant de le fusionner
+#%% cleaner et suppression des anciens
 df_new_flights_only = df_new_flights_only.drop(columns=["departure_date_only_utc_map"])
 
-
-
-#%% cleaner les anciens
 list_vol_ini = np.array(df_vols_to_be_merged.index)
 list_vol_next = list_vol_ini - 1 #car vol rangé du plus récent au plus ancien
 
@@ -147,8 +143,5 @@ df_complete = df_complete.sort_values(by=["departure_date_utc"], ascending = Fal
 #%% si ok, enregistrer et supprimer ancien folder
 df_complete.to_csv(path_flight_data_csv, index=False, encoding="utf-8-sig")
 
-for next_flight_csv in list_next_csv:
-    os.remove(next_flight_csv)
-    os.rmdir(os.path.dirname(next_flight_csv))
 
 

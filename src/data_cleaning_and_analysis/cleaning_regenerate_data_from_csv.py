@@ -81,13 +81,14 @@ for aircraft_row in df_avion.itertuples():
 
     #puis on sauvegarde
     df_complete.to_csv(path_flight_data_csv, index=False, encoding="utf-8-sig")
+    print()
 
 
 #%% pour un seul avion
 registration_ac = "F-GBOL"
 
 df_avion = df_avion[df_avion["registration"] == registration_ac]
-icao24_ac = df_avion.icao24.values[0]
+icao24_ac = str(df_avion.icao24.values[0])
 co2_ac = df_avion.co2_kg_per_hour.values[0]
 ac_proprio = df_avion.proprio.values[0]
 gallons_ac = df_avion.us_gallons_per_hour.values[0]
