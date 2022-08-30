@@ -46,7 +46,7 @@ registration_ac = "F-GVMA"
 df_all_flights = df_all_flights[df_all_flights["registration"] == registration_ac]
 df_all_flights = df_all_flights[df_all_flights["propriétaire"] == "avion de location Valljet"]
 # =============================================================================
-date_1 = pd.to_datetime("01-01-2021", utc=True, dayfirst=True)
+date_1 = pd.to_datetime("01-01-2022", utc=True, dayfirst=True)
 date_2 = pd.to_datetime("31-08-2022", utc=True, dayfirst=True)
 
 df_all_flights = df_all_flights.loc[(df_all_flights["departure_date_utc"] >= date_1) & (df_all_flights["departure_date_utc"] < date_2)]
@@ -63,6 +63,8 @@ df_group_month_c = df_all_flights.groupby("month", as_index=False, sort = False)
 df_group_month_c.loc[:,"year"] = df_group_month_c["month"].str.strip().str[4:]
 
 df_group_year = df_all_flights.groupby("year", as_index=False, sort = False)["co2_emission_tonnes"].sum()
+
+df_group_day_c = df_all_flights.groupby("departure_date_only_utc", as_index=False, sort = False)["registration"].count()
 
 
 df_4month = df_all_flights.groupby(pd.Grouper(key="departure_date_utc", freq="4MS"))[["registration","co2_emission_tonnes"]].count()
@@ -111,6 +113,21 @@ ax3.set_title("Nombre de vols par mois", fontsize = 16)
 ax3.tick_params(labelsize=10, labelrotation=0)
 # ax3.bar_label(ax3.containers[0], fontsize = 11)
 # ax3.bar_label(ax3.containers[1], fontsize = 11)
+
+# fig3.tight_layout()
+
+
+plt.show()
+
+#%% nb of flights per day
+fig4, ax4 = plt.subplots(figsize=(10, 10))
+sns.barplot(data=df_group_day_c, x="departure_date_only_utc", y="registration")#, hue="year", dodge=False)
+
+ax4.set_xlabel("Par jour", fontsize = 14)
+ax4.set_ylabel("Nombre de vols", fontsize = 14)
+ax4.set_title("Nombre de vols par jours", fontsize = 16)
+ax4.tick_params(labelsize=10, labelrotation=90)
+ax4.set_xticks(range(0,240,10))
 
 # fig3.tight_layout()
 
