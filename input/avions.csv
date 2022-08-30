@@ -1,35 +1,35 @@
 ﻿registration,icao24,proprio,date_acquisition,model,type,msn,us_gallons_per_hour,co2_kg_per_hour,last_check
-F-HFHP,3994ef,avion du groupe Pinault,10/06/2020,Bombardier Global 7500,BD-700-2A12,70022,460,4500,24/08/2022
-F-GVMA,395580,avion de Bernard Arnault,14/09/2020,Bombardier Global 7500,BD-700-2A12,70020,460,4500,24/08/2022
-F-HMBY,39b038,avion du groupe Bouygues,01/12/2016,Bombardier Global 6000,BD-700-2A12,9748,480,4700,24/08/2022
-F-HVBL,39d42b,avion #2 du groupe Bolloré,14/06/2013,Dassault Falcon-7X,Falcon-7X,188,320,3120,24/08/2022
-F-GBOL,3905cb,avion #1 du groupe Bolloré,17/06/2013,Bombardier Global 6000,BD-700-1A10,9500,480,4700,24/08/2022
-F-HJJJ,39a529,avion du groupe JC-Decaux,18/02/2020,Falcon 900EX,Falcon 900EX,318,267,2600,24/08/2022
-F-GLTK,392E6A,avion de location Valljet,05/07/2022,Cessna CitationJet CITATION II,F550,550-0609,193,1882,29/08/2022
-F-HBMR,398591,avion de location Valljet,01/03/2022,Cessna CitationJet CITATION II,F550,550-0717,193,1882,29/08/2022
-F-GGGA,3918C0,avion de location Valljet,06/05/2021,Cessna CitationJet CITATION II,F550,550-0586,193,1882,29/08/2022
-F-HBZA,398720,avion de location Valljet,29/01/2019,Cessna CitationJet CITATION II,F550,550-0672,193,1882,29/08/2022
-F-HGPG,3999E6,avion de location Valljet,08/11/2019,Cessna CitationJet CJ/CJ1,525,525-0102,134,1307,29/08/2022
-F-HAJD,398123,avion de location Valljet,31/10/2019,Cessna CitationJet CJ/CJ1,525,525-0523,134,1307,29/08/2022
-F-HRIB,39C501,avion de location Valljet,10/11/2021,Cessna CitationJet CJ/CJ1,525,525-0188,134,1307,29/08/2022
-F-HJAV,39A415,avion de location Valljet,04/05/2021,Cessna CitationJet CJ/CJ1,525,525-0473,134,1307,29/08/2022
-F-HIVA,39A2A0,avion de location Valljet,15/01/2020,Cessna CitationJet CJ/CJ1,525,525-0235,134,1307,29/08/2022
-F-HVLJ,39D569,avion de location Valljet,16/06/2020,Cessna CitationJet CJ2,525A,525A0164,140,1365,29/08/2022
-F-HMSG,39B246,avion de location Valljet,18/03/2020,Cessna CitationJet CJ2,525A,525A-0033,140,1365,29/08/2022
-F-HEMI,399188,avion de location Valljet,20/07/2021,Cessna CitationJet CJ2+,525A,525A0479,140,1365,29/08/2022
-F-HTSB,39CE41,avion de location Valljet,28/12/2020,Cessna CitationJet CJ3,525B,525B-0230,170,1657,29/08/2022
-F-HGRI,399A28,avion de location Valljet,06/05/2021,Cessna CitationJet M2,525,525-0851,120,1170,29/08/2022
-F-HFKF,399545,avion de location Valljet,28/01/2022,Embraer 145,ERJ-145 LR,145286,403,3929,29/08/2022
-F-HELA,399160,avion de location Valljet,07/11/2018,Embraer 145,ERJ-145 EP,145167,403,3929,29/08/2022
-F-HFCN,39944D,avion de location Valljet,14/02/2019,Embraer 145,ERJ-145 MP,145362,403,3929,29/08/2022
-F-HREX,39C497,avion de location Valljet,06/05/2021,Beech Aircraft HAWKER 800 XP,Hawker 800XP,258335,291,2837,29/08/2022
-F-HPUR,39BE91,avion de location Valljet,10/01/2018,Beech Aircraft HAWKER 800 XP,Hawker 800XP,258673,291,2837,29/08/2022
-F-HFCS,399452,avion de location Valljet,09/07/2018,Beech Aircraft HAWKER 800 XP,Hawker 900XP,HA-0073,250,2438,29/08/2022
-F-HPHX,39BCF7,avion de location Valljet,10/12/2020,Beech Aircraft HAWKER 800 XP,Hawker 900XP,HA-0186,250,2438,29/08/2022
-F-HEME,399184,avion de location Valljet,13/05/2020,Beech Aircraft HAWKER 800 XP,Hawker 900XP,HA-0034,250,2438,29/08/2022
-F-GPGA,393CC0,avion de location Valljet,08/12/2017,Beech Aircraft HAWKER 800 XP,Hawker 900XP,HA-0205,250,2438,29/08/2022
-F-HFKD,399543,avion de location Valljet,20/07/2021,Embraer Legacy 600,EMB-135BJ,14500933,312,3042,29/08/2022
-F-HGSA,399A40,avion de location Valljet,17/08/2020,Embraer Legacy 600,EMB-135BJ,14501051,312,3042,29/08/2022
-F-HJMA,39A580,avion de location Valljet,21/03/2019,Embraer Legacy 600,EMB-135BJ,14500854,312,3042,29/08/2022
-F-HSTB,39CA61,avion de location Valljet,11/03/2020,Embraer Legacy 650,EMB-135BJ,14501160,403,3530,29/08/2022
-F-HBAN,39840D,avion de location Valljet,12/07/2022,Embraer Legacy 650,EMB-135BJ,14501141,403,3530,29/08/2022
+F-HFHP,3994ef,avion du groupe Pinault,10/06/2020,Bombardier Global 7500,BD-700-2A12,70022,460,4500,2022-08-30
+F-GVMA,395580,avion de Bernard Arnault,14/09/2020,Bombardier Global 7500,BD-700-2A12,70020,460,4500,2022-08-30
+F-HMBY,39b038,avion du groupe Bouygues,01/12/2016,Bombardier Global 6000,BD-700-2A12,9748,480,4700,2022-08-30
+F-HVBL,39d42b,avion #2 du groupe Bolloré,14/06/2013,Dassault Falcon-7X,Falcon-7X,188,320,3120,2022-08-30
+F-GBOL,3905cb,avion #1 du groupe Bolloré,17/06/2013,Bombardier Global 6000,BD-700-1A10,9500,480,4700,2022-08-30
+F-HJJJ,39a529,avion du groupe JC-Decaux,18/02/2020,Falcon 900EX,Falcon 900EX,318,267,2600,2022-08-30
+F-GLTK,392E6A,avion de location Valljet,05/07/2022,Cessna CitationJet CITATION II,F550,550-0609,193,1882,2022-08-30
+F-HBMR,398591,avion de location Valljet,01/03/2022,Cessna CitationJet CITATION II,F550,550-0717,193,1882,2022-08-30
+F-GGGA,3918C0,avion de location Valljet,06/05/2021,Cessna CitationJet CITATION II,F550,550-0586,193,1882,2022-08-30
+F-HBZA,398720,avion de location Valljet,29/01/2019,Cessna CitationJet CITATION II,F550,550-0672,193,1882,2022-08-30
+F-HGPG,3999E6,avion de location Valljet,08/11/2019,Cessna CitationJet CJ/CJ1,525,525-0102,134,1307,2022-08-30
+F-HAJD,398123,avion de location Valljet,31/10/2019,Cessna CitationJet CJ/CJ1,525,525-0523,134,1307,2022-08-30
+F-HRIB,39C501,avion de location Valljet,10/11/2021,Cessna CitationJet CJ/CJ1,525,525-0188,134,1307,2022-08-30
+F-HJAV,39A415,avion de location Valljet,04/05/2021,Cessna CitationJet CJ/CJ1,525,525-0473,134,1307,2022-08-30
+F-HIVA,39A2A0,avion de location Valljet,15/01/2020,Cessna CitationJet CJ/CJ1,525,525-0235,134,1307,2022-08-30
+F-HVLJ,39D569,avion de location Valljet,16/06/2020,Cessna CitationJet CJ2,525A,525A0164,140,1365,2022-08-30
+F-HMSG,39B246,avion de location Valljet,18/03/2020,Cessna CitationJet CJ2,525A,525A-0033,140,1365,2022-08-30
+F-HEMI,399188,avion de location Valljet,20/07/2021,Cessna CitationJet CJ2+,525A,525A0479,140,1365,2022-08-30
+F-HTSB,39CE41,avion de location Valljet,28/12/2020,Cessna CitationJet CJ3,525B,525B-0230,170,1657,2022-08-30
+F-HGRI,399A28,avion de location Valljet,06/05/2021,Cessna CitationJet M2,525,525-0851,120,1170,2022-08-30
+F-HFKF,399545,avion de location Valljet,28/01/2022,Embraer 145,ERJ-145 LR,145286,403,3929,2022-08-30
+F-HELA,399160,avion de location Valljet,07/11/2018,Embraer 145,ERJ-145 EP,145167,403,3929,2022-08-30
+F-HFCN,39944D,avion de location Valljet,14/02/2019,Embraer 145,ERJ-145 MP,145362,403,3929,2022-08-30
+F-HREX,39C497,avion de location Valljet,06/05/2021,Beech Aircraft HAWKER 800 XP,Hawker 800XP,258335,291,2837,2022-08-30
+F-HPUR,39BE91,avion de location Valljet,10/01/2018,Beech Aircraft HAWKER 800 XP,Hawker 800XP,258673,291,2837,2022-08-30
+F-HFCS,399452,avion de location Valljet,09/07/2018,Beech Aircraft HAWKER 800 XP,Hawker 900XP,HA-0073,250,2438,2022-08-30
+F-HPHX,39BCF7,avion de location Valljet,10/12/2020,Beech Aircraft HAWKER 800 XP,Hawker 900XP,HA-0186,250,2438,2022-08-30
+F-HEME,399184,avion de location Valljet,13/05/2020,Beech Aircraft HAWKER 800 XP,Hawker 900XP,HA-0034,250,2438,2022-08-30
+F-GPGA,393CC0,avion de location Valljet,08/12/2017,Beech Aircraft HAWKER 800 XP,Hawker 900XP,HA-0205,250,2438,2022-08-30
+F-HFKD,399543,avion de location Valljet,20/07/2021,Embraer Legacy 600,EMB-135BJ,14500933,312,3042,2022-08-30
+F-HGSA,399A40,avion de location Valljet,17/08/2020,Embraer Legacy 600,EMB-135BJ,14501051,312,3042,2022-08-30
+F-HJMA,39A580,avion de location Valljet,21/03/2019,Embraer Legacy 600,EMB-135BJ,14500854,312,3042,2022-08-30
+F-HSTB,39CA61,avion de location Valljet,11/03/2020,Embraer Legacy 650,EMB-135BJ,14501160,403,3530,2022-08-30
+F-HBAN,39840D,avion de location Valljet,12/07/2022,Embraer Legacy 650,EMB-135BJ,14501141,403,3530,2022-08-30
