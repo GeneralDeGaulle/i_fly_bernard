@@ -20,7 +20,6 @@ output/**/*.jpeg
 
 # sauf dans bilans except html
 !\output/Bilans/**/*.*
-output/Bilans/**/*.html
 
 # sauf exemples
 !\output/F-GBOL/2022-07-21/**/*.*
