@@ -121,6 +121,7 @@ for aircraft_row in df_avion.itertuples():
                 post_flight_consolidation.fct_check_2flights_in1(df_new_flights_only)
 
                 # on ne génère plus automatiquement une map, pour sauver de la place
+
                 # #plot map grâce à plotly avec les infos requises pour le titre de l'image
                 # for new_flight in df_new_flights_only.itertuples():
                 #     co2_new = new_flight.co2_emission_tonnes
