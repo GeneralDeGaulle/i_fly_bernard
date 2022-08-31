@@ -21,7 +21,7 @@ import matplotlib.pyplot as plt
 # plt.rcParams["figure.autolayout"] = True
 
 # Apply the default theme
-sns.set_theme( palette="pastel", style="whitegrid")
+sns.set_theme(palette="pastel", style="whitegrid")
 
 
 #%% path
