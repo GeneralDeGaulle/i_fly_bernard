@@ -120,14 +120,15 @@ for aircraft_row in df_avion.itertuples():
                 df_new_flights_only = post_flight_consolidation.fct_short_flight(df_new_flights_only)
                 post_flight_consolidation.fct_check_2flights_in1(df_new_flights_only)
 
-                #plot map grâce à plotly avec les infos requises pour le titre de l'image
-                for new_flight in df_new_flights_only.itertuples():
-                    co2_new = new_flight.co2_emission_tonnes
-                    tps_vol_new = new_flight.flight_duration_str
-                    path_csv_flight = new_flight.path_csv
-                    date_map = new_flight.departure_date_only_utc_map.strftime("%#d %B %Y")
+                # on ne génère plus automatiquement une map, pour sauver de la place
+                # #plot map grâce à plotly avec les infos requises pour le titre de l'image
+                # for new_flight in df_new_flights_only.itertuples():
+                #     co2_new = new_flight.co2_emission_tonnes
+                #     tps_vol_new = new_flight.flight_duration_str
+                #     path_csv_flight = new_flight.path_csv
+                #     date_map = new_flight.departure_date_only_utc_map.strftime("%#d %B %Y")
 
-                    csv_to_map.fct_csv_2_map(path_csv_flight, registration_ac, date_map, co2_new, tps_vol_new, ac_proprio)
+                #     csv_to_map.fct_csv_2_map(path_csv_flight, registration_ac, date_map, co2_new, tps_vol_new, ac_proprio)
 
 
                 # #clean and save data
