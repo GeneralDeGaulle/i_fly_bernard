@@ -42,8 +42,6 @@ path_output_bilan = os.path.join(path, "output", "Bilans")
 df_avion = pd.read_csv(path_avions, delimiter = ",")
 df_avion = df_avion.sort_values(by=["proprio"])
 
-list_ac = df_avion["registration"].values
-
 
 #%% load df
 df_all_flights = pd.read_csv(path_all_flights, delimiter = ",")
@@ -53,16 +51,21 @@ df_all_flights["arrival_date_utc"] = pd.to_datetime(df_all_flights["arrival_date
 
 
 #%% filtre temporel
-date_1 = pd.to_datetime("01-07-2022", utc=True, dayfirst=True)
-date_2 = pd.to_datetime("01-08-2022", utc=True, dayfirst=True)
+date_1 = pd.to_datetime("01-08-2022", utc=True, dayfirst=True)
+date_2 = pd.to_datetime("01-09-2022", utc=True, dayfirst=True)
 
 df_all_flights_m = df_all_flights.loc[(df_all_flights["departure_date_utc"] >= date_1) & (df_all_flights["departure_date_utc"] < date_2)]
+df_all_flights_m = df_all_flights_m[df_all_flights_m["propriétaire"] != "avion de location Valljet"]
 
+df_all_flights_m = df_all_flights_m.sort_values(by = "registration")
+
+
+list_ac = list(df_all_flights_m.registration.unique())
 
 #%% stats mensuel tout
 save_stat = []
 
-df_all_flights_m_agg = df_all_flights_m[["flight_duration_min","co2_emission_tonnes"]].agg(["count", "sum", "mean", ",median", "min", "max"]).round(1)
+df_all_flights_m_agg = df_all_flights_m[["flight_duration_min","co2_emission_tonnes"]].agg(["count", "sum", "mean", "median", "min", "max"]).round(1)
 df_all_flights_m_rte =str( df_all_flights_m["routes"].describe())
 
 print(df_all_flights_m_agg.to_markdown(tablefmt="fancy_grid"))
@@ -168,9 +171,9 @@ fig.update_layout(margin = {"r":0,"t":0,"l":0,"b":0}, width=1600, height=800,
 fig.update_layout(legend_title="<b> Propriétaire du jet privé", legend_font_size=15,
                   legend_font_color ="#161a1d", legend_font_family = "Arial",
                   legend_borderwidth = 1, legend_bordercolor = "grey",
-                  legend=dict(xanchor="right", x=0.75, yanchor="top", y=0.75))
+                  legend=dict(xanchor="left", x=0.01, yanchor="top", y=0.92))
 
-fig.update_layout(title = "<b>Carte de tous les vols du mois de juillet 2022</b>",
+fig.update_layout(title = "<b>Carte de tous les vols du mois d'août 2022</b>",
                   title_font_size=25, title_font_color="#161a1d", title_font_family = "Arial",
                   title_x=0.5, title_y = 0.95)
 

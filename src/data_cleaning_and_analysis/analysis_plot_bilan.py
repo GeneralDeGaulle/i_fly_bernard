@@ -44,10 +44,10 @@ df_all_flights = df_all_flights.sort_values(by = "departure_date_utc")
 # =============================================================================
 registration_ac = "F-GVMA"
 df_all_flights = df_all_flights[df_all_flights["registration"] == registration_ac]
-df_all_flights = df_all_flights[df_all_flights["propriétaire"] == "avion de location Valljet"]
+df_all_flights = df_all_flights[df_all_flights["propriétaire"] != "avion de location Valljet"]
 # =============================================================================
-date_1 = pd.to_datetime("01-01-2022", utc=True, dayfirst=True)
-date_2 = pd.to_datetime("31-08-2022", utc=True, dayfirst=True)
+date_1 = pd.to_datetime("01-01-2021", utc=True, dayfirst=True)
+date_2 = pd.to_datetime("01-09-2022", utc=True, dayfirst=True)
 
 df_all_flights = df_all_flights.loc[(df_all_flights["departure_date_utc"] >= date_1) & (df_all_flights["departure_date_utc"] < date_2)]
 # =============================================================================
