@@ -62,30 +62,38 @@ df_all_flights_m = df_all_flights_m.sort_values(by = "registration")
 
 list_ac = list(df_all_flights_m.registration.unique())
 
+
+#%% mise en forme
+
+df_all_flights["flight_duration_hours"] = df_all_flights["flight_duration_min"]/60.0
+df_all_flights["year"] = df_all_flights['arrival_date_utc'].dt.strftime("%Y")
+
+
 #%% stats mensuel tout
 save_stat = []
 
-df_all_flights_m_agg = df_all_flights_m[["flight_duration_min","co2_emission_tonnes"]].agg(["count", "sum", "mean", "median", "min", "max"]).round(1)
-df_all_flights_m_rte =str( df_all_flights_m["routes"].describe())
+df_all_flights_m_agg = df_all_flights_m[["flight_duration_hours","co2_emission_tonnes"]].agg(["count", "sum", "mean", "median", "min", "max"]).round(1)
+df_all_flights_m_rte = df_all_flights_m.groupby("routes").count()["registration"].sort_values(ascending = False)
 
-print(df_all_flights_m_agg.to_markdown(tablefmt="fancy_grid"))
-print(df_all_flights_m_rte)
+# df_group_year = df_all_flights_m.groupby("year", as_index=False, sort = False)["co2_emission_tonnes"].sum()
 
+# print(df_all_flights_m_agg.to_markdown(tablefmt="fancy_grid"))
+# print(df_all_flights_m_rte)
 
 save_stat.append("--- All flights ---\n")
 save_stat.append(df_all_flights_m_agg.to_markdown(tablefmt="fancy_grid") + "\n")
-save_stat.append(df_all_flights_m_rte)
+# save_stat.append(df_all_flights_m_rte.head(15).to_markdown(tablefmt="fancy_grid") + "\n")
 save_stat.append("------------------------------------------------\n\n")
 
-path_csv_all_flights_m_agg = os.path.join(path_output_bilan, "df_all_flights_m_agg.csv")
-df_all_flights_m_agg.to_csv(path_csv_all_flights_m_agg, encoding="utf-8-sig")
+# path_csv_all_flights_m_agg = os.path.join(path_output_bilan, "df_all_flights_m_agg.csv")
+# df_all_flights_m_agg.to_csv(path_csv_all_flights_m_agg, encoding="utf-8-sig")
 
 
 #%% stats mensuels avion
 df_all_flights_m_grouped = df_all_flights_m.groupby("propriétaire").sum()
-df_all_flights_m_grouped = df_all_flights_m_grouped[["flight_duration_min", "co2_emission_tonnes"]].sort_values(by=["flight_duration_min"], ascending = False).reset_index()
+df_all_flights_m_grouped = df_all_flights_m_grouped[["flight_duration_hours", "co2_emission_tonnes"]].sort_values(by=["flight_duration_hours"], ascending = False).reset_index()
 
-# df_all_flights_m_grouped["flight_duration_min"] = df_all_flights_m_grouped["flight_duration_min"].apply(lambda x: maths_for_bernard.fct_time_str(x))
+df_all_flights_m_grouped["count"] = df_all_flights_m_grouped["registration"].map(df_all_flights_m["registration"].value_counts())
 
 print(df_all_flights_m_grouped.to_markdown(tablefmt="fancy_grid"))
 
@@ -98,12 +106,10 @@ save_stat.append("------------------------------------------------\n\n")
 for ac in list_ac:
     df = df_all_flights_m[df_all_flights_m["registration"] == ac]
 
-    agg = df[["flight_duration_min","co2_emission_tonnes"]].agg(["count", "sum", "mean", "min", "max"])
-    rte = str(df["routes"].describe())
+    agg = df[["flight_duration_hours","co2_emission_tonnes"]].agg(["count", "sum", "mean", "median", "min", "max"])
 
     save_stat.append("--- " + ac +" ---")
     save_stat.append(agg.to_markdown(tablefmt="fancy_grid") + "\n")
-    save_stat.append(rte)
     save_stat.append("------------------------------------------------\n\n")
 
 
