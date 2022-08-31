@@ -4,6 +4,7 @@ __pycache__/
 input/pictures_twitter/
 input/raw_data/
 output/save/
+output/Bilans/misc_bilans/livraisons_mediapart/
 
 # ignore all files with specific extensions
 *.psd
@@ -18,8 +19,12 @@ output/**/*.html
 output/**/*.jpg
 output/**/*.jpeg
 
-# sauf dans bilans except html
-!\output/Bilans/**/*.*
+# sauf les bilans
+!\output\Bilans\aout_2022\
+!\output\Bilans\juillet_2022\
+!\output\Bilans\juin_2022\
+!\output\Bilans\juin_2022\
+!\output\Bilans\misc_bilans\
 
 # sauf exemples
 !\output/F-GBOL/2022-07-21/**/*.*
