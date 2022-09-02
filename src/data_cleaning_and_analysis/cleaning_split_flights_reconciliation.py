@@ -14,7 +14,8 @@ import os
 import numpy as np
 
 import locale
-locale.setlocale(locale.LC_TIME,"");
+
+locale.setlocale(locale.LC_TIME, "")
 
 
 #%%
@@ -37,14 +38,14 @@ registration_ac = "F-HMBY"
 
 #%% define path
 path = os.getcwd()
-path_avions = os.path.join(path, "input","avions.csv")
+path_avions = os.path.join(path, "input", "avions.csv")
 
 path_flight_data = os.path.join(path, "output", registration_ac)
 path_flight_data_csv = os.path.join(path_flight_data, f"{registration_ac}_flight_data_all.csv")
 
 
 #%% load generic data
-df_avion = pd.read_csv(path_avions, delimiter = ",")
+df_avion = pd.read_csv(path_avions, delimiter=",")
 
 df_avion = df_avion[df_avion["registration"] == registration_ac]
 
@@ -55,7 +56,7 @@ gallons_ac = df_avion.us_gallons_per_hour.values[0]
 
 
 #%%
-df_ac_data = pd.read_csv(path_flight_data_csv, delimiter = ",")
+df_ac_data = pd.read_csv(path_flight_data_csv, delimiter=",")
 df_ac_data["departure_date_utc"] = pd.to_datetime(df_ac_data["departure_date_utc"], utc=True)
 df_ac_data["arrival_date_utc"] = pd.to_datetime(df_ac_data["arrival_date_utc"], utc=True)
 
@@ -63,17 +64,20 @@ df_ac_data["arrival_date_utc"] = pd.to_datetime(df_ac_data["arrival_date_utc"], 
 #%% identifier doublette de vol à réconcilier
 df_vols_tbc = df_ac_data.copy()
 
-df_vols_tbc.loc[:,"next_flight_departure"] = df_vols_tbc["airport_departure"].shift(1)
-df_vols_tbc.loc[:,"next_flight_departure_date"] = df_vols_tbc["departure_date_utc"].shift(1)
-df_vols_tbc.loc[:,"diff_with_next"] = df_vols_tbc["next_flight_departure_date"] - df_vols_tbc["arrival_date_utc"]
-df_vols_tbc.loc[:,"next_flight_csv"] = df_vols_tbc["path_csv"].shift(1)
+df_vols_tbc.loc[:, "next_flight_csv"] = df_vols_tbc["path_csv"].shift(1)
+df_vols_tbc.loc[:, "next_flight_departure"] = df_vols_tbc["airport_departure"].shift(1)
+df_vols_tbc.loc[:, "next_flight_departure_date"] = df_vols_tbc["departure_date_utc"].shift(1)
+df_vols_tbc.loc[:, "diff_with_next"] = (df_vols_tbc["next_flight_departure_date"]
+                                        - df_vols_tbc["arrival_date_utc"])
 
-df_vols_tbc_1 = df_vols_tbc[(df_vols_tbc["airport_arrival"] == "A/C in cruise") &
-                          (df_vols_tbc["next_flight_departure"] == "A/C in cruise")]
 
-df_vols_to_be_merged_1 = df_vols_tbc_1[(df_vols_tbc_1["arrival_date_utc"].dt.strftime("%H") >= "23") &
-                         (df_vols_tbc_1["diff_with_next"].dt.seconds/3600 <= 4) &
-                         (df_vols_tbc_1["diff_with_next"].dt.days == 0)]
+df_vols_tbc_1 = df_vols_tbc[(df_vols_tbc["airport_arrival"] == "A/C in cruise")
+                            & (df_vols_tbc["next_flight_departure"] == "A/C in cruise")]
+
+df_vols_to_be_merged_1 = df_vols_tbc_1[
+      (df_vols_tbc_1["arrival_date_utc"].dt.strftime("%H") >= "23")
+    & (df_vols_tbc_1["diff_with_next"].dt.seconds / 3600 <= 4)
+    & (df_vols_tbc_1["diff_with_next"].dt.days == 0)]
 
 df_vols_to_be_merged = pd.concat([df_vols_to_be_merged_1])
 
@@ -108,16 +112,20 @@ for flight in df_vols_to_be_merged.itertuples():
 
 
 #%% refaire tourner le code pour obtenir les infos du vols
-df_new_flights_empty = pd.DataFrame(columns = df_ac_data.columns)
+df_new_flights_empty = pd.DataFrame(columns=df_ac_data.columns)
 
-#récupération des infos pour tous les nouveaux vols de cet avion
-df_new_flights_only = get_new_df_data.fct_get_all_data(df_new_flights_empty,
-                                                       list_new_csv,
-                                                       registration_ac,
-                                                       icao24_ac, co2_ac, ac_proprio, gallons_ac,
-                                                       quiet = 0)
+# récupération des infos pour tous les nouveaux vols de cet avion
+df_new_flights_only = get_new_df_data.fct_get_all_data(
+    df_new_flights_empty,
+    list_new_csv,
+    registration_ac,
+    icao24_ac,
+    co2_ac,
+    ac_proprio,
+    gallons_ac,
+    quiet=0)
 
-#plot map grâce à plotly
+# plot map grâce à plotly
 for flight in df_new_flights_only.itertuples():
     path_csv_flt = os.path.join(path, flight.path_csv)
     post_flight_consolidation.plot_df_csv(pd.read_csv(path_csv_flt), path_csv_flt)
@@ -127,7 +135,7 @@ for flight in df_new_flights_only.itertuples():
 df_new_flights_only = df_new_flights_only.drop(columns=["departure_date_only_utc_map"])
 
 list_vol_ini = np.array(df_vols_to_be_merged.index)
-list_vol_next = list_vol_ini - 1 #car vol rangé du plus récent au plus ancien
+list_vol_next = list_vol_ini - 1  # car vol rangé du plus récent au plus ancien
 
 df_ac_data = df_ac_data.drop(list_vol_ini)
 df_ac_data = df_ac_data.drop(list_vol_next)
@@ -135,9 +143,9 @@ df_ac_data = df_ac_data.drop(list_vol_next)
 
 #%%
 
-#une fois fini on regroupe tous les vols.
+# une fois fini on regroupe tous les vols.
 df_complete = pd.concat([df_ac_data, df_new_flights_only])
-df_complete = df_complete.sort_values(by=["departure_date_utc"], ascending = False)
+df_complete = df_complete.sort_values(by=["departure_date_utc"], ascending=False)
 
 
 #%% si ok, enregistrer et supprimer ancien folder

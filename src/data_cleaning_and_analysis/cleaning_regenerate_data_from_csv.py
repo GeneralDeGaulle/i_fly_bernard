@@ -22,7 +22,7 @@ from src.core import post_flight_consolidation
 path = os.getcwd()
 path_avions = os.path.join(path, r"input\avions.csv")
 
-df_avion = pd.read_csv(path_avions, delimiter = ",")
+df_avion = pd.read_csv(path_avions, delimiter=",")
 
 
 #%% pour repositionner les colonnes si besoin
@@ -34,7 +34,7 @@ df_avion = pd.read_csv(path_avions, delimiter = ",")
 
 #%% pour tous les avions
 for aircraft_row in df_avion.itertuples():
-    #define variables pour un avion
+    # define variables pour un avion
     registration_ac = aircraft_row.registration
     icao24_ac = str(aircraft_row.icao24)
     co2_ac = aircraft_row.co2_kg_per_hour
@@ -46,7 +46,7 @@ for aircraft_row in df_avion.itertuples():
     path_flight_data = os.path.join(path, "output", registration_ac)
     path_flight_data_csv = os.path.join(path_flight_data, f"{registration_ac}_flight_data_all.csv")
 
-    df_ac_data = pd.read_csv(path_flight_data_csv, delimiter = ",")
+    df_ac_data = pd.read_csv(path_flight_data_csv, delimiter=",")
 
     # pour recalculer les données du vol à partir du csv
     list_new_csv = list(df_ac_data.path_csv.values)
@@ -55,31 +55,35 @@ for aircraft_row in df_avion.itertuples():
     # df_new_flights_empty = pd.DataFrame(columns = list_col)
 
     # df vide
-    df_new_flights_empty = pd.DataFrame(columns = df_ac_data.columns)
+    df_new_flights_empty = pd.DataFrame(columns=df_ac_data.columns)
 
-    #récupération des infos pour tous les nouveaux vols de cet avion
-    df_ac_data_new = get_new_df_data.fct_get_all_data(df_new_flights_empty,
-                                                           list_new_csv,
-                                                           registration_ac,
-                                                           icao24_ac, co2_ac, ac_proprio, gallons_ac,
-                                                           quiet = 1)
+    # récupération des infos pour tous les nouveaux vols de cet avion
+    df_ac_data_new = get_new_df_data.fct_get_all_data(
+        df_new_flights_empty,
+        list_new_csv,
+        registration_ac,
+        icao24_ac,
+        co2_ac,
+        ac_proprio,
+        gallons_ac,
+        quiet=1)
 
     # #clean and save data
-    #on nettoie new flight avant de le fusionner
+    # on nettoie new flight avant de le fusionner
     df_ac_data_new = df_ac_data_new.drop(columns=["departure_date_only_utc_map"])
 
-    #on garde le même nom par simplicité.
+    # on garde le même nom par simplicité.
     df_complete = df_ac_data_new.copy()
-    df_complete = df_complete.sort_values(by=["departure_date_utc"], ascending = False)
+    df_complete = df_complete.sort_values(by=["departure_date_utc"], ascending=False)
 
-    #on teste le nouveau df avec les fonctions de consolidations.En fonction de la vérification,
+    # on teste le nouveau df avec les fonctions de consolidations.En fonction de la vérification,
     # soit on applique les modifs, soit une alerte.
     df_complete = post_flight_consolidation.fct_airport_vs_cruise(df_complete)
     df_complete = post_flight_consolidation.fct_short_flight(df_complete)
     post_flight_consolidation.fct_check_2flights_in1(df_complete)
     post_flight_consolidation.fct_check_reconciliation(df_complete)
 
-    #puis on sauvegarde
+    # puis on sauvegarde
     df_complete.to_csv(path_flight_data_csv, index=False, encoding="utf-8-sig")
     print()
 
@@ -95,7 +99,7 @@ gallons_ac = df_avion.us_gallons_per_hour.values[0]
 
 path_flight_data = os.path.join(path, "output", registration_ac)
 path_flight_data_csv = os.path.join(path_flight_data, f"{registration_ac}_flight_data_all.csv")
-df_ac_data = pd.read_csv(path_flight_data_csv, delimiter = ",")
+df_ac_data = pd.read_csv(path_flight_data_csv, delimiter=",")
 
 # pour recalculer les données du vol à partir du csv
 list_new_csv = list(df_ac_data.path_csv.values)
@@ -104,22 +108,27 @@ list_new_csv = list(df_ac_data.path_csv.values)
 # df_new_flights_empty = pd.DataFrame(columns = list_col)
 
 # df vide
-df_new_flights_empty = pd.DataFrame(columns = df_ac_data.columns)
-#récupération des infos pour tous les nouveaux vols de cet avion
-df_ac_data_new = get_new_df_data.fct_get_all_data(df_new_flights_empty,
-                                                       list_new_csv,
-                                                       registration_ac,
-                                                       icao24_ac, co2_ac, ac_proprio, gallons_ac,
-                                                       quiet = 1)
+df_new_flights_empty = pd.DataFrame(columns=df_ac_data.columns)
+# récupération des infos pour tous les nouveaux vols de cet avion
+df_ac_data_new = get_new_df_data.fct_get_all_data(
+    df_new_flights_empty,
+    list_new_csv,
+    registration_ac,
+    icao24_ac,
+    co2_ac,
+    ac_proprio,
+    gallons_ac,
+    quiet=1)
+
 # #clean and save data
-#on nettoie new flight avant de le fusionner
+# on nettoie new flight avant de le fusionner
 df_ac_data_new = df_ac_data_new.drop(columns=["departure_date_only_utc_map"])
 
-#on garde le même nom par simplicité.
+# on garde le même nom par simplicité.
 df_complete = df_ac_data_new.copy()
-df_complete = df_complete.sort_values(by=["departure_date_utc"], ascending = False)
+df_complete = df_complete.sort_values(by=["departure_date_utc"], ascending=False)
 
-#on teste le nouveau df avec les fonctions de consolidations.En fonction de la vérification,
+# on teste le nouveau df avec les fonctions de consolidations.En fonction de la vérification,
 # soit on applique les modifs, soit une alerte.
 df_complete = post_flight_consolidation.fct_airport_vs_cruise(df_complete)
 df_complete = post_flight_consolidation.fct_short_flight(df_complete)
@@ -127,9 +136,9 @@ post_flight_consolidation.fct_check_2flights_in1(df_complete)
 post_flight_consolidation.fct_check_reconciliation(df_complete)
 
 
-#puis on sauvegarde
+# puis on sauvegarde
 df_complete.to_csv(path_flight_data_csv, index=False, encoding="utf-8-sig")
 
 
 #%% concat all aircraft df in one csv
-post_flight_consolidation.fct_concat_all_flights(df_avion, path, quiet = 0)
+post_flight_consolidation.fct_concat_all_flights(df_avion, path, quiet=0)

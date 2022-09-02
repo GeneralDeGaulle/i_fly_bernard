@@ -14,15 +14,17 @@ from geographiclib.geodesic import Geodesic
 
 
 #%%
-# fonction pour déterminer le bearing de l'avion et donc positionner son nez dans le bon sens sur l'image de la trajectoire
-# geographiclib.geodesic aurait pu être utilisée
+# fonction pour déterminer le bearing de l'avion et donc positionner son nez dans le bon sens
+# sur l'image de la trajectoire. geographiclib.geodesic aurait pu être utilisée
 def fct_get_bearing(lat1, long1, lat2, long2):
-    diff_long = (long2 - long1)
+    diff_long = long2 - long1
 
     x = math.cos(math.radians(lat2)) * math.sin(math.radians(diff_long))
-    y = math.cos(math.radians(lat1)) * math.sin(math.radians(lat2)) - math.sin(math.radians(lat1)) * math.cos(math.radians(lat2)) * math.cos(math.radians(diff_long))
+    y = math.cos(math.radians(lat1)) * math.sin(math.radians(lat2)) - math.sin(
+        math.radians(lat1)
+    ) * math.cos(math.radians(lat2)) * math.cos(math.radians(diff_long))
 
-    bearing_rad = np.arctan2(x,y)
+    bearing_rad = np.arctan2(x, y)
     bearing_deg = np.degrees(bearing_rad)
 
     return bearing_deg
@@ -34,7 +36,7 @@ def fct_get_distance(lat1, long1, lat2, long2):
 
     g = geod.Inverse(lat1, long1, lat2, long2)
 
-    dist_km = round(g['s12']/1000.0,0)
+    dist_km = round(g["s12"] / 1000.0, 0)
 
     return dist_km
 
@@ -49,13 +51,17 @@ def fct_geodesic(df, y, index_gap):
 
     geod = Geodesic.WGS84  # define the WGS84 ellipsoid
 
-    l = geod.InverseLine(lat_ini, long_ini, lat_last, long_last,
-        Geodesic.LATITUDE | Geodesic.LONGITUDE)
+    l = geod.InverseLine(
+        lat_ini, long_ini, lat_last, long_last, Geodesic.LATITUDE | Geodesic.LONGITUDE)
 
     n = int(math.ceil(l.a13))
 
-    lat_geo = [l.ArcPosition(i, Geodesic.LATITUDE | Geodesic.LONGITUDE | Geodesic.LONG_UNROLL)["lat2"] for i in range(n)]
-    lon_geo = [l.ArcPosition(i, Geodesic.LATITUDE | Geodesic.LONGITUDE | Geodesic.LONG_UNROLL)["lon2"] for i in range(n)]
+    lat_geo = [
+        l.ArcPosition(i, Geodesic.LATITUDE | Geodesic.LONGITUDE | Geodesic.LONG_UNROLL)["lat2"]
+        for i in range(n)]
+    lon_geo = [
+        l.ArcPosition(i, Geodesic.LATITUDE | Geodesic.LONGITUDE | Geodesic.LONG_UNROLL)["lon2"]
+        for i in range(n)]
 
     return lat_geo, lon_geo
 
@@ -71,14 +77,17 @@ def fct_geodesic_multiple_flights(df):
 
     geod = Geodesic.WGS84  # define the WGS84 ellipsoid
 
-    l = geod.InverseLine(lat_ini, long_ini, lat_last, long_last,
-        Geodesic.LATITUDE | Geodesic.LONGITUDE)
+    l = geod.InverseLine(
+        lat_ini, long_ini, lat_last, long_last, Geodesic.LATITUDE | Geodesic.LONGITUDE)
 
     n = int(math.ceil(l.a13))
 
-
-    lat_geo = [l.ArcPosition(i, Geodesic.LATITUDE | Geodesic.LONGITUDE | Geodesic.LONG_UNROLL)["lat2"] for i in range(n)]
-    lon_geo = [l.ArcPosition(i, Geodesic.LATITUDE | Geodesic.LONGITUDE | Geodesic.LONG_UNROLL)["lon2"] for i in range(n)]
+    lat_geo = [
+        l.ArcPosition(i, Geodesic.LATITUDE | Geodesic.LONGITUDE | Geodesic.LONG_UNROLL)["lat2"]
+        for i in range(n)]
+    lon_geo = [
+        l.ArcPosition(i, Geodesic.LATITUDE | Geodesic.LONGITUDE | Geodesic.LONG_UNROLL)["lon2"]
+        for i in range(n)]
 
     return lat_geo, lon_geo
 
@@ -87,14 +96,16 @@ def fct_geodesic_multiple_flights(df):
 def fct_time_str(flt_duration_min):
 
     if flt_duration_min >= 60.0:
-        part_entiere = math.floor(flt_duration_min/60.0)
-        part_decimal = int(round(flt_duration_min - part_entiere*60.0,0))
+        part_entiere = math.floor(flt_duration_min / 60.0)
+        part_decimal = int(round(flt_duration_min - part_entiere * 60.0, 0))
         if part_decimal >= 10:
-            flt_duration_str = str(math.floor(flt_duration_min/60.0)) + "h" + str(part_decimal) +"min"
+            flt_duration_str = (
+                str(math.floor(flt_duration_min / 60.0)) + "h" + str(part_decimal) + "min")
         else:
-            flt_duration_str = str(math.floor(flt_duration_min/60.0)) + "h0" + str(part_decimal) +"min"
+            flt_duration_str = (
+                str(math.floor(flt_duration_min / 60.0)) + "h0" + str(part_decimal) + "min")
     else:
-        flt_duration_str = str(int(round(flt_duration_min,0))) +"min"
+        flt_duration_str = str(int(round(flt_duration_min, 0))) + "min"
 
     return flt_duration_str
 
