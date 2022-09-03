@@ -47,7 +47,7 @@ def fct_concat_all_flights(df_avion, path, quiet=1):
 
     # pour sauvegarder
     path_all_ac = os.path.join(path, "output", "all_flights_data.csv")
-    df_all_flights.to_csv(path_all_ac, index=False, encoding="utf-8-sig")
+    df_all_flights.to_csv(path_all_ac, index=False, encoding="utf-8-sig", date_format="%Y-%m-%d %H:%M:%S")
 
     if quiet == 0:
         print("--- all_flights_data.csv généré ---")

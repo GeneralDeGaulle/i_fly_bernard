@@ -84,7 +84,7 @@ for aircraft_row in df_avion.itertuples():
     post_flight_consolidation.fct_check_reconciliation(df_complete)
 
     # puis on sauvegarde
-    df_complete.to_csv(path_flight_data_csv, index=False, encoding="utf-8-sig")
+    df_complete.to_csv(path_flight_data_csv, index=False, encoding="utf-8-sig", date_format="%Y-%m-%d %H:%M:%S")
     print()
 
 

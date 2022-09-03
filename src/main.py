@@ -161,8 +161,8 @@ for aircraft_row in df_avion.itertuples():
                              ] = today_date.date()
 
                 # puis on sauvegarde
-                df_complete.to_csv(path_flight_data_csv, index=False, encoding="utf-8-sig")
-                df_avion.to_csv(path_avions, index=False, encoding="utf-8-sig")
+                df_complete.to_csv(path_flight_data_csv, index=False, encoding="utf-8-sig", date_format="%Y-%m-%d %H:%M:%S")
+                df_avion.to_csv(path_avions, index=False, encoding="utf-8-sig", date_format="%Y-%m-%d")
 
                 # puis on génère des logs
                 n = n + len(df_new_flights_only)
@@ -176,7 +176,7 @@ for aircraft_row in df_avion.itertuples():
                 # malgré tout, on met à jour la date de dernier check.
                 df_avion.loc[df_avion["registration"] == registration_ac, "last_check"
                              ] = today_date.date()
-                df_avion.to_csv(path_avions, index=False, encoding="utf-8-sig")
+                df_avion.to_csv(path_avions, index=False, encoding="utf-8-sig", date_format="%Y-%m-%d")
                 list_print_new_flights.append(f"--- {registration_ac} - 0 vols générés ---")
                 print(f"--- No new flights for A/C {registration_ac} ---")
                 print(f"--- {registration_ac} done ! ---")
@@ -185,7 +185,7 @@ for aircraft_row in df_avion.itertuples():
             # malgré tout, on met à jour la date de dernier check.
             df_avion.loc[df_avion["registration"] == registration_ac, "last_check"
                          ] = today_date.date()
-            df_avion.to_csv(path_avions, index=False, encoding="utf-8-sig")
+            df_avion.to_csv(path_avions, index=False, encoding="utf-8-sig", date_format="%Y-%m-%d")
             list_print_new_flights.append(f"--- {registration_ac} - 0 vols générés ---")
             print(f"--- No new flights for A/C {registration_ac} ---")
             print(f"--- {registration_ac} done ! ---")
@@ -193,7 +193,7 @@ for aircraft_row in df_avion.itertuples():
     else:
         # malgré tout, on met à jour la date de dernier check.
         df_avion.loc[df_avion["registration"] == registration_ac, "last_check"] = today_date.date()
-        df_avion.to_csv(path_avions, index=False, encoding="utf-8-sig")
+        df_avion.to_csv(path_avions, index=False, encoding="utf-8-sig", date_format="%Y-%m-%d")
         list_print_new_flights.append(f"--- {registration_ac} - 0 vols générés ---")
         print(f"--- No new flights for A/C {registration_ac} ---")
         print(f"--- {registration_ac} done ! ---")

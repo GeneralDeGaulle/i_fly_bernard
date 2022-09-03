@@ -149,7 +149,7 @@ df_complete = df_complete.sort_values(by=["departure_date_utc"], ascending=False
 
 
 #%% si ok, enregistrer et supprimer ancien folder
-df_complete.to_csv(path_flight_data_csv, index=False, encoding="utf-8-sig")
+df_complete.to_csv(path_flight_data_csv, index=False, encoding="utf-8-sig", date_format="%Y-%m-%d %H:%M:%S"))
 
 
 #%%
