@@ -61,9 +61,9 @@ ac_proprio = df_avion.proprio.values[0]
 
 #%%
 df_ac = pd.read_csv(path_flight_data_csv, delimiter=",")
-df_ac["departure_date_utc"] = pd.to_datetime(df_ac["departure_date_utc"], utc=True)
-df_ac["arrival_date_utc"] = pd.to_datetime(df_ac["arrival_date_utc"], utc=True)
-df_ac["departure_date_only_utc_map"] = pd.to_datetime(df_ac["departure_date_only_utc"])
+df_ac["departure_date_utc"] = pd.to_datetime(df_ac["departure_date_utc"], utc=True, format="%Y-%m-%d %H:%M:%S"))
+df_ac["arrival_date_utc"] = pd.to_datetime(df_ac["arrival_date_utc"], utc=True, format="%Y-%m-%d %H:%M:%S"))
+df_ac["departure_date_only_utc"] = pd.to_datetime(df_ac["departure_date_only_utc"], format="%Y-%m-%d"))
 
 df_ac = df_ac.head(3)
 

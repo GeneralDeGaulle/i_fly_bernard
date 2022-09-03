@@ -35,8 +35,8 @@ path_all_flights = os.path.join(path, "output", "all_flights_data.csv")
 #%% load df
 df_all_flights = pd.read_csv(path_all_flights, delimiter=",")
 
-df_all_flights["departure_date_utc"] = pd.to_datetime(df_all_flights["departure_date_utc"], utc=True)
-df_all_flights["arrival_date_utc"] = pd.to_datetime(df_all_flights["arrival_date_utc"], utc=True)
+df_all_flights["departure_date_utc"] = pd.to_datetime(df_all_flights["departure_date_utc"], utc=True, format="%Y-%m-%d %H:%M:%S")
+df_all_flights["arrival_date_utc"] = pd.to_datetime(df_all_flights["arrival_date_utc"], utc=True, format="%Y-%m-%d %H:%M:%S")
 
 df_all_flights = df_all_flights.sort_values(by="departure_date_utc")
 

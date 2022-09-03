@@ -48,8 +48,8 @@ df_avion = df_avion.sort_values(by=["proprio"])
 df_all_flights = pd.read_csv(path_all_flights, delimiter=",")
 
 df_all_flights["departure_date_utc"] = pd.to_datetime(
-    df_all_flights["departure_date_utc"], utc=True
-)
+    df_all_flights["departure_date_utc"], utc=True, format="%Y-%m-%d %H:%M:%S")
+
 df_all_flights["arrival_date_utc"] = pd.to_datetime(df_all_flights["arrival_date_utc"], utc=True)
 
 

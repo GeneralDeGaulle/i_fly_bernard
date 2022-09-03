@@ -41,9 +41,9 @@ os.chdir(path)
 path_avions = os.path.join(path, "input", "avions.csv")
 
 df_avion = pd.read_csv(path_avions, delimiter=",")
-df_avion["last_check"] = pd.to_datetime(df_avion["last_check"], utc=True)
+df_avion["last_check"] = pd.to_datetime(df_avion["last_check"], utc=True, format="%Y-%m-%d")
 
-today_date = pd.to_datetime("now", utc=True)
+today_date = pd.to_datetime("now", utc=True, format="%Y-%m-%d")
 
 
 #%% start of loop
@@ -71,8 +71,8 @@ for aircraft_row in df_avion.itertuples():
         df_template.to_csv(path_flight_data_csv, index=False, encoding="utf-8-sig")
 
     df_ac_data = pd.read_csv(path_flight_data_csv, delimiter=",")
-    df_ac_data["departure_date_utc"] = pd.to_datetime(df_ac_data["departure_date_utc"], utc=True)
-    df_ac_data["arrival_date_utc"] = pd.to_datetime(df_ac_data["arrival_date_utc"], utc=True)
+    df_ac_data["departure_date_utc"] = pd.to_datetime(df_ac_data["departure_date_utc"], utc=True, format="%Y-%m-%d %H:%M:%S")
+    df_ac_data["arrival_date_utc"] = pd.to_datetime(df_ac_data["arrival_date_utc"], utc=True, format="%Y-%m-%d %H:%M:%S")
 
     # go sur adsb-exchange pour trouver les nouveau vols par rapport à la date du dernier check jusqu'à aujourd'hui
     list_new_flights_ac = []

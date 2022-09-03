@@ -57,8 +57,8 @@ gallons_ac = df_avion.us_gallons_per_hour.values[0]
 
 #%%
 df_ac_data = pd.read_csv(path_flight_data_csv, delimiter=",")
-df_ac_data["departure_date_utc"] = pd.to_datetime(df_ac_data["departure_date_utc"], utc=True)
-df_ac_data["arrival_date_utc"] = pd.to_datetime(df_ac_data["arrival_date_utc"], utc=True)
+df_ac_data["departure_date_utc"] = pd.to_datetime(df_ac_data["departure_date_utc"], utc=True, format="%Y-%m-%d %H:%M:%S"))
+df_ac_data["arrival_date_utc"] = pd.to_datetime(df_ac_data["arrival_date_utc"], utc=True, format="%Y-%m-%d %H:%M:%S"))
 
 
 #%% identifier doublette de vol à réconcilier
