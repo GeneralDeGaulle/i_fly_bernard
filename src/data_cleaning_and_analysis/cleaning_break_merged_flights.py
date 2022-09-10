@@ -26,7 +26,7 @@ from src.core import get_new_df_data
 
 #%%
 # =============================================================================
-registration_ac = "F-HEME"
+registration_ac = "F-HTSB"
 # =============================================================================
 
 #%% define path
@@ -134,7 +134,7 @@ df_complete = pd.concat([df_ac_data, df_new_flights_only])
 df_complete = df_complete.sort_values(by=["departure_date_utc"], ascending=False)
 
 
-df_complete.to_csv(path_flight_data_csv, index=False, encoding="utf-8-sig", date_format="%Y-%m-%d %H:%M:%S"))
+df_complete.to_csv(path_flight_data_csv, index=False, encoding="utf-8-sig", date_format="%Y-%m-%d %H:%M:%S")
 
 
 #%%
