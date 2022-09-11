@@ -43,6 +43,9 @@ path_avions = os.path.join(path, "input", "avions.csv")
 df_avion = pd.read_csv(path_avions, delimiter=",")
 df_avion["last_check"] = pd.to_datetime(df_avion["last_check"], utc=True, format="%Y-%m-%d")
 
+# on enlève les avions radiés
+df_avion = df_avion[df_avion["radié"] == "non"]
+
 today_date = pd.to_datetime("now", utc=True, format="%Y-%m-%d")
 
 
