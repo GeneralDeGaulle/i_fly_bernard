@@ -17,7 +17,7 @@ import pandas as pd
 
 import plotly.graph_objects as go
 import plotly.express as px
-from plotly.offline import plot  # for displaying picture in spyder/browser
+# from plotly.offline import plot
 from PIL import Image
 
 import os
