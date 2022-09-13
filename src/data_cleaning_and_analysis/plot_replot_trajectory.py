@@ -44,6 +44,7 @@ df_avion = df_avion[df_avion["registration"] == registration_ac]
 icao24_ac = str(df_avion.icao24.values[0])
 co2_ac = df_avion.co2_kg_per_hour.values[0]
 ac_proprio = df_avion.proprio.values[0]
+gallons_ac = df_avion.us_gallons_per_hour.values[0]
 
 
 #%%
@@ -53,7 +54,7 @@ df_ac_data["arrival_date_utc"] = pd.to_datetime(df_ac_data["arrival_date_utc"], 
 
 
 #%%
-list_new_vols_index = [1]
+list_new_vols_index = [3]
 df_new_flights_only = df_ac_data.iloc[list_new_vols_index]
 
 # df_new_flights_only.to_markdown(tablefmt="fancy_grid")
@@ -114,7 +115,7 @@ df_complete = pd.concat([df_ac_data, df_new_flights_only])
 df_complete = df_complete.sort_values(by=["departure_date_utc"], ascending=False)
 
 # puis on sauvegarde
-df_complete.to_csv(path_flight_data_csv, index=False, encoding="utf-8-sig", date_format="%Y-%m-%d %H:%M:%S"))
+df_complete.to_csv(path_flight_data_csv, index=False, encoding="utf-8-sig", date_format="%Y-%m-%d %H:%M:%S")
 
 
 #%%
