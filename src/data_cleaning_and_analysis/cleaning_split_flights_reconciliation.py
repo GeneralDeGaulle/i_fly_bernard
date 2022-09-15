@@ -20,7 +20,6 @@ locale.setlocale(locale.LC_TIME, "")
 
 #%%
 from src.core import get_new_df_data
-from src.core import csv_to_map
 from src.core import post_flight_consolidation
 
 
@@ -33,7 +32,7 @@ from src.core import post_flight_consolidation
 
 #%%
 # =============================================================================
-registration_ac = "F-HMBY"
+registration_ac = "F-HTSB"
 # =============================================================================
 
 #%% define path
@@ -57,8 +56,8 @@ gallons_ac = df_avion.us_gallons_per_hour.values[0]
 
 #%%
 df_ac_data = pd.read_csv(path_flight_data_csv, delimiter=",")
-df_ac_data["departure_date_utc"] = pd.to_datetime(df_ac_data["departure_date_utc"], utc=True, format="%Y-%m-%d %H:%M:%S"))
-df_ac_data["arrival_date_utc"] = pd.to_datetime(df_ac_data["arrival_date_utc"], utc=True, format="%Y-%m-%d %H:%M:%S"))
+df_ac_data["departure_date_utc"] = pd.to_datetime(df_ac_data["departure_date_utc"], utc=True, format="%Y-%m-%d %H:%M:%S")
+df_ac_data["arrival_date_utc"] = pd.to_datetime(df_ac_data["arrival_date_utc"], utc=True, format="%Y-%m-%d %H:%M:%S")
 
 
 #%% identifier doublette de vol à réconcilier
@@ -149,7 +148,7 @@ df_complete = df_complete.sort_values(by=["departure_date_utc"], ascending=False
 
 
 #%% si ok, enregistrer et supprimer ancien folder
-df_complete.to_csv(path_flight_data_csv, index=False, encoding="utf-8-sig", date_format="%Y-%m-%d %H:%M:%S"))
+df_complete.to_csv(path_flight_data_csv, index=False, encoding="utf-8-sig", date_format="%Y-%m-%d %H:%M:%S")
 
 
 #%%
