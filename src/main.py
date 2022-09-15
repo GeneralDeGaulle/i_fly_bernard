@@ -18,8 +18,9 @@ import locale
 
 locale.setlocale(locale.LC_TIME, "")
 
-#%%
+#%% start counter
 start_time = time.time()
+
 
 #%% import scripts
 from src.core import adsb_exchange
@@ -44,7 +45,7 @@ df_avion = pd.read_csv(path_avions, delimiter=",")
 df_avion["last_check"] = pd.to_datetime(df_avion["last_check"], utc=True, format="%Y-%m-%d")
 
 # on enlève les avions radiés
-df_avion = df_avion[df_avion["radié"] == "non"]
+df_avion_loop = df_avion[df_avion["radié"] == "non"]
 
 today_date = pd.to_datetime("now", utc=True, format="%Y-%m-%d")
 
@@ -54,7 +55,7 @@ n = 0
 list_print_new_flights = []
 
 # on attaque la boucle for pour passer les avions l'un après l'autre
-for aircraft_row in df_avion.itertuples():
+for aircraft_row in df_avion_loop.itertuples():
     # define variables pour un avion
     registration_ac = aircraft_row.registration
     icao24_ac = str(aircraft_row.icao24)
@@ -202,7 +203,7 @@ for aircraft_row in df_avion.itertuples():
         print(f"--- {registration_ac} done ! ---")
 
 
-#%%
+#%% general status
 print()
 print("---------------------------")
 print("--- all aircraft done ! ---")
