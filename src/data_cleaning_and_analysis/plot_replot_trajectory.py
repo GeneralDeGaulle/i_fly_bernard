@@ -54,7 +54,7 @@ df_ac_data["arrival_date_utc"] = pd.to_datetime(df_ac_data["arrival_date_utc"], 
 
 
 #%%
-list_new_vols_index = [3]
+list_new_vols_index = range(0,3)
 df_new_flights_only = df_ac_data.iloc[list_new_vols_index]
 
 # df_new_flights_only.to_markdown(tablefmt="fancy_grid")

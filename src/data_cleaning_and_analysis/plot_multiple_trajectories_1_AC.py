@@ -34,7 +34,7 @@ from src.core import maths_for_bernard
 #%%
 
 # =============================================================================
-registration_ac = "F-GBOL"
+registration_ac = "F-HFHP"
 # =============================================================================
 
 
@@ -61,9 +61,9 @@ ac_proprio = df_avion.proprio.values[0]
 
 #%%
 df_ac = pd.read_csv(path_flight_data_csv, delimiter=",")
-df_ac["departure_date_utc"] = pd.to_datetime(df_ac["departure_date_utc"], utc=True, format="%Y-%m-%d %H:%M:%S"))
-df_ac["arrival_date_utc"] = pd.to_datetime(df_ac["arrival_date_utc"], utc=True, format="%Y-%m-%d %H:%M:%S"))
-df_ac["departure_date_only_utc"] = pd.to_datetime(df_ac["departure_date_only_utc"], format="%Y-%m-%d"))
+df_ac["departure_date_utc"] = pd.to_datetime(df_ac["departure_date_utc"], utc=True, format="%Y-%m-%d %H:%M:%S")
+df_ac["arrival_date_utc"] = pd.to_datetime(df_ac["arrival_date_utc"], utc=True, format="%Y-%m-%d %H:%M:%S")
+df_ac["departure_date_only_utc"] = pd.to_datetime(df_ac["departure_date_only_utc"], format="%Y-%m-%d")
 
 df_ac = df_ac.head(3)
 
@@ -82,8 +82,8 @@ co2_tot = df_ac["co2_emission_tonnes"].sum()
 df_ac = df_ac.sort_values(by=["departure_date_utc"], ascending=True)
 df_ac = df_ac.reset_index(drop=True)
 
-df_ac["airport_departure"] = ["Paris", "Toulon", "Corfou"]
-df_ac["airport_arrival"] = ["Toulon", "Corfou", "Paris"]
+df_ac["airport_departure"] = ["Venise", "Paris", "Venise"]
+df_ac["airport_arrival"] = ["Paris", "Venise", "Paris"]
 
 
 #%% couleur contnue difficile car pas bcp de vol
@@ -151,7 +151,7 @@ fig = go.Figure()
 
 for i, flight in df_ac.iterrows():
 
-    date_map = flight.departure_date_only_utc_map.strftime("%d %B %Y")
+    date_map = flight.departure_date_only_utc.strftime("%d %B %Y")
     depart_time = flight.departure_date_utc.strftime("%Hh%M")
     arrival_time = flight.arrival_date_utc.strftime("%Hh%M")
 
@@ -168,20 +168,20 @@ for i, flight in df_ac.iterrows():
     df = pd.read_csv(flight.path_csv)
     geo_lat, geo_lon = maths_for_bernard.fct_geodesic_multiple_flights(df)
 
-    # trajectoire extrapolée
-    fig.add_trace(
-        go.Scattermapbox(
-            lon=geo_lon,
-            lat=geo_lat,
-            mode="lines",
-            line_width=5,
-            line_color=px.colors.qualitative.Pastel[i],
-            name=legend_i))
+    # # trajectoire extrapolée
+    # fig.add_trace(
+    #     go.Scattermapbox(
+    #         lon=geo_lon,
+    #         lat=geo_lat,
+    #         mode="lines",
+    #         line_width=5,
+    #         line_color=px.colors.qualitative.Pastel[i],
+    #         name=legend_i))
 
     # trajectoire réelle
-    # fig.add_trace(go.Scattermapbox(lon = df.long, lat = df.lat, mode = "markers",
-    #                                     marker_size = 5.5, marker_color = px.colors.qualitative.Pastel1[i],
-    #                                     name = legend_i))
+    fig.add_trace(go.Scattermapbox(lon = df.long, lat = df.lat, mode = "markers",
+                                        marker_size = 5.5, marker_color = px.colors.qualitative.Pastel[i],
+                                        name = legend_i))
 
 
 # fig.update_traces(marker={"size": 5.5})
@@ -193,21 +193,12 @@ fig.update_layout(
     height=800,
     mapbox_zoom=3,
     mapbox_style="carto-positron",
-    title_text=("<b>Triple vol en seul jour pour l'"
-                + ac_proprio
-                + "</b><br>"
-                + date_map
-                + " - "
-                + registration_ac
-                + " - "
-                + flight_temps_str
-                + " de vol - "
-                + str(co2_tot)
-                + "t de CO2 <b>",
-    title_font_family="Arial",
-    title_font_size=25,
-    title_x=0.5,
-    title_y=0.96))  # , title_font_color = "darkblue
+    title_text=(f"<b>Triple vol en seul jour pour l'{ac_proprio} </b><br> {date_map} - {registration_ac} - {flight_temps_str} de vol - {str(co2_tot)}t de CO2 <b>"),
+                title_font_family="Arial",
+                title_font_size=25,
+                title_x=0.5,
+                title_y=0.96)
+
 
 fig.update_layout(
     legend_font_size=14,
