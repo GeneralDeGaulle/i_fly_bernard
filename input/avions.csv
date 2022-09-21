@@ -1,14 +1,14 @@
 ﻿registration,icao24,proprio,date_acquisition,model,type,msn,us_gallons_per_hour,co2_kg_per_hour,last_check,radié
-F-HFHP,3994ef,avion du groupe Pinault,10/06/2020,Bombardier Global 7500,BD-700-2A12,70022,460,4500,2022-09-15,non
+F-HFHP,3994ef,avion du groupe Pinault,10/06/2020,Bombardier Global 7500,BD-700-2A12,70022,460,4500,2022-09-19,non
 F-GVMA,395580,avion de Bernard Arnault,14/09/2020,Bombardier Global 7500,BD-700-2A12,70020,460,4500,2022-09-01,oui
-F-HMBY,39b038,avion du groupe Bouygues,01/12/2016,Bombardier Global 6000,BD-700-2A12,9748,480,4700,2022-09-15,non
-F-HVBL,39d42b,avion #2 du groupe Bolloré,14/06/2013,Dassault Falcon-7X,Falcon-7X,188,320,3120,2022-09-15,non
-F-GBOL,3905cb,avion #1 du groupe Bolloré,17/06/2013,Bombardier Global 6000,BD-700-1A10,9500,480,4700,2022-09-15,non
-F-HJJJ,39a529,avion du groupe JC-Decaux,18/02/2020,Falcon 900EX,Falcon 900EX,318,267,2600,2022-09-15,non
-F-GLTK,392E6A,avion de location Valljet,05/07/2022,Cessna CitationJet CITATION II,F550,550-0609,193,1882,2022-09-15,non
-F-HBMR,398591,avion de location Valljet,01/03/2022,Cessna CitationJet CITATION II,F550,550-0717,193,1882,2022-09-15,non
-F-GGGA,3918C0,avion de location Valljet,06/05/2021,Cessna CitationJet CITATION II,F550,550-0586,193,1882,2022-09-15,non
-F-HBZA,398720,avion de location Valljet,29/01/2019,Cessna CitationJet CITATION II,F550,550-0672,193,1882,2022-09-15,non
+F-HMBY,39b038,avion du groupe Bouygues,01/12/2016,Bombardier Global 6000,BD-700-2A12,9748,480,4700,2022-09-19,non
+F-HVBL,39d42b,avion #2 du groupe Bolloré,14/06/2013,Dassault Falcon-7X,Falcon-7X,188,320,3120,2022-09-19,non
+F-GBOL,3905cb,avion #1 du groupe Bolloré,17/06/2013,Bombardier Global 6000,BD-700-1A10,9500,480,4700,2022-09-19,non
+F-HJJJ,39a529,avion du groupe JC-Decaux,18/02/2020,Falcon 900EX,Falcon 900EX,318,267,2600,2022-09-19,non
+F-GLTK,392E6A,avion de location Valljet,05/07/2022,Cessna CitationJet CITATION II,F550,550-0609,193,1882,2022-09-19,non
+F-HBMR,398591,avion de location Valljet,01/03/2022,Cessna CitationJet CITATION II,F550,550-0717,193,1882,2022-09-19,non
+F-GGGA,3918C0,avion de location Valljet,06/05/2021,Cessna CitationJet CITATION II,F550,550-0586,193,1882,2022-09-19,non
+F-HBZA,398720,avion de location Valljet,29/01/2019,Cessna CitationJet CITATION II,F550,550-0672,193,1882,2022-09-19,non
 F-HGPG,3999E6,avion de location Valljet,08/11/2019,Cessna CitationJet CJ/CJ1,525,525-0102,134,1307,2022-09-15,non
 F-HAJD,398123,avion de location Valljet,31/10/2019,Cessna CitationJet CJ/CJ1,525,525-0523,134,1307,2022-09-15,non
 F-HRIB,39C501,avion de location Valljet,10/11/2021,Cessna CitationJet CJ/CJ1,525,525-0188,134,1307,2022-09-15,non
