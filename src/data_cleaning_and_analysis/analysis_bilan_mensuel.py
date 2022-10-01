@@ -22,7 +22,6 @@ locale.setlocale(locale.LC_TIME, "")
 
 
 #%%
-from src.core import post_flight_consolidation
 from src.core import maths_for_bernard
 
 
@@ -54,8 +53,8 @@ df_all_flights["arrival_date_utc"] = pd.to_datetime(df_all_flights["arrival_date
 
 
 #%% filtre temporel
-date_1 = pd.to_datetime("01-08-2022", utc=True, dayfirst=True)
-date_2 = pd.to_datetime("01-09-2022", utc=True, dayfirst=True)
+date_1 = pd.to_datetime("01-09-2022", utc=True, dayfirst=True)
+date_2 = pd.to_datetime("01-10-2022", utc=True, dayfirst=True)
 
 df_all_flights_m = df_all_flights.loc[(df_all_flights["departure_date_utc"] >= date_1)
                                       & (df_all_flights["departure_date_utc"] < date_2)]
@@ -70,8 +69,8 @@ list_ac = list(df_all_flights_m.registration.unique())
 
 #%% mise en forme
 
-df_all_flights["flight_duration_hours"] = df_all_flights["flight_duration_min"] / 60.0
-df_all_flights["year"] = df_all_flights["arrival_date_utc"].dt.strftime("%Y")
+df_all_flights_m["flight_duration_hours"] = df_all_flights_m["flight_duration_min"] / 60.0
+df_all_flights_m["year"] = df_all_flights_m["arrival_date_utc"].dt.strftime("%Y")
 
 
 #%% stats mensuel tout
@@ -160,10 +159,12 @@ for n, ac in enumerate(list_ac):
         color_i = flight.color
 
         df = pd.read_csv(flight.path_csv)
+
+
+        # trajectoire extrapolée
         geo_lat, geo_lon = maths_for_bernard.fct_geodesic_multiple_flights(df)
 
         # pour gérer l'affichage d'un seul élément
-        print(n, m)
         if m != n:
             fig.add_trace(go.Scattermapbox(
                                             lon=geo_lon,
@@ -183,19 +184,32 @@ for n, ac in enumerate(list_ac):
                                             name=legend_i,
                                             showlegend=True))
 
-        m = m + 1
 
         # #real_trajectory
-        # fig.add_trace(go.Scattermapbox(lon = df.long, lat = df.lat, mode = "lines",
-        #                                     line_width = 3, line_color = color_i,
-        #                                     name = legend_i))
+        # if m != n:
+        #     fig.add_trace(go.Scattermapbox(lon = df.long,
+        #                                    lat = df.lat,
+        #                                    mode = "lines",
+        #                                    line_width = 3,
+        #                                    line_color = color_i,
+        #                                    name = legend_i,
+        #                                    showlegend=False))
+        # else:
+        #     fig.add_trace(go.Scattermapbox(lon = df.long,
+        #                                    lat = df.lat,
+        #                                    mode = "lines",
+        #                                    line_width = 3,
+        #                                    line_color = color_i,
+        #                                    name = legend_i,
+        #                                    showlegend=True))
 
+        m = m + 1
 
 fig.update_coloraxes(showscale=False)
 
 fig.update_layout(
     margin={"r": 0, "t": 0, "l": 0, "b": 0},
-    width=1600,
+    width=800,
     height=800,
     mapbox_zoom=3,
     mapbox_style="carto-positron")
@@ -207,10 +221,10 @@ fig.update_layout(
     legend_font_family="Arial",
     legend_borderwidth=1,
     legend_bordercolor="grey",
-    legend=dict(xanchor="left", x=0.01, yanchor="top", y=0.92))
+    legend=dict(xanchor="right", x=0.99, yanchor="top", y=0.85))
 
 fig.update_layout(
-    title="<b>Carte de tous les vols du mois d'août 2022</b>",
+    title="<b>Carte de tous les vols du mois de septembre 2022</b>",
     title_font_size=25,
     title_font_color="#161a1d",
     title_font_family="Arial",
