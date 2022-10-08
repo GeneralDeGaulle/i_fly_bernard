@@ -55,7 +55,6 @@ def fct_kml_2_folder(flights_legs_list_new, path_f_data):
 
 #%%
 def fct_kml_2_csv(flight_leg_kml):
-
     # on récupère facilement les infos car les i/o entre fct ont été bien faites
     flight_leg_folder = flight_leg_kml[0]
     path_kml = flight_leg_kml[1]

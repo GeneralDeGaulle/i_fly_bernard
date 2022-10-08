@@ -9,7 +9,6 @@ Script #4 qui détermine toutes les infos du vol (aéroports départs et arrivé
 
 #%%
 import pandas as pd
-import math
 import numpy as np
 import os
 
