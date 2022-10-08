@@ -4,7 +4,7 @@ __pycache__/
 input/pictures_twitter/
 input/raw_data/
 output/save/
-output/Bilans/misc_bilans/livraisons_mediapart/
+output/Bilans/misc_bilans/
 
 # ignore all files with specific extensions
 *.psd
